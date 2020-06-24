@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14859bbb9bf8d8448a251cb6c8878d67, type: 3}
+  m_Name: Casino Inventory
+  m_EditorClassIdentifier: 
+  savePath: 
+  database: {fileID: 11400000, guid: 32f9ca7e32f001143975e5e26eea5f4b, type: 2}
+  type: 2
+  data:
+    slots:
+    - prismite:
+        name: 
+        id: 0
+        colour: 0
+        buffs:
+        - modifier: 0
+          value: 10
+          min: 10
+          max: 20
+    - prismite:
+        name: 
+        id: 0
+        colour: 0
+        buffs:
+        - modifier: 0
+          value: 18
+          min: 10
+          max: 20
+    - prismite:
+        name: 
+        id: 0
+        colour: 0
+        buffs:
+        - modifier: 0
+          value: 14
+          min: 10
+          max: 20
+    - prismite:
+        name: 
+        id: 0
+        colour: 0
+        buffs:
+        - modifier: 0
+          value: 18
+          min: 10
+          max: 20
+    - prismite:
+        name: 
+        id: 4
+        colour: 0
+        buffs: []
+    - prismite:
+        name: 
+        id: 4
+        colour: 0
+        buffs: []
+    - prismite:
+        name: 
+        id: 3
+        colour: 0
+        buffs:
+        - modifier: 0
+          value: 25
+          min: 25
+          max: 50
+    - prismite:
+        name: 
+        id: 4
+        colour: 0
+        buffs: []
