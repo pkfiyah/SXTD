@@ -47,7 +47,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tile: {fileID: 11400000, guid: 6d0df4415b59ddc4b92ee74f9393de2a, type: 2}
-  isFollowingCursor: 0
+  type: 1
+  _maxProj: 3
+  _fireRate: 2
   ho: {fileID: 7451211693988713274, guid: aef7ad74214ba374eb10f3daa9fb29f7, type: 3}
 --- !u!60 &7811861728329962083
 PolygonCollider2D:

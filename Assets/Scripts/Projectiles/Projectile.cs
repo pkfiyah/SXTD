@@ -46,10 +46,9 @@ public class Projectile : MonoBehaviour, IBaseProjectile {
   void OnTriggerEnter2D(Collider2D col) {
     if (col.gameObject == _target) {
       // Do thing
-      Debug.Log("HIt Thing");
       Piece p = col.gameObject.GetComponent<Piece>();
 
-      p.takePhysDamage(damage);
+      // p.takePhysDamage(damage);
       Destroy(this.gameObject);
     }
   }

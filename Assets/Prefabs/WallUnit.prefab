@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tile: {fileID: 11400000, guid: cf7b72ec7e9fab04a8c58693105834d4, type: 2}
-  isFollowingCursor: 0
+  type: 2
 --- !u!60 &-8120389638982370570
 PolygonCollider2D:
   m_ObjectHideFlags: 0

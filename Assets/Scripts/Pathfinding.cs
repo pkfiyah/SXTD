@@ -20,8 +20,7 @@ public class Pathfinding {
     // Parse existing game board traversable into PathNodes for algo
     for(int x = 0; x < gb.GetLength(0); x++) {
       for(int y = 0; y < gb.GetLength(1); y++) {
-        Debug.Log("isTraversable: " + gb[x, y].isTraversable());
-        grid.setGridObject(x, y, new PathNode(grid, x, y, gb[x, y].isTraversable()));
+        grid.setGridObject(x, y, new PathNode(grid, x, y, gb[x, y].IsTraversable()));
       }
     }
     Debug.Log("Game Board Parsed");

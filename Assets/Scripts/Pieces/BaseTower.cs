@@ -9,8 +9,6 @@ public class BaseTower : Piece {
 
     public override void Awake() {
       base.Awake();
-      _isTraversable = false;
-      _isSlottable = true;
       _prismiteNodes = new List<Prismite>();
     }
 

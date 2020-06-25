@@ -22,7 +22,6 @@ public class GameMaster : MonoBehaviour {
   public Vector2Int boardDimensions;
   public GameObject emptyTile;
   public GameObject hearth;
-  public PieceMenu pm;
   public int spawnNum;
   public bool isPlanning = true;
 
@@ -98,6 +97,18 @@ public class GameMaster : MonoBehaviour {
     inventory.Clean();
   }
 
+  void OnMouseUp() {
+    if (isPlanning && MouseData.activeSelection != null) {
+      if (GameMaster.Instance.isOnGameboard(MouseData.GetTilePosition)) {
+        if (MouseData.activeSelection.GetComponent<Piece>().type == PieceType.Hearth) {
+          GameMaster.Instance.setHearthTile(MouseData.GetTilePosition, MouseData.activeSelection);
+        } else {
+          GameMaster.Instance.updateGameboard(MouseData.GetTilePosition, MouseData.activeSelection);
+        }
+      }
+    }
+  }
+
   // Update is called once per frame
   void FixedUpdate() {
     // Planning phase
@@ -139,12 +150,12 @@ public class GameMaster : MonoBehaviour {
 
   public void setHearthTile(Vector3Int piecePosition, GameObject piece) {
     if (hearth == null) {
-      if (piece.GetComponent<HearthTile>() != null) {
+      if (piece.GetComponent<Piece>().type == PieceType.Hearth) {
         hearth = updateGameboard(piecePosition, piece);
       }
     } else {
       // Delete Current Hearth, Only One May Exist
-      Vector3Int oldTile = hearth.GetComponent<Piece>().getTilePosition();
+      Vector3Int oldTile = hearth.GetComponent<Piece>().GetTilePosition();
       updateGameboard(oldTile, null);
       hearth = updateGameboard(piecePosition, piece);
     }
@@ -152,19 +163,23 @@ public class GameMaster : MonoBehaviour {
 
   // All modifications to the game board happen here
   public GameObject updateGameboard(Vector3Int tilePosition, GameObject piece) {
-    // If called with null, just make this position an emptyTile
-    if (piece == null) piece = Instantiate(emptyTile, getWorldPositionFromTilePosition(tilePosition), Quaternion.identity);
+    GameObject newPiece;
+    if (piece == null) {
+      newPiece = Instantiate(emptyTile, getWorldPositionFromTilePosition(tilePosition), Quaternion.identity);
+    } else {
+      newPiece = Instantiate(piece, getWorldPositionFromTilePosition(tilePosition), Quaternion.identity);
+    }
     Piece pieceRef = _gameboard[tilePosition.x, tilePosition.y];
-    Piece p = piece.GetComponent<Piece>();
-    if (piece.GetComponent<SpriteRenderer>() == null && p.tile != null) {
+    Piece p = newPiece.GetComponent<Piece>();
+    if (newPiece.GetComponent<SpriteRenderer>() == null && p.tile != null) {
       p.tile.color = Color.white;
       this.setTileGraphic(tilePosition, p.tile);
     }
     if (pieceRef != null) {
-      _gameboard[tilePosition.x, tilePosition.y].destroySelf();
+      _gameboard[tilePosition.x, tilePosition.y].DestroySelf();
     }
     _gameboard[tilePosition.x, tilePosition.y] = p;
-    return piece;
+    return newPiece;
   }
 
   public bool isOnGameboard(Vector3Int tileCoords) {
@@ -177,7 +192,7 @@ public class GameMaster : MonoBehaviour {
 
   public List<Vector2> aStar(Vector3Int startTilePos) {
     _pathfinder.parseGameBoard(_gameboard);
-    List<PathNode> path = _pathfinder.findPath(startTilePos.x, startTilePos.y, hearth.GetComponent<Piece>().getTilePosition().x, hearth.GetComponent<Piece>().getTilePosition().y);
+    List<PathNode> path = _pathfinder.findPath(startTilePos.x, startTilePos.y, hearth.GetComponent<Piece>().GetTilePosition().x, hearth.GetComponent<Piece>().GetTilePosition().y);
     List<Vector2> convertedPath = new List<Vector2>();
 
     foreach (PathNode node in path) {

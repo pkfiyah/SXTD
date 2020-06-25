@@ -16,18 +16,17 @@ public class TowerTile : BaseTower {
   public override void Awake() {
     base.Awake();
     _projectiles = new List<Projectile>();
-    _isTraversable = false;
   }
 
   void FixedUpdate() {
-    if(_gm.isPlanning) {
+    if(GameMaster.Instance.isPlanning) {
       // Do Nothing
     } else {
         _fireTimer += Time.deltaTime;
 
       // Fires Projectile
       if (_currProj < _maxProj && _fireTimer >= _fireRate) {
-        _projectiles.Add(Instantiate(ho, _gm.getWorldPositionFromTilePosition(this.getTilePosition()), Quaternion.identity).GetComponent<Projectile>());
+        _projectiles.Add(Instantiate(ho, GameMaster.Instance.getWorldPositionFromTilePosition(this.GetTilePosition()), Quaternion.identity).GetComponent<Projectile>());
         _fireTimer = 0.0f;
         if (_focusTarget != null) _projectiles[_projectiles.Count - 1].setTarget(_focusTarget);
       }

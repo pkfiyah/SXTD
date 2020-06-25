@@ -14,14 +14,9 @@ public class EmptyTile : Piece {
         this.tile = emptyTiles[emptyTiles.Length - 1];
       }
     }
-    public void takePhysDamage(float damageTaken) { return; }
-    public void takeMagDamage(float damageTaken) { return; }
-    public void takePureDamage(float damageTaken) { return; }
-    public bool checkAlive() { return false; }
-    public bool isTraversable() { return true; }
     void OnGUI() {
-      Vector3 worldPos = getWorldPosition();
-      Vector3Int tilePos = getTilePosition();
+      Vector3 worldPos = this.GetWorldPosition();
+      Vector3Int tilePos = this.GetTilePosition();
       Handles.Label(worldPos, "(" + tilePos.x + ", " + tilePos.y + ")");
     }
 }
