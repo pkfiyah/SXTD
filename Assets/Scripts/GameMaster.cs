@@ -27,9 +27,7 @@ public class GameMaster : MonoBehaviour {
   public bool isPlanning = true;
 
   // [SerializeField] private UI_Inventory uiInventory;
-  private GhostMarkerController _gmc;
   private Tilemap _entityTilemap;
-  private Tile _ghostSelection;
   private Pathfinding _pathfinder;
   private Piece[,] _gameboard;
   // private PrismiteCasino _casino;
@@ -75,13 +73,7 @@ public class GameMaster : MonoBehaviour {
 
   // Initialize Game State
   void Awake() {
-    // TESTING
-    // PrismiteWorld.SpawnPrismiteWorld(new Vector3(1, 1), new Prismite { prismiteType = Prismite.PrismiteType.Green, prismiteQuality = Prismite.PrismiteQuality.Smooth });
-    // _casino = new PrismiteCasino();
-    // END TESTING
-
     Instance = this;
-    _gmc = this.GetComponent<GhostMarkerController>();
     _entityTilemap = GameObject.Find("Entity Tilemap").GetComponent<Tilemap>();
     _pathfinder = new Pathfinding(boardDimensions.x, boardDimensions.y);
     // uiInventory.setInventory(_inventory);
@@ -110,7 +102,9 @@ public class GameMaster : MonoBehaviour {
   void FixedUpdate() {
     // Planning phase
     if(isPlanning) {
+      if(MouseData.activeSelection != null) {
 
+      }
     }
 
     if (Input.GetKeyDown(KeyCode.Space)) {
@@ -159,16 +153,10 @@ public class GameMaster : MonoBehaviour {
   // All modifications to the game board happen here
   public GameObject updateGameboard(Vector3Int tilePosition, GameObject piece) {
     // If called with null, just make this position an emptyTile
-    if (piece == null) piece = emptyTile;
+    if (piece == null) piece = Instantiate(emptyTile, getWorldPositionFromTilePosition(tilePosition), Quaternion.identity);
     Piece pieceRef = _gameboard[tilePosition.x, tilePosition.y];
-    Vector3 realPos = this.getWorldPositionFromTilePosition(tilePosition);
-    realPos.z = 0;
-    GameObject cloneUnit = Instantiate(piece, realPos, Quaternion.identity);
-    if (cloneUnit.GetComponent<Piece>().isFollowingCursor) {
-      cloneUnit.GetComponent<Piece>().isFollowingCursor = false;
-    }
-    Piece p = cloneUnit.GetComponent<Piece>();
-    if (cloneUnit.GetComponent<SpriteRenderer>() == null) {
+    Piece p = piece.GetComponent<Piece>();
+    if (piece.GetComponent<SpriteRenderer>() == null && p.tile != null) {
       p.tile.color = Color.white;
       this.setTileGraphic(tilePosition, p.tile);
     }
@@ -176,7 +164,7 @@ public class GameMaster : MonoBehaviour {
       _gameboard[tilePosition.x, tilePosition.y].destroySelf();
     }
     _gameboard[tilePosition.x, tilePosition.y] = p;
-    return cloneUnit;
+    return piece;
   }
 
   public bool isOnGameboard(Vector3Int tileCoords) {

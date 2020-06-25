@@ -24,44 +24,7 @@ public class Piece : MonoBehaviour, IBaseEntity {
     _isTraversable = true;
     _isAttackable = false;
     isFollowingCursor = false;
-
-    // addEvent(gameObject, EventTriggerType.PointerEnter, delegate { OnEnterTile(gameObject);});
-    // addEvent(gameObject, EventTriggerType.PointerExit, delegate { OnExitTile(gameObject);});
   }
-
-  // _------------------------- TEMP COASDNSAIDNASDN
-
-  // protected void addEvent(GameObject obj, EventTriggerType type, UnityAction<BaseEventData> action) {
-  //   EventTrigger trigger = obj.GetComponent<EventTrigger>();
-  //   var eventTrigger = new EventTrigger.Entry();
-  //   eventTrigger.eventID = type;
-  //   eventTrigger.callback.AddListener(action);
-  //   trigger.triggers.Add(eventTrigger);
-  // }
-  //
-  // public void OnEnter(GameObject obj) {
-  //   MouseData.slotHoveredOver = obj;
-  // }
-  //
-  // public void OnExit(GameObject obj) {
-  //   MouseData.slotHoveredOver = null;
-  // }
-  //
-  // public void OnEnterTile(GameObject obj) {
-  //   Debug.Log("In Tile: " + obj.GetComponent<Piece>().getTilePosition());
-  //   MouseData.tileHoveredOver = obj.GetComponent<Piece>();
-  // }
-  //
-  // public void OnExitTile(GameObject obj) {
-  //   MouseData.tileHoveredOver = null;
-  // }
-
-  // public void OnDragStart(GameObject obj) {
-  //   if (slotsOnInterface[obj].prismite.id <= -1) return;
-  //   MouseData.tempItemBeingDragged = CreateTempItem(obj);
-  // }
-
-  /// =------------------------------- TMEP ENDIUNGH
 
   // Update is called once per frame
   void FixedUpdate() {
@@ -80,11 +43,10 @@ public class Piece : MonoBehaviour, IBaseEntity {
   }
 
   void OnMouseUp() {
-    if (_gm.isPlanning && isFollowingCursor) {
-      Vector3Int mouseTilePos = _gm.getTilePositionFromWorldPosition(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-      mouseTilePos.z = 0;
-      if (_gm.isOnGameboard(mouseTilePos)) {
-        _gm.updateGameboard(mouseTilePos, this.gameObject);
+    if (GameMaster.Instance.isPlanning && MouseData.activeSelection) {
+      if (GameMaster.Instance.isOnGameboard(MouseData.GetTilePosition)) {
+        GameMaster.Instance.updateGameboard(MouseData.GetTilePosition, Instantiate(MouseData.activeSelection, MouseData.GetTilePosition, Quaternion.identity));
+        Destroy(this.gameObject);
       }
     }
   }
