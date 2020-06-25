@@ -757,6 +757,7 @@ GameObject:
   - component: {fileID: 291406621}
   - component: {fileID: 291406620}
   - component: {fileID: 291406619}
+  - component: {fileID: 291406622}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -826,7 +827,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 291406620}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 291406622}
+        m_MethodName: HitOpenBloseButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &291406620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -864,6 +876,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 291406617}
   m_CullTransparentMesh: 0
+--- !u!114 &291406622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 291406617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddf2c042ce717824cb393dc552859039, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveAmountX: -7.2
 --- !u!1 &300861391
 GameObject:
   m_ObjectHideFlags: 0
@@ -1478,6 +1503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: 014c1c0154ad135498e2152b8d3da9e8, type: 2}
+  canAcceptItems: 1
   inventoryPrefab: {fileID: 1810419377569272846, guid: bda02b1e1a2e7d14cad2422eb471a09b,
     type: 3}
   X_SPACE_BETWEEN: 80
@@ -3458,22 +3484,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c38070e0150463443803f915254be4ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pfPrismiteWorld: {fileID: 6584260765311614590, guid: d368caff7287db9499bf6a1e10b62580,
-    type: 3}
-  redPrismiteSprite: {fileID: 21300000, guid: 7734eb1da5077cf4e8b02ae695d66ea6, type: 3}
-  bluePrismiteSprite: {fileID: 21300000, guid: 7734eb1da5077cf4e8b02ae695d66ea6, type: 3}
-  yellowPrismiteSprite: {fileID: 21300000, guid: 7734eb1da5077cf4e8b02ae695d66ea6,
-    type: 3}
-  purplePrismiteSprite: {fileID: 21300000, guid: 7734eb1da5077cf4e8b02ae695d66ea6,
-    type: 3}
-  greenPrismiteSprite: {fileID: 21300000, guid: ceeedd9aa06b15a439a6698002fabad1,
-    type: 3}
-  orangePrismiteSprite: {fileID: 21300000, guid: 7734eb1da5077cf4e8b02ae695d66ea6,
-    type: 3}
-  blackPrismiteSprite: {fileID: 21300000, guid: 7734eb1da5077cf4e8b02ae695d66ea6,
-    type: 3}
-  whitePrismiteSprite: {fileID: 21300000, guid: 41c4d61b649d2ee42943e4cd01428f18,
-    type: 3}
 --- !u!4 &1433638137
 Transform:
   m_ObjectHideFlags: 0
@@ -5564,6 +5574,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: a6a9b385d7ab7ab4384cdaa93026502c, type: 2}
+  canAcceptItems: 0
   inventoryPrefab: {fileID: 1810419377569272846, guid: bda02b1e1a2e7d14cad2422eb471a09b,
     type: 3}
   X_SPACE_BETWEEN: 110

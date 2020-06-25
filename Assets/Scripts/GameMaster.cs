@@ -31,9 +31,7 @@ public class GameMaster : MonoBehaviour {
   private Tilemap _entityTilemap;
   private Tile _ghostSelection;
   private Pathfinding _pathfinder;
-  private GameObject _activeSelection;
   private Piece[,] _gameboard;
-  private InventoryOld _inventory;
   // private PrismiteCasino _casino;
 
   // ------------------- THIS IS FOR TOWERS LATER -------------------- //
@@ -86,7 +84,6 @@ public class GameMaster : MonoBehaviour {
     _gmc = this.GetComponent<GhostMarkerController>();
     _entityTilemap = GameObject.Find("Entity Tilemap").GetComponent<Tilemap>();
     _pathfinder = new Pathfinding(boardDimensions.x, boardDimensions.y);
-    _inventory = new InventoryOld();
     // uiInventory.setInventory(_inventory);
 
     // Construct Empty Game Board
@@ -106,26 +103,14 @@ public class GameMaster : MonoBehaviour {
 
   // Resets inventory scriptable object
   private void OnApplicationQuit() {
-    inventory.data.Clear();
+    inventory.Clean();
   }
 
   // Update is called once per frame
   void FixedUpdate() {
-
     // Planning phase
     if(isPlanning) {
-      Vector3 mouseWorldCoords = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-      Vector3Int mouseTileCoords = this.getTilePositionFromWorldPosition(mouseWorldCoords);
-      if(_activeSelection != null) {
-        if (_gmc.getGhostPiece() == null) {
-          Vector3 worldP = this.getWorldPositionFromTilePosition(mouseTileCoords);
-          GameObject t = Instantiate(_activeSelection, worldP, Quaternion.identity);
-          t.GetComponent<Piece>().isFollowingCursor = true;
-          _gmc.setGhostPiece(t);
-        }
-      } else {
-        _gmc.cleanState();
-      }
+
     }
 
     if (Input.GetKeyDown(KeyCode.Space)) {
@@ -136,23 +121,6 @@ public class GameMaster : MonoBehaviour {
       Debug.Log(":Loading");
       inventory.Load();
     }
-  }
-
-  public void addToInventory() {
-    //Stub
-    // _inventory.addPrismite(_casino.rollPrismite());
-  }
-
-  public void removeFromInventory() {
-
-  }
-
-  public void setActiveSelection(GameObject p) {
-    _activeSelection = p;
-  }
-
-  public GameObject getActiveSelection() {
-    return _activeSelection;
   }
 
   public Piece getPieceAtTile(Vector3Int tilePosition) {
@@ -192,8 +160,6 @@ public class GameMaster : MonoBehaviour {
   public GameObject updateGameboard(Vector3Int tilePosition, GameObject piece) {
     // If called with null, just make this position an emptyTile
     if (piece == null) piece = emptyTile;
-
-
     Piece pieceRef = _gameboard[tilePosition.x, tilePosition.y];
     Vector3 realPos = this.getWorldPositionFromTilePosition(tilePosition);
     realPos.z = 0;
@@ -232,16 +198,16 @@ public class GameMaster : MonoBehaviour {
     return convertedPath;
   }
 
-  public void AttributeModified(Attribute attribute) {
-    Debug.Log(string.Concat(attribute.type, "att updated"));
-  }
+  // public void AttributeModified(Attribute attribute) {
+  //   Debug.Log(string.Concat(attribute.type, "att updated"));
+  // }
 }
 
 [System.Serializable]
 public class Attribute {
   [System.NonSerialized]
   public GameMaster parent;
-  public Attributes type;
+  // public Attributes type;
   public ModifiableInt value;
 
   public void SetParent(GameMaster _parent) {
@@ -250,13 +216,17 @@ public class Attribute {
   }
 
   public void AttributeModified() {
-    parent.AttributeModified(this);
+    //parent.AttributeModified(this);
   }
 }
 
 
 public static class MouseData {
-  public static GameObject tempItemBringDragged;
+  public static GameObject tempItemBeingDragged;
   public static GameObject slotHoveredOver;
+  public static Piece tileHoveredOver;
   public static UserInterface interfaceMouseIsOver;
+  public static GameObject activeSelection;
+  public static Vector3 GetWorldPosition { get { Vector3 normalZmousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition); normalZmousePos.z = 0; return normalZmousePos; }}
+  public static Vector3Int GetTilePosition { get { Vector3 normalZmousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition); normalZmousePos.z = 0; return GameMaster.Instance.getTilePositionFromWorldPosition(normalZmousePos); }}
 }

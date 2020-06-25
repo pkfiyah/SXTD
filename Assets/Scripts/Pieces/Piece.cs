@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using UnityEngine.Events;
 using UnityEngine.Tilemaps;
 
 public class Piece : MonoBehaviour, IBaseEntity {
@@ -21,7 +24,44 @@ public class Piece : MonoBehaviour, IBaseEntity {
     _isTraversable = true;
     _isAttackable = false;
     isFollowingCursor = false;
+
+    // addEvent(gameObject, EventTriggerType.PointerEnter, delegate { OnEnterTile(gameObject);});
+    // addEvent(gameObject, EventTriggerType.PointerExit, delegate { OnExitTile(gameObject);});
   }
+
+  // _------------------------- TEMP COASDNSAIDNASDN
+
+  // protected void addEvent(GameObject obj, EventTriggerType type, UnityAction<BaseEventData> action) {
+  //   EventTrigger trigger = obj.GetComponent<EventTrigger>();
+  //   var eventTrigger = new EventTrigger.Entry();
+  //   eventTrigger.eventID = type;
+  //   eventTrigger.callback.AddListener(action);
+  //   trigger.triggers.Add(eventTrigger);
+  // }
+  //
+  // public void OnEnter(GameObject obj) {
+  //   MouseData.slotHoveredOver = obj;
+  // }
+  //
+  // public void OnExit(GameObject obj) {
+  //   MouseData.slotHoveredOver = null;
+  // }
+  //
+  // public void OnEnterTile(GameObject obj) {
+  //   Debug.Log("In Tile: " + obj.GetComponent<Piece>().getTilePosition());
+  //   MouseData.tileHoveredOver = obj.GetComponent<Piece>();
+  // }
+  //
+  // public void OnExitTile(GameObject obj) {
+  //   MouseData.tileHoveredOver = null;
+  // }
+
+  // public void OnDragStart(GameObject obj) {
+  //   if (slotsOnInterface[obj].prismite.id <= -1) return;
+  //   MouseData.tempItemBeingDragged = CreateTempItem(obj);
+  // }
+
+  /// =------------------------------- TMEP ENDIUNGH
 
   // Update is called once per frame
   void FixedUpdate() {
@@ -47,6 +87,14 @@ public class Piece : MonoBehaviour, IBaseEntity {
         _gm.updateGameboard(mouseTilePos, this.gameObject);
       }
     }
+  }
+
+  void OnMouseEnter() {
+    MouseData.tileHoveredOver = this;
+  }
+
+  void OnMouseExit() {
+    MouseData.tileHoveredOver = null;
   }
 
   public void takePhysDamage(float damageTaken) {

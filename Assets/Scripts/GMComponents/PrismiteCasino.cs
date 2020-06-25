@@ -19,5 +19,7 @@ public class PrismiteCasino : MonoBehaviour {
       }
     }
 
-
+    private void OnApplicationQuit() {
+      inventory.Clean();
+    }
 }

@@ -6,10 +6,10 @@ public class TileButton : MonoBehaviour {
     public GameObject tilePrefab;
     public GameMaster gm;
     public void tileButtonPressed() {
-      if (gm.getActiveSelection() == null) {
-        gm.setActiveSelection(tilePrefab);
+      if (MouseData.activeSelection == null) {
+        MouseData.activeSelection = tilePrefab;
       } else {
-        gm.setActiveSelection(null);
+        MouseData.activeSelection = null;
       }
     }
 }

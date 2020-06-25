@@ -10,47 +10,22 @@ public class GhostMarkerController : MonoBehaviour {
     public Tilemap ghostTileMap;
     public Tilemap entityTileMap;
 
-    private GameObject _ghostPiece;
-    private GameMaster _gm;
-
-    public void setGhostPiece(GameObject piece) {
-      _ghostPiece = piece;
-    }
-
-    public GameObject getGhostPiece() {
-      return _ghostPiece;
-    }
+    private bool isClean = true;
 
     public void cleanBoard() {
       ghostTileMap.ClearAllTiles();
-    }
-
-    public void cleanState() {
-      ghostTileMap.ClearAllTiles();
-      Destroy(_ghostPiece);
-      _ghostPiece = null;
-    }
-
-    void Awake() {
-      _gm = this.GetComponent<GameMaster>();
+      isClean = true;
     }
 
     void FixedUpdate() {
-      this.cleanBoard();
-      if (_ghostPiece != null) {
-        // if (_ghostPiece.GetComponent<SpriteRenderer>() != null) {
-        //   _ghostPiece.GetComponent<SpriteRenderer>().color = GhostMarkerController.GHOST_WHITE;
-        // }
-
-        Vector3 mouseWorldCoords = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mouseWorldCoords.z = 0;
-        Vector3Int mouseTileCoords = _gm.getTilePositionFromWorldPosition(mouseWorldCoords);
-        Tile tileRef = _ghostPiece.GetComponent<Piece>().tile;
+      if (!isClean) this.cleanBoard();
+      if(MouseData.activeSelection != null) {
+        Tile tileRef = MouseData.activeSelection.GetComponent<Piece>().tile;
         if (tileRef != null) {
           tileRef.color = GhostMarkerController.GHOST_WHITE;
-          ghostTileMap.SetTile(mouseTileCoords, tileRef);
+          ghostTileMap.SetTile(MouseData.GetTilePosition, tileRef);
         }
-        _ghostPiece.transform.position = mouseWorldCoords;
+        isClean = false;
       }
     }
 }

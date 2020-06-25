@@ -8,6 +8,5 @@ public class SpawnButton : MonoBehaviour {
   public GameMaster gm;
 
   public void spawnButtonPressed() {
-    gm.addToInventory();
   }
 }

@@ -8,6 +8,7 @@ using UnityEngine.Events;
 public abstract class UserInterface : MonoBehaviour {
 
     public InventoryObject inventory;
+    public bool canAcceptItems = true;
     public Dictionary<GameObject, InventorySlot> slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
 
     public virtual void Start() {
@@ -49,6 +50,7 @@ public abstract class UserInterface : MonoBehaviour {
     }
 
     public void OnEnterInterface(GameObject obj) {
+      Debug.Log("In Interface: " + obj);
       MouseData.interfaceMouseIsOver = obj.GetComponent<UserInterface>();
     }
 
@@ -58,7 +60,7 @@ public abstract class UserInterface : MonoBehaviour {
 
     public void OnDragStart(GameObject obj) {
       if (slotsOnInterface[obj].prismite.id <= -1) return;
-      MouseData.tempItemBringDragged = CreateTempItem(obj);
+      MouseData.tempItemBeingDragged = CreateTempItem(obj);
     }
 
     public GameObject CreateTempItem(GameObject obj) {
@@ -77,22 +79,22 @@ public abstract class UserInterface : MonoBehaviour {
     }
 
     public void OnDragEnd(GameObject obj) {
-      Destroy(MouseData.tempItemBringDragged);
+      Destroy(MouseData.tempItemBeingDragged);
       if (MouseData.interfaceMouseIsOver == null) {
-        slotsOnInterface[obj].RemoveItem();
+        // slotsOnInterface[obj].RemoveItem();
         return;
       }
-      if (MouseData.slotHoveredOver) {
+      if (MouseData.interfaceMouseIsOver.canAcceptItems && MouseData.slotHoveredOver) {
         InventorySlot mouseHoverSlotData = MouseData.interfaceMouseIsOver.slotsOnInterface[MouseData.slotHoveredOver];
         inventory.SwapItems(slotsOnInterface[obj], mouseHoverSlotData);
       }
     }
 
     public void OnDrag(GameObject obj) {
-      if (MouseData.tempItemBringDragged != null) {
+      if (MouseData.tempItemBeingDragged != null) {
         Vector3 t = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         t.z = 0f;
-        MouseData.tempItemBringDragged.GetComponent<RectTransform>().position = t;
+        MouseData.tempItemBeingDragged.GetComponent<RectTransform>().position = t;
       }
     }
 }
