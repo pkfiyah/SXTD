@@ -6,14 +6,14 @@ public class ProgressTimeButton : MonoBehaviour
 {
     public GameMaster _gm;
 
-    
+
 
     void Awake() {
     }
 
     public void progressTime() {
-      if (_gm.isPlanning) {
-        _gm.isPlanning = false;
+      if (GameMaster.Instance.runState.GetState == State.Planning) {
+        GameMaster.Instance.runState.data.progressState();
       }
     }
 }

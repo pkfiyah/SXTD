@@ -13,25 +13,22 @@ MonoBehaviour:
   m_Name: Piece Inventory
   m_EditorClassIdentifier: 
   savePath: 
-  database: {fileID: 11400000, guid: 5c21b76e7a5aefc4e9327d814a244bab, type: 2}
+  database: {fileID: 11400000, guid: 32f9ca7e32f001143975e5e26eea5f4b, type: 2}
   type: 1
-  container:
+  data:
     slots:
-    - allowedItems: 
-      item:
+    - prismite:
         name: 
-        id: -1
+        id: 0
+        colour: 0
         buffs: []
-      amount: 0
-    - allowedItems: 
-      item:
+    - prismite:
         name: 
-        id: -1
+        id: 0
+        colour: 0
         buffs: []
-      amount: 0
-    - allowedItems: 
-      item:
+    - prismite:
         name: 
-        id: -1
+        id: 0
+        colour: 0
         buffs: []
-      amount: 0

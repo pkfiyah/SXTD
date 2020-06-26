@@ -15,23 +15,40 @@ public class RunStateObject : ScriptableObject {
   public string name;
   [TextArea(15,20)]
   public string description;
+  public State GetState { get { return data.state; } }
   public RunState data = new RunState();
-
   public RunState CreateRunState() {
     return new RunState(this);
   }
 }
 
+[System.Serializable]
 public class RunState {
+
   public State state = State.Planning;
   public int currency = 0;
-  // items/modifiers go here
   public int stage = 1;
-  public RunState(RunStateObject rsObj) {
 
+  public RunState(RunStateObject rsObj) {
+    state = rsObj.data.state;
+    currency = rsObj.data.currency;
+    stage = rsObj.data.stage;
   }
 
   public RunState() {
     state = State.Planning;
+  }
+
+  public void progressState() {
+    switch (state) {
+      case State.Planning:
+        state = State.Active;
+        break;
+      case State.Active:
+        state = State.Planning;
+        break;
+      default:
+        break;
+    }
   }
 }
