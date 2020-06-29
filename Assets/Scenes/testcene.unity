@@ -1113,6 +1113,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: 014c1c0154ad135498e2152b8d3da9e8, type: 2}
   canAcceptItems: 1
+  destructableInventory: 0
   inventoryPrefab: {fileID: 1810419377569272846, guid: bda02b1e1a2e7d14cad2422eb471a09b,
     type: 3}
   X_SPACE_BETWEEN: 80
@@ -2188,7 +2189,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1523882884
 Transform:
   m_ObjectHideFlags: 0
@@ -2900,7 +2901,6 @@ GameObject:
   - component: {fileID: 1524512102}
   - component: {fileID: 1524512101}
   - component: {fileID: 1524512100}
-  - component: {fileID: 1524512103}
   m_Layer: 5
   m_Name: StartButton
   m_TagString: Untagged
@@ -2971,8 +2971,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1524512103}
-        m_MethodName: progressTime
+      - m_Target: {fileID: 346626975}
+        m_MethodName: EndPlanningPhase
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3019,19 +3019,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1524512098}
   m_CullTransparentMesh: 0
---- !u!114 &1524512103
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1524512098}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e16ef1d4bc6c9224f8f232581d7ca1aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _gm: {fileID: 346626975}
 --- !u!1 &1765285560
 GameObject:
   m_ObjectHideFlags: 0
@@ -3409,6 +3396,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: a6a9b385d7ab7ab4384cdaa93026502c, type: 2}
   canAcceptItems: 0
+  destructableInventory: 0
   inventoryPrefab: {fileID: 1810419377569272846, guid: bda02b1e1a2e7d14cad2422eb471a09b,
     type: 3}
   X_SPACE_BETWEEN: 110

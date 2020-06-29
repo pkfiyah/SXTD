@@ -3,23 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-/// NOTES--- May need to Setup up mini canvases with reference to Camera for proper placement.
-/// maybe don't need sub canvas
-// Test multiple inventories and towers --> Doesnt currently work, Make a Non-Scriptable Object version of Inventories/InventorySlots for Tower Piece
-//
+public class SlottableGameboardPiece : GameboardPiece {
 
+    private StaticInterface ui;
 
-public class GameboardPiece : MonoBehaviour {
-    public PieceObject piece;
+    void Awake() {
+        ui = GetComponentInChildren<StaticInterface>();
+    }
+
+    void FixedUpdate() {
+      if (MouseData.activeSelection != this) {
+        ui.Disappear();
+      }
+    }
 
     void OnMouseDown() {
       if(EventSystem.current.IsPointerOverGameObject()) return;
       if (MouseData.activeSelection == null  || (MouseData.activeSelection != null && MouseData.activeSelection != this)) {
         // Select this spot
-        Debug.Log("Selected Piece");
+
+        Debug.Log("Selected Slottable Piece");
         MouseData.activeSelection = this;
+        ui.Reappear();
       } else {
-        Debug.Log("Unselected Piece");
+        Debug.Log("Unselected Slottable Piece");
         MouseData.activeSelection = null;
       }
     }

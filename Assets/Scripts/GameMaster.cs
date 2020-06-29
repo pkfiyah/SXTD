@@ -20,12 +20,14 @@ public class GameMaster : MonoBehaviour {
 
   // Resets inventory scriptable object on close
   private void OnApplicationQuit() {
+    runState.data.state = State.Planning;
     inventory.Clean();
   }
 
   // Update is called once per frame
   void FixedUpdate() {
     // Planning phase
+    Debug.Log("Current State: " + runState.GetState);
     if(runState.GetState == State.Planning) {
       if(MouseData.activeSelection != null) {
 
@@ -40,5 +42,10 @@ public class GameMaster : MonoBehaviour {
       Debug.Log(":Loading");
       inventory.Load();
     }
+  }
+
+  public void EndPlanningPhase() {
+    // Do thing if needed
+    runState.data.state = State.Active;
   }
 }

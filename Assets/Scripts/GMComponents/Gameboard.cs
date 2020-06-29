@@ -38,8 +38,8 @@ public class Gameboard : MonoBehaviour {
       PieceObject pieceObj = newPiece.GetComponent<GameboardPiece>().piece;
       pieceObj.parent = this;
 
+      // Sets the tile portion of the graphic to the board
       if (newPiece.GetComponent<SpriteRenderer>() == null && pieceObj.tile != null) {
-        pieceObj.tile.color = Color.white;
         SetTileGraphic(tilePosition, pieceObj.tile);
       }
 
@@ -77,10 +77,11 @@ public class Gameboard : MonoBehaviour {
     }
 
     public void SetTileGraphic(Vector3Int tilePosition, Tile tile) {
+      tile.color = Color.white;
       entityTilemap.SetTile(tilePosition, tile);
     }
 
-    public List<Vector2> aStar(Vector3Int startTilePos) {
+    public List<Vector3Int> aStar(Vector3Int startTilePos) {
       Piece[,] boardRef = new Piece[boardDimensions.x, boardDimensions.y];
       for (int i = 0; i < boardDimensions.x; i++) {
         for (int j = 0; j < boardDimensions.y; j++) {
@@ -90,10 +91,9 @@ public class Gameboard : MonoBehaviour {
 
       _pathfinder.parseGameBoard(boardRef);
       List<PathNode> path = _pathfinder.findPath(startTilePos.x, startTilePos.y, hearthTileRef.x, hearthTileRef.y);
-      List<Vector2> convertedPath = new List<Vector2>();
-
+      List<Vector3Int> convertedPath = new List<Vector3Int>();
       foreach (PathNode node in path) {
-        convertedPath.Add(new Vector2(node.getX(), node.getY()));
+        convertedPath.Add(new Vector3Int(node.getX(), node.getY(), 0));
       }
       return convertedPath;
     }
@@ -107,6 +107,6 @@ public static class MouseData {
   public static GameObject slotHoveredOver;
   public static Piece tileHoveredOver;
   public static UserInterface interfaceMouseIsOver;
-  public static PieceObject activeSelection;
+  public static GameboardPiece activeSelection;
   public static Vector3 GetWorldPosition { get { Vector3 normalZmousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition); normalZmousePos.z = 0; return normalZmousePos; }}
 }

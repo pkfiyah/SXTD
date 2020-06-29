@@ -19,16 +19,16 @@ MonoBehaviour:
     slots:
     - prismite:
         name: 
-        id: 0
+        id: -1
         colour: 0
         buffs: []
     - prismite:
         name: 
-        id: 0
+        id: -1
         colour: 0
         buffs: []
     - prismite:
         name: 
-        id: 0
+        id: -1
         colour: 0
         buffs: []
