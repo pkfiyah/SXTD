@@ -29,7 +29,6 @@ public class PrismiteObject : ScriptableObject {
     [TextArea(15,20)]
     public string description;
     public Prismite data = new Prismite();
-
     public Prismite CreatePrismite() {
       return new Prismite(this);
     }

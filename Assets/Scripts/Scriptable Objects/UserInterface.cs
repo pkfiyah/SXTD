@@ -9,9 +9,14 @@ public abstract class UserInterface : MonoBehaviour {
 
     public InventoryObject inventory;
     public bool canAcceptItems = true;
+    public bool destructableInventory = false;
     public Dictionary<GameObject, InventorySlot> slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
 
     public virtual void Start() {
+        if (destructableInventory) {
+          inventory = Instantiate(inventory);
+        }
+
         for (int i = 0; i < inventory.GetSlots.Length; i++) {
           inventory.GetSlots[i].parent = this;
           inventory.GetSlots[i].OnAfterUpdate += OnSlotUpdate;
