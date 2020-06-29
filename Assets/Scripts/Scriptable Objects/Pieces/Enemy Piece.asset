@@ -16,3 +16,7 @@ MonoBehaviour:
   description: 
   data:
     type: 4
+    damage:
+      baseValue: 5
+      modifiedValue: 0
+    attackSpeed: 0.5

@@ -30,13 +30,19 @@ public class PieceObject : ScriptableObject {
 [System.Serializable]
 public class Piece : IPiece {
   public PieceType type;
+  public ModifiableInt damage;
+  public float attackSpeed;
 
   public Piece() {
     type = PieceType.Empty;
+    attackSpeed = 0f;
+    damage = new ModifiableInt();
   }
 
   public Piece(PieceObject po) {
     type = po.data.type;
+    attackSpeed = po.data.attackSpeed;
+    damage = po.data.damage;
   }
 
   public bool IsTraversable() {

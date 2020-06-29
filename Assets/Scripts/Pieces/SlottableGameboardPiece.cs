@@ -21,12 +21,9 @@ public class SlottableGameboardPiece : GameboardPiece {
       if(EventSystem.current.IsPointerOverGameObject()) return;
       if (MouseData.activeSelection == null  || (MouseData.activeSelection != null && MouseData.activeSelection != this)) {
         // Select this spot
-
-        Debug.Log("Selected Slottable Piece");
         MouseData.activeSelection = this;
         ui.Reappear();
       } else {
-        Debug.Log("Unselected Slottable Piece");
         MouseData.activeSelection = null;
       }
     }

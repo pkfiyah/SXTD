@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class OpenCloseButton : MonoBehaviour {
-    public float moveAmountX = -2.0f;
     private bool isOpen = true;
     public void HitOpenBloseButton() {
+      RectTransform parent = this.GetComponent<RectTransform>().parent as RectTransform;
       if (isOpen) {
-        this.GetComponent<RectTransform>().parent.position = new Vector3(moveAmountX, 3.5f, 0f);
+        parent.localPosition = new Vector3(-parent.rect.width * 0.9f, parent.localPosition.y, 0f);
         isOpen = false;
       } else {
-        this.GetComponent<RectTransform>().parent.position = new Vector3(0f, 3.5f, 0f);
+        parent.localPosition = new Vector3(0f, parent.localPosition.y, 0f);
         isOpen = true;
       }
     }
