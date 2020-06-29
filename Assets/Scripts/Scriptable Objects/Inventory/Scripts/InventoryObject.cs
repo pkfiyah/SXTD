@@ -91,6 +91,10 @@ public class InventoryObject : ScriptableObject {
 [System.Serializable]
 public class Inventory {
   public InventorySlot[] slots = new InventorySlot[8];
+  // public Inventory(){}
+  public Inventory(int slotCount) {
+    slots = new InventorySlot[slotCount];
+  }
   public void Clear() {
     for (int i = 0; i < slots.Length; i++) {
       slots[i].RemoveItem();

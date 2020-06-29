@@ -8,7 +8,6 @@ public class GhostMarkerController : MonoBehaviour {
     public static Color GHOST_WHITE = new Color(1.0f, 1.0f, 1.0f, 0.5f);
 
     public Tilemap ghostTileMap;
-    public Tilemap entityTileMap;
 
     private bool isClean = true;
 
@@ -19,11 +18,11 @@ public class GhostMarkerController : MonoBehaviour {
 
     void FixedUpdate() {
       if (!isClean) this.cleanBoard();
-      if(MouseData.activeSelection != null) {
-        Tile tileRef = MouseData.activeSelection.GetComponent<Piece>().tile;
+      if(MouseData.tempPieceBeingDragged != null) {
+        Tile tileRef = MouseData.tempPieceBeingDragged.GetComponent<GameboardPiece>().piece.tile;
         if (tileRef != null) {
           tileRef.color = GhostMarkerController.GHOST_WHITE;
-          ghostTileMap.SetTile(MouseData.GetTilePosition, tileRef);
+          ghostTileMap.SetTile(ghostTileMap.WorldToCell(MouseData.GetWorldPosition), tileRef);
         }
         isClean = false;
       }

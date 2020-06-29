@@ -3,9 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+[RequireComponent(typeof(CanvasGroup))]
 public class StaticInterface : UserInterface {
 
   public GameObject[] slots;
+  private CanvasGroup _cGroup;
+
+  void Awake() {
+    _cGroup = GetComponent<CanvasGroup>();
+  }
 
   public override void createSlots() {
     slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
@@ -20,5 +26,15 @@ public class StaticInterface : UserInterface {
       inventory.GetSlots[i].slotDisplay = obj;
       slotsOnInterface.Add(obj, inventory.GetSlots[i]);
     }
+  }
+
+  public void Disappear() {
+    _cGroup.alpha = 0f;
+    _cGroup.blocksRaycasts = false;
+  }
+
+  public void Reappear() {
+    _cGroup.alpha = 1f;
+    _cGroup.blocksRaycasts = true;
   }
 }
