@@ -20,6 +20,10 @@ public class InventoryObject : ScriptableObject {
   public Inventory data;  // The actual Inventory data
   public InventorySlot[] GetSlots { get { return data.slots; } } // quick reference to get the Inventory Slots array
 
+  public Inventory CreateInventory() {
+    return new Inventory(this);
+  }
+
   public bool AddPrismite(Prismite prismite) {
     if (EmptySlotCount <= 0) return false;
     SetEmptySlot(prismite);
@@ -95,27 +99,17 @@ public class Inventory {
   public Inventory(int slotCount) {
     slots = new InventorySlot[slotCount];
   }
+
+  public Inventory(InventoryObject orig) {
+      slots = new InventorySlot[orig.GetSlots.Length];
+      for (int i = 0; i < orig.GetSlots.Length; i++) {
+        slots[i] = new InventorySlot(orig.GetSlots[i].prismite);
+      }
+  }
+
   public void Clear() {
     for (int i = 0; i < slots.Length; i++) {
       slots[i].RemoveItem();
     }
   }
 }
-
-// -----------------------------------------------------------------------------
-
-// public class TowerInventory : Inventory {
-//
-//   public TowerInventory() {
-//     slots = new InventorySlot[3];
-//     for (int i = 0; i < slots.Length; i++) {
-//       slots[i] = new InventorySlot();
-//     }
-//   }
-//
-//   public void Clear() {
-//     for (int i = 0; i < slots.Length; i++) {
-//       slots[i].RemoveItem();
-//     }
-//   }
-// }

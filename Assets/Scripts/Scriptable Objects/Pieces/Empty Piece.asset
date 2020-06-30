@@ -13,6 +13,15 @@ MonoBehaviour:
   m_Name: Empty Piece
   m_EditorClassIdentifier: 
   tile: {fileID: 11400000, guid: 0a6029b9071126f4ab0afde752ee7d2f, type: 2}
-  description: 
+  description: 'Default Piece, Used for all spaces that aren''t another type
+
+    -
+    IsTraversable: true
+
+    - CanConstructOn: true'
   data:
     type: 0
+    damage:
+      baseValue: 0
+      modifiedValue: 0
+    attackSpeed: 0

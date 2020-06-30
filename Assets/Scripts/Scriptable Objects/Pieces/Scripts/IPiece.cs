@@ -4,4 +4,5 @@ using UnityEngine;
 
 public interface IPiece {
   bool IsTraversable();
+  bool CanConstructOn();
 }

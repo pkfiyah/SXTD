@@ -9,15 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 697fad31807d7204a85642c9bdb3d09c, type: 3}
-  m_Name: Enemy Piece
+  m_Script: {fileID: 11500000, guid: 5ab7457837bba2b4daa8f47b47b1e6e8, type: 3}
+  m_Name: Default State
   m_EditorClassIdentifier: 
-  tile: {fileID: 11400000, guid: 43592944cac70aa4aa8107e092b22af3, type: 2}
-  description: 
   data:
-    id: 1
-    type: 5
-    damage:
-      baseValue: 5
-      modifiedValue: 0
-    attackSpeed: 0.5
+    state: 1
+    currency: 0
+    stage: 1

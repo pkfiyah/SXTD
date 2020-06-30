@@ -28,6 +28,11 @@ public class Gameboard : MonoBehaviour {
       }
     }
 
+    // Instantiate all GameboardPieces from Pieces
+    private void RealizeGameBoard() {
+      LevelGenerator g = new LevelGenerator();
+    }
+
     // All modifications to the game board happen here
     public GameObject UpdateGameboard(Vector3Int tilePosition, GameObject piece) {
       if(!IsOnGameboard(tilePosition)) return null;

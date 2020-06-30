@@ -47,6 +47,7 @@ public class Prismite {
   // Clones an existing PrismiteObject
   public Prismite(PrismiteObject item) {
     id = item.data.id;
+    colour = item.data.colour;
     buffs = new PrismiteBuff[item.data.buffs.Length];
     for (int i = 0; i < buffs.Length; i++) {
       buffs[i] = new PrismiteBuff(item.data.buffs[i].min, item.data.buffs[i].max);

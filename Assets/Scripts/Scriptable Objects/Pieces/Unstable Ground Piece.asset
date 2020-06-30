@@ -9,12 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ab7457837bba2b4daa8f47b47b1e6e8, type: 3}
-  m_Name: Planning State
+  m_Script: {fileID: 11500000, guid: 697fad31807d7204a85642c9bdb3d09c, type: 3}
+  m_Name: Unstable Ground Piece
   m_EditorClassIdentifier: 
-  name: Planning State
+  tile: {fileID: 11400000, guid: 3bb66c83607a175489540b4ad434b29a, type: 2}
   description: 
   data:
-    state: 1
-    currency: 0
-    stage: 1
+    type: 6
+    damage:
+      baseValue: 0
+      modifiedValue: 0
+    attackSpeed: 0

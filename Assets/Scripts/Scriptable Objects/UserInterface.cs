@@ -13,7 +13,8 @@ public abstract class UserInterface : MonoBehaviour {
     public Dictionary<GameObject, InventorySlot> slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
 
     public virtual void Start() {
-        if (destructableInventory) {
+        if (destructableInventory) { // Parent Must Have an inventory if this is the case **
+          // inventory = transform.parent.GetComponent<SlottableGameboardPiece>().inventory;
           inventory = Instantiate(inventory);
         }
 

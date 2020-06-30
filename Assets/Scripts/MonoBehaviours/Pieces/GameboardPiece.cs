@@ -3,28 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class SlottableGameboardPiece : GameboardPiece {
-
-    private StaticInterface ui;
-
-    void Awake() {
-        ui = GetComponentInChildren<StaticInterface>();
-    }
-
-    void FixedUpdate() {
-      if (MouseData.activeSelection != this) {
-        ui.Disappear();
-      }
-    }
+public class GameboardPiece : MonoBehaviour {
+    public PieceObject piece;
 
     void OnMouseDown() {
       if(EventSystem.current.IsPointerOverGameObject()) return;
       if (MouseData.activeSelection == null  || (MouseData.activeSelection != null && MouseData.activeSelection != this)) {
-        // Select this spot
         MouseData.activeSelection = this;
-        ui.Reappear();
       } else {
         MouseData.activeSelection = null;
       }
+    }
+
+    public void OnBeforeStateChange() {
+      // Do this
+    }
+
+    public void OnAfterStateChange() {
+      // Do this
     }
 }
