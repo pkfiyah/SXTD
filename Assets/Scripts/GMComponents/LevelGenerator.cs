@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class LevelGenerator {
     // Whats a level Have?
+    private const int LEFT_UNSTABLE_GROUND_MARGIN = 2;
     private Vector2Int dimensions;
+    private Rect unstableGroundArea;
     private Piece[,] level;
 
     public LevelGenerator() {
@@ -21,12 +23,16 @@ public class LevelGenerator {
       return level;
     }
 
+    public Rect GetUnstableGround() {
+      return unstableGroundArea;
+    }
+
     private void InitializeBoard() {
       level = new Piece[dimensions.x, dimensions.y];
       // Empty area to start
       for(int i = 0; i < dimensions.x; i++) {
         for (int j = 0; j < dimensions.y; j++) {
-          level[i, j] = new Piece(PieceType.Empty); // TYPE EMPTY
+          level[i, j] = new Piece(PieceType.Empty);
         }
       }
 
@@ -38,11 +44,11 @@ public class LevelGenerator {
 
     // Not along sides, just under half of stage
     private void DefineEnemySpawnArea() {
-      int yStart = (int)(dimensions.y / 2) - 1;
-      Rect temp = new Rect(2, yStart, dimensions.x - 4, dimensions.y - yStart);
-      for (int i = (int)temp.x; i < (int)(temp.x + temp.width); i++) {
-        for (int j = (int)temp.y; j < (int)(temp.y + temp.height); j++) {
-          level[i, j] = new Piece(PieceType.UnstableGround);// TYpe: UNSTABLE GORUND // Non-constructable unstable ground (Usd for spawn points)
+      int yStart = (int)(dimensions.y / 2) + 1;
+      unstableGroundArea = new Rect(LEFT_UNSTABLE_GROUND_MARGIN, yStart, dimensions.x - LEFT_UNSTABLE_GROUND_MARGIN * 2, dimensions.y - yStart);
+      for (int i = (int)unstableGroundArea.x; i < (int)(unstableGroundArea.x + unstableGroundArea.width); i++) {
+        for (int j = (int)unstableGroundArea.y; j < (int)(unstableGroundArea.y + unstableGroundArea.height); j++) {
+          level[i, j] = new Piece(PieceType.UnstableGround);
         }
       }
     }
@@ -54,9 +60,8 @@ public class LevelGenerator {
       while (nodeCount < 3) {
         int randX = Random.Range(1, dimensions.x - 1);
         int randY = Random.Range(1, dimensions.y - 1);
-        if (ScanArea(randX, randY, PieceType.UnstableGround)) {
-          Debug.Log("Found Prismite Spot X:" + randX + " Y:" + randY);
-          level[randX, randY] = new Piece(PieceType.Ground); // TYPE NODE/PRISMITE/WALL?;
+        if (ScanArea(randX, randY, PieceType.UnstableGround) && ScanArea(randX, randY, PieceType.Hearth) && ScanArea(randX, randY, PieceType.Ground)) {
+          level[randX, randY] = new Piece(PieceType.Ground);
           nodeCount++;
         }
       }
@@ -67,7 +72,7 @@ public class LevelGenerator {
         // randomly first two rows for now
         int randX = Random.Range(0, dimensions.x);
         int randY = Random.Range(0, 2);
-        level[randX, randY] = new Piece(PieceType.Hearth); // TYPE: HEARTH
+        level[randX, randY] = new Piece(PieceType.Hearth);
     }
 
     private bool ScanArea(int x, int y, PieceType avoidType) {

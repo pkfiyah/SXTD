@@ -16,7 +16,9 @@ public class TileButton : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     }
 
     public void OnEndDrag(PointerEventData eventData) {
-      Gameboard.Instance.UpdateGameboard(Gameboard.Instance.GetTilePositionFromWorldPosition(Camera.main.ScreenToWorldPoint(eventData.position)), MouseData.tempPieceBeingDragged);
+      Gameboard.Instance.UpdateGameboard(
+        Gameboard.Instance.GetTilePositionFromWorldPosition(Camera.main.ScreenToWorldPoint(eventData.position)),
+        MouseData.tempPieceBeingDragged.GetComponent<GameboardPiece>().piece);
       Destroy(MouseData.tempPieceBeingDragged);
     }
 

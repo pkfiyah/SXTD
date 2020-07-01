@@ -5,56 +5,64 @@ using UnityEngine.Tilemaps;
 
 public class Gameboard : MonoBehaviour {
 
+    public PieceDatabaseObject pieceDatabase;
     public Vector2Int boardDimensions;
     public Tilemap entityTilemap;
-    public PieceObject emptyTile;
-    public GameObject tileTemplate;
+    public GameObject gameboardPieceTemplatePrefab;
+
     public static Gameboard Instance { get; private set; }
 
-    private Vector2Int hearthTileRef;
+    private Vector2Int _hearthTileRef;
     private Pathfinding _pathfinder;
     private GameObject[,] _gameboard;
+    private LevelGenerator _levelGen;
 
     void Awake() {
       Instance = this;
       _gameboard = new GameObject[boardDimensions.x, boardDimensions.y];
       _pathfinder = new Pathfinding(boardDimensions.x, boardDimensions.y);
-
-      // Construct Empty Game Board
-      for (int i = 0; i < boardDimensions.x; i++) {
-        for (int j = 0; j < boardDimensions.y; j++) {
-          UpdateGameboard(new Vector3Int(i, j, 0), tileTemplate);
-        }
-      }
+      _levelGen = new LevelGenerator(boardDimensions.x, boardDimensions.y);
+      RealizeGameBoard();
     }
 
     // Instantiate all GameboardPieces from Pieces
     private void RealizeGameBoard() {
-      LevelGenerator g = new LevelGenerator();
+      Piece[,] generatedLevel = _levelGen.GetLevel();
+      for (int i = 0; i < boardDimensions.x; i++) {
+        for (int j = 0; j < boardDimensions.y; j++) {
+          UpdateGameboard(new Vector3Int(i, j, 0), pieceDatabase.GetPiece[(int)generatedLevel[i, j].type]); // Piece database is indexed by type / int type
+        }
+      }
+      for (int i = 0; i < 3; i++) {
+        int randX = Random.Range((int)_levelGen.GetUnstableGround().x, (int)(_levelGen.GetUnstableGround().width + _levelGen.GetUnstableGround().x));
+        int randY = Random.Range((int)_levelGen.GetUnstableGround().y, (int)(_levelGen.GetUnstableGround().height + _levelGen.GetUnstableGround().y));
+        UpdateGameboard(new Vector3Int(randX, randY, 0), pieceDatabase.GetPiece[(int)generatedLevel[randX, randY].type]); // Piece database is indexed by type / int type THIS NEEDS TO POINT TO SPAWN PIECE
+      }
+
     }
 
     // All modifications to the game board happen here
-    public GameObject UpdateGameboard(Vector3Int tilePosition, GameObject piece) {
+    public GameObject UpdateGameboard(Vector3Int tilePosition, PieceObject piece) {
       if(!IsOnGameboard(tilePosition)) return null;
 
-      GameObject newPiece = Instantiate(piece, GetWorldPositionFromTilePosition(tilePosition), Quaternion.identity);
-      newPiece.transform.parent = this.transform;
-
-      PieceObject pieceObj = newPiece.GetComponent<GameboardPiece>().piece;
-      pieceObj.parent = this;
+      GameObject newGameboardPiece = Instantiate(gameboardPieceTemplatePrefab, GetWorldPositionFromTilePosition(tilePosition), Quaternion.identity);
+      GameboardPiece gp = newGameboardPiece.GetComponent<GameboardPiece>();
+      gp.piece = piece;
+      newGameboardPiece.transform.parent = this.transform;
+      gp.piece.parent = this;
 
       // Sets the tile portion of the graphic to the board
-      if (newPiece.GetComponent<SpriteRenderer>() == null && pieceObj.tile != null) {
-        SetTileGraphic(tilePosition, pieceObj.tile);
+      if (newGameboardPiece.GetComponent<SpriteRenderer>() == null && piece.tile != null) {
+        SetTileGraphic(tilePosition, piece.tile);
       }
 
       if (_gameboard[tilePosition.x, tilePosition.y] != null) Destroy(_gameboard[tilePosition.x, tilePosition.y]);
-      if (pieceObj.data.type == PieceType.Hearth) {
-        hearthTileRef = new Vector2Int(tilePosition.x, tilePosition.y);
+      if (piece.data.type == PieceType.Hearth) {
+        _hearthTileRef = new Vector2Int(tilePosition.x, tilePosition.y);
       }
 
-      _gameboard[tilePosition.x, tilePosition.y] = newPiece;
-      return newPiece;
+      _gameboard[tilePosition.x, tilePosition.y] = newGameboardPiece;
+      return newGameboardPiece;
     }
 
     private bool IsOnGameboard(Vector3Int tileCoords) {
@@ -95,7 +103,7 @@ public class Gameboard : MonoBehaviour {
       }
 
       _pathfinder.parseGameBoard(boardRef);
-      List<PathNode> path = _pathfinder.findPath(startTilePos.x, startTilePos.y, hearthTileRef.x, hearthTileRef.y);
+      List<PathNode> path = _pathfinder.findPath(startTilePos.x, startTilePos.y, _hearthTileRef.x, _hearthTileRef.y);
       List<Vector3Int> convertedPath = new List<Vector3Int>();
       foreach (PathNode node in path) {
         convertedPath.Add(new Vector3Int(node.getX(), node.getY(), 0));

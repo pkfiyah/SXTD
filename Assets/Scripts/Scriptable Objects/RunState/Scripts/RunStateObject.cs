@@ -14,8 +14,6 @@ public enum State {
 [CreateAssetMenu(fileName = "New Run State Object", menuName = "Inventory System/Run State/New Run State")]
 public class RunStateObject : ScriptableObject {
 
-  // public UnityEvent BeforeStateChange;
-  // public UnityEvent AfterStateChange;
   public State GetState { get { return data.state; } }
   public RunState data = new RunState();
   public RunState CreateRunState() {
@@ -24,7 +22,6 @@ public class RunStateObject : ScriptableObject {
 
   public void ProgressState() {
     if (TDEvents.BeforeStateChange != null) TDEvents.BeforeStateChange.Invoke(data.state);
-    Debug.Log("Progressing State");
     switch(GetState) {
       case State.Planning:
         data.state = State.Active;
