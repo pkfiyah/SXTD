@@ -663,7 +663,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddf2c042ce717824cb393dc552859039, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initial: {x: 0, y: 0}
   direction: 2
 --- !u!1 &300861391
 GameObject:
@@ -960,6 +959,10 @@ MonoBehaviour:
   boardDimensions: {x: 8, y: 12}
   entityTilemap: {fileID: 660948931}
   gameboardPieceTemplatePrefab: {fileID: 4110002756758202855, guid: dae1f683c748df4488147958191d96d8,
+    type: 3}
+  spawnPointPrefab: {fileID: 9040160641436043393, guid: 29b32af08e3176e4381036f14455e93d,
+    type: 3}
+  enemyPrefab: {fileID: 1681031129313094952, guid: a35797ac5c7676c40990410dd06d5ddd,
     type: 3}
 --- !u!114 &346626978
 MonoBehaviour:
@@ -3696,7 +3699,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddf2c042ce717824cb393dc552859039, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initial: {x: 0, y: 0}
   direction: 1
 --- !u!114 &2073570128
 MonoBehaviour:

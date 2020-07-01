@@ -9,6 +9,8 @@ public class Gameboard : MonoBehaviour {
     public Vector2Int boardDimensions;
     public Tilemap entityTilemap;
     public GameObject gameboardPieceTemplatePrefab;
+    public GameObject spawnPointPrefab;
+    public GameObject enemyPrefab;
 
     public static Gameboard Instance { get; private set; }
 
@@ -36,16 +38,26 @@ public class Gameboard : MonoBehaviour {
       for (int i = 0; i < 3; i++) {
         int randX = Random.Range((int)_levelGen.GetUnstableGround().x, (int)(_levelGen.GetUnstableGround().width + _levelGen.GetUnstableGround().x));
         int randY = Random.Range((int)_levelGen.GetUnstableGround().y, (int)(_levelGen.GetUnstableGround().height + _levelGen.GetUnstableGround().y));
-        UpdateGameboard(new Vector3Int(randX, randY, 0), pieceDatabase.GetPiece[(int)generatedLevel[randX, randY].type]); // Piece database is indexed by type / int type THIS NEEDS TO POINT TO SPAWN PIECE
+        UpdateGameboard(new Vector3Int(randX, randY, 0), pieceDatabase.GetPiece[(int)PieceType.SpawnPoint]); // Piece database is indexed by type / int type THIS NEEDS TO POINT TO SPAWN PIECE
       }
+    }
 
+    private GameObject GetPrefabFromType (PieceObject piece) {
+      switch(piece.data.type) {
+        case PieceType.SpawnPoint:
+          return spawnPointPrefab;
+        case PieceType.Entity:
+          return enemyPrefab;
+        default:
+          return gameboardPieceTemplatePrefab;
+      }
     }
 
     // All modifications to the game board happen here
     public GameObject UpdateGameboard(Vector3Int tilePosition, PieceObject piece) {
       if(!IsOnGameboard(tilePosition)) return null;
 
-      GameObject newGameboardPiece = Instantiate(gameboardPieceTemplatePrefab, GetWorldPositionFromTilePosition(tilePosition), Quaternion.identity);
+      GameObject newGameboardPiece = Instantiate(GetPrefabFromType(piece), GetWorldPositionFromTilePosition(tilePosition), Quaternion.identity);
       GameboardPiece gp = newGameboardPiece.GetComponent<GameboardPiece>();
       gp.piece = piece;
       newGameboardPiece.transform.parent = this.transform;
@@ -60,8 +72,10 @@ public class Gameboard : MonoBehaviour {
       if (piece.data.type == PieceType.Hearth) {
         _hearthTileRef = new Vector2Int(tilePosition.x, tilePosition.y);
       }
-
-      _gameboard[tilePosition.x, tilePosition.y] = newGameboardPiece;
+      
+      if (piece.data.type != PieceType.Entity) { // Entities dont "occupy" a space
+        _gameboard[tilePosition.x, tilePosition.y] = newGameboardPiece;
+      }
       return newGameboardPiece;
     }
 
