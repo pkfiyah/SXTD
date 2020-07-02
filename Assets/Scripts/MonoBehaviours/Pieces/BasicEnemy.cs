@@ -40,7 +40,7 @@ public class BasicEnemy : GameboardPiece {
       }
 
       if (movementPath == null) {
-        movementPath = piece.parent.aStar(piece.parent.GetTilePositionFromWorldPosition(transform.position));
+        movementPath = Gameboard.Instance.aStar(piece.parent.GetTilePositionFromWorldPosition(transform.position));
       }
 
       if (movementPath.Count > 0) {

@@ -8,9 +8,11 @@ public class Gameboard : MonoBehaviour {
     public PieceDatabaseObject pieceDatabase;
     public Vector2Int boardDimensions;
     public Tilemap entityTilemap;
+    public Tilemap groundTilemap;
     public GameObject gameboardPieceTemplatePrefab;
     public GameObject spawnPointPrefab;
     public GameObject enemyPrefab;
+    public Tile emptyTile;
 
     public static Gameboard Instance { get; private set; }
 
@@ -30,6 +32,7 @@ public class Gameboard : MonoBehaviour {
     // Instantiate all GameboardPieces from Pieces
     private void RealizeGameBoard() {
       Piece[,] generatedLevel = _levelGen.GetLevel();
+      GoGreen();
       for (int i = 0; i < boardDimensions.x; i++) {
         for (int j = 0; j < boardDimensions.y; j++) {
           UpdateGameboard(new Vector3Int(i, j, 0), pieceDatabase.GetPiece[(int)generatedLevel[i, j].type]); // Piece database is indexed by type / int type
@@ -53,6 +56,14 @@ public class Gameboard : MonoBehaviour {
       }
     }
 
+    private void GoGreen() {
+      for (int i = 0; i < boardDimensions.x; i++) {
+        for (int j = 0; j < boardDimensions.y; j++) {
+          SetTileGraphic(groundTilemap, new Vector3Int(i, j, 0), emptyTile);
+        }
+      }
+    }
+
     // All modifications to the game board happen here
     public GameObject UpdateGameboard(Vector3Int tilePosition, PieceObject piece) {
       if(!IsOnGameboard(tilePosition)) return null;
@@ -65,15 +76,19 @@ public class Gameboard : MonoBehaviour {
 
       // Sets the tile portion of the graphic to the board
       if (newGameboardPiece.GetComponent<SpriteRenderer>() == null && piece.tile != null) {
-        SetTileGraphic(tilePosition, piece.tile);
+        if (piece.data.type == PieceType.UnstableGround || piece.data.type == PieceType.SpawnPoint || piece.data.type == PieceType.Empty) {
+          SetTileGraphic(groundTilemap, tilePosition, piece.tile);
+        } else {
+          SetTileGraphic(entityTilemap, tilePosition, piece.tile);
+        }
       }
 
-      if (_gameboard[tilePosition.x, tilePosition.y] != null) Destroy(_gameboard[tilePosition.x, tilePosition.y]);
       if (piece.data.type == PieceType.Hearth) {
         _hearthTileRef = new Vector2Int(tilePosition.x, tilePosition.y);
       }
-      
+
       if (piece.data.type != PieceType.Entity) { // Entities dont "occupy" a space
+        Destroy(_gameboard[tilePosition.x, tilePosition.y]);
         _gameboard[tilePosition.x, tilePosition.y] = newGameboardPiece;
       }
       return newGameboardPiece;
@@ -103,9 +118,9 @@ public class Gameboard : MonoBehaviour {
       return ret;
     }
 
-    public void SetTileGraphic(Vector3Int tilePosition, Tile tile) {
+    public void SetTileGraphic(Tilemap _tilemap, Vector3Int tilePosition, Tile tile) {
       tile.color = Color.white;
-      entityTilemap.SetTile(tilePosition, tile);
+      _tilemap.SetTile(tilePosition, tile);
     }
 
     public List<Vector3Int> aStar(Vector3Int startTilePos) {

@@ -6,6 +6,12 @@ using UnityEngine.EventSystems;
 public class GameboardPiece : MonoBehaviour {
     public PieceObject piece;
 
+    private State currentState = State.Planning;
+
+    void Awake() {
+      TDEvents.AfterStateChange.AddListener(OnAfterStateChange);
+    }
+
     void OnMouseDown() {
       if(EventSystem.current.IsPointerOverGameObject()) return;
       if (MouseData.activeSelection == null  || (MouseData.activeSelection != null && MouseData.activeSelection != this)) {
@@ -19,7 +25,7 @@ public class GameboardPiece : MonoBehaviour {
       // Do this
     }
 
-    public void OnAfterStateChange() {
-      // Do this
+    public void OnAfterStateChange(State state) {
+      currentState = state;
     }
 }

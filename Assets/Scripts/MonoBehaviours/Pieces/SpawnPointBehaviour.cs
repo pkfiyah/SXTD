@@ -15,12 +15,11 @@ public class SpawnPointBehaviour : MonoBehaviour {
     void FixedUpdate() {
       if (GameMaster.Instance.runState.GetState == State.Active) {
         _spawnTimer += Time.deltaTime;
-        if (_spawnTimer >= _spawnInterval) {
+        if (_spawnList.Count > 0 && _spawnTimer >= _spawnInterval) {
           _spawnTimer = 0f;
           PieceObject piece = _spawnList[0];
           _spawnList.RemoveAt(0);
           Gameboard.Instance.UpdateGameboard(Gameboard.Instance.GetTilePositionFromWorldPosition(transform.position), piece);
-          Debug.Log("Spawned");
         }
       }
     }

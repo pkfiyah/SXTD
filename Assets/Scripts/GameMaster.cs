@@ -24,6 +24,10 @@ public class GameMaster : MonoBehaviour {
     inventory.Clean();
   }
 
+  public void StateChange() {
+    runState.ProgressState();
+  }
+
   // Update is called once per frame
   void FixedUpdate() {
     // Planning phase

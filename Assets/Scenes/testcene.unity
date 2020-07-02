@@ -857,7 +857,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 0
+  m_SortingLayerID: 83669535
   m_SortingOrder: 3
   m_TargetDisplay: 0
 --- !u!224 &308849853
@@ -958,12 +958,14 @@ MonoBehaviour:
   pieceDatabase: {fileID: 11400000, guid: ba250c24f39324e4aaf0aff62783d084, type: 2}
   boardDimensions: {x: 8, y: 12}
   entityTilemap: {fileID: 660948931}
+  groundTilemap: {fileID: 1523882886}
   gameboardPieceTemplatePrefab: {fileID: 4110002756758202855, guid: dae1f683c748df4488147958191d96d8,
     type: 3}
   spawnPointPrefab: {fileID: 9040160641436043393, guid: 29b32af08e3176e4381036f14455e93d,
     type: 3}
   enemyPrefab: {fileID: 1681031129313094952, guid: a35797ac5c7676c40990410dd06d5ddd,
     type: 3}
+  emptyTile: {fileID: 11400000, guid: b5a2482989a4f874d8be122ba4658868, type: 2}
 --- !u!114 &346626978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -976,8 +978,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48b353a3ff0a30643a210468f412e89f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundTileMap: {fileID: 1523882886}
-  groundTile: {fileID: 11400000, guid: b5a2482989a4f874d8be122ba4658868, type: 2}
 --- !u!1 &362340546
 GameObject:
   m_ObjectHideFlags: 0
@@ -1385,15 +1385,43 @@ Tilemap:
   m_Enabled: 1
   m_Tiles: {}
   m_AnimatedTiles: {}
-  m_TileAssetArray: []
-  m_TileSpriteArray: []
-  m_TileMatrixArray: []
-  m_TileColorArray: []
+  m_TileAssetArray:
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  m_TileSpriteArray:
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  m_TileMatrixArray:
+  - m_RefCount: 0
+    m_Data:
+      e00: NaN
+      e01: 0
+      e02: 0
+      e03: NaN
+      e10: NaN
+      e11: 0
+      e12: 0
+      e13: NaN
+      e20: 0
+      e21: 0
+      e22: 0
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 0
+  m_TileColorArray:
+  - m_RefCount: 0
+    m_Data: {r: -7.0835876, g: -7.0835876, b: -7.0835876, a: -7.0835876}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: 0, y: 0, z: 0}
-  m_Size: {x: 0, y: 0, z: 1}
+  m_Size: {x: 2, y: 10, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -1453,7 +1481,7 @@ TilemapRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0, y: 0.25, z: 0}
+  m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 3
@@ -2825,7 +2853,7 @@ TilemapRenderer:
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 3
-  m_Mode: 0
+  m_Mode: 1
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
 --- !u!1839735485 &1523882886
@@ -2841,37 +2869,40 @@ Tilemap:
   m_TileAssetArray:
   - m_RefCount: 0
     m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   m_TileSpriteArray:
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
   m_TileMatrixArray:
   - m_RefCount: 0
     m_Data:
       e00: NaN
-      e01: 1808384
-      e02: 1808384
+      e01: 0
+      e02: 1.3140567e-34
       e03: NaN
       e10: NaN
-      e11: 8.73e-43
-      e12: 8.73e-43
+      e11: 0
+      e12: 3.3e-43
       e13: NaN
-      e20: 0.93795556
-      e21: -193826820
-      e22: -9.798957e+14
-      e23: -33209600
-      e30: 4.5905e-41
-      e31: 8.73e-43
-      e32: 4.5907e-41
-      e33: 8.73e-43
+      e20: -6.133058e+18
+      e21: 1.3140548e-34
+      e22: 0
+      e23: 0
+      e30: 1.031e-42
+      e31: 3.3e-43
+      e32: 0
+      e33: 0
   m_TileColorArray:
   - m_RefCount: 0
-    m_Data: {r: -0.000000001397062, g: -0.000000001397062, b: -0.000000001397062,
-      a: -0.000000001397062}
+    m_Data: {r: -5.598526, g: -5.598526, b: -5.598526, a: -5.598526}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -4, y: -6, z: 0}
-  m_Size: {x: 12, y: 14, z: 1}
+  m_Size: {x: 12, y: 16, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -2974,7 +3005,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 346626975}
-        m_MethodName: EndPlanningPhase
+        m_MethodName: StateChange
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
