@@ -95,9 +95,16 @@ public class InventoryObject : ScriptableObject {
 [System.Serializable]
 public class Inventory {
   public InventorySlot[] slots = new InventorySlot[8];
-  // public Inventory(){}
-  public Inventory(int slotCount) {
-    slots = new InventorySlot[slotCount];
+
+  public Inventory(InventoryObject orig, int newSlotCount) {
+      slots = new InventorySlot[newSlotCount];
+      for (int i = 0; i < newSlotCount; i++) {
+        if (orig.GetSlots[i].prismite != null) {
+          slots[i] = new InventorySlot(orig.GetSlots[i].prismite);
+        } else {
+          slots[i] = new InventorySlot(orig.GetSlots[0].prismite);
+        }
+      }
   }
 
   public Inventory(InventoryObject orig) {

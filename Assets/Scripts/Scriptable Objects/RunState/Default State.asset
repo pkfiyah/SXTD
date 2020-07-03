@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data:
     state: 1
-    currency: 0
+    currency: 5
     stage: 1
+    time: 6

@@ -44,3 +44,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: GroundLayer
+    uniqueID: 4028042439
+    locked: 0
+  - name: EntityLayer
+    uniqueID: 1004109023
+    locked: 0
+  - name: UILayer
+    uniqueID: 83669535
+    locked: 0

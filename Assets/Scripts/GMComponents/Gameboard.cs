@@ -13,6 +13,7 @@ public class Gameboard : MonoBehaviour {
     public GameObject spawnPointPrefab;
     public GameObject enemyPrefab;
     public Tile emptyTile;
+    public int prismiteNodes = 3;
 
     public static Gameboard Instance { get; private set; }
 
@@ -38,7 +39,7 @@ public class Gameboard : MonoBehaviour {
           UpdateGameboard(new Vector3Int(i, j, 0), pieceDatabase.GetPiece[(int)generatedLevel[i, j].type]); // Piece database is indexed by type / int type
         }
       }
-      for (int i = 0; i < 3; i++) {
+      for (int i = 0; i < prismiteNodes; i++) {
         int randX = Random.Range((int)_levelGen.GetUnstableGround().x, (int)(_levelGen.GetUnstableGround().width + _levelGen.GetUnstableGround().x));
         int randY = Random.Range((int)_levelGen.GetUnstableGround().y, (int)(_levelGen.GetUnstableGround().height + _levelGen.GetUnstableGround().y));
         UpdateGameboard(new Vector3Int(randX, randY, 0), pieceDatabase.GetPiece[(int)PieceType.SpawnPoint]); // Piece database is indexed by type / int type THIS NEEDS TO POINT TO SPAWN PIECE
@@ -140,8 +141,6 @@ public class Gameboard : MonoBehaviour {
       return convertedPath;
     }
 }
-
-
 
 public static class MouseData {
   public static GameObject tempItemBeingDragged;

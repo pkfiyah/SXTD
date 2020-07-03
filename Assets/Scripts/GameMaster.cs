@@ -13,15 +13,35 @@ public class GameMaster : MonoBehaviour {
   // Public Static Reference to the GameMaster from anywhere
   public static GameMaster Instance { get; private set; }
   public RunStateObject runState;
+  private GameClock clock;
+
+  void OnEnable() {
+    TDEvents.PrismiteRolled.AddListener(ProgressTimeFromRoll);
+  }
+
+  void OnDisable() {
+    TDEvents.PrismiteRolled.RemoveListener(ProgressTimeFromRoll);
+  }
 
   void Awake() {
     Instance = this;
+    clock = new GameClock(runState.data.time);
+    runState.ResetBots();
   }
 
   // Resets inventory scriptable object on close
   private void OnApplicationQuit() {
-    runState.data.state = State.Planning;
+    runState.Reinitialize();
     inventory.Clean();
+  }
+
+  public void ProgressTime() {
+    clock.Tick();
+  }
+
+  public void ProgressTimeFromRoll() {
+    runState.ResetBots();
+    clock.Tick(4);
   }
 
   public void StateChange() {
