@@ -102,7 +102,7 @@ public class Inventory {
         if (orig.GetSlots[i].prismite != null) {
           slots[i] = new InventorySlot(orig.GetSlots[i].prismite);
         } else {
-          slots[i] = new InventorySlot(orig.GetSlots[0].prismite);
+          slots[i] = new InventorySlot(new Prismite());
         }
       }
   }

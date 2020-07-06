@@ -13,7 +13,10 @@ public class GameMaster : MonoBehaviour {
   // Public Static Reference to the GameMaster from anywhere
   public static GameMaster Instance { get; private set; }
   public RunStateObject runState;
+
   private GameClock clock;
+  private float _activeHourLength = 20f;
+  private float _timer = 0f;
 
   void OnEnable() {
     TDEvents.PrismiteRolled.AddListener(ProgressTimeFromRoll);
@@ -37,11 +40,17 @@ public class GameMaster : MonoBehaviour {
 
   public void ProgressTime() {
     clock.Tick();
+    if (!clock.IsDaytime()) {
+      runState.ProgressState();
+    }
   }
 
   public void ProgressTimeFromRoll() {
     runState.ResetBots();
     clock.Tick(4);
+    if (!clock.IsDaytime()) {
+      runState.ProgressState();
+    }
   }
 
   public void StateChange() {
@@ -49,11 +58,21 @@ public class GameMaster : MonoBehaviour {
   }
 
   // Update is called once per frame
-  void FixedUpdate() {
+  void Update() {
     // Planning phase
     if(runState.GetState == State.Planning) {
       if(MouseData.activeSelection != null) {
 
+      }
+    } else if (runState.GetState == State.Active) {
+      _timer += Time.deltaTime;
+      if (_timer >= _activeHourLength) {
+        _timer = 0f;
+        clock.Tick();
+      }
+      if (clock.IsDaytime()) {
+        // Need to clean up active phase here
+        runState.ProgressState();
       }
     }
 

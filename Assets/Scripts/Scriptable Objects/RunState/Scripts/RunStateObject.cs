@@ -38,7 +38,7 @@ public class RunStateObject : ScriptableObject {
   }
 
   public void ProgressState() {
-    /*if (TDEvents.BeforeStateChange != null)*/ TDEvents.BeforeStateChange.Invoke(data.state);
+    TDEvents.BeforeStateChange.Invoke(data.state);
     switch(GetState) {
       case State.Planning:
         data.state = State.Active;
@@ -50,12 +50,12 @@ public class RunStateObject : ScriptableObject {
         data.state = State.Planning;
         break;
     }
-    /*if (TDEvents.AfterStateChange != null)*/ TDEvents.AfterStateChange.Invoke(data.state);
+    TDEvents.AfterStateChange.Invoke(data.state);
   }
 
   public void ResetBots() {
     data.currentBots = data.maxBots;
-    /*if (TDEvents.CurrencyChange != null)*/ TDEvents.CurrencyChange.Invoke(data.maxBots);
+    TDEvents.CurrencyChange.Invoke(data.maxBots);
   }
 }
 

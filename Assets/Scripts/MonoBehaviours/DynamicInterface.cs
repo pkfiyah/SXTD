@@ -14,7 +14,10 @@ public class DynamicInterface : UserInterface {
   public bool isCasino = false;
 
   void Awake() {
-    prismiteNodeCount = Gameboard.Instance.prismiteNodes;
+    if (isCasino) {
+      prismiteNodeCount = Gameboard.Instance.prismiteNodes;
+      inventory.data = new Inventory(inventory, prismiteNodeCount);
+    }
   }
 
   public override void createSlots() {

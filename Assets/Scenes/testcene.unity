@@ -251,7 +251,7 @@ GameObject:
   - component: {fileID: 175054718}
   - component: {fileID: 175054717}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Roll Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -534,7 +534,7 @@ GameObject:
   - component: {fileID: 291406619}
   - component: {fileID: 291406622}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Shutter Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

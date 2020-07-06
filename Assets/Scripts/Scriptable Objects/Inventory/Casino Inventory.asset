@@ -19,61 +19,16 @@ MonoBehaviour:
     slots:
     - prismite:
         name: 
-        id: 0
-        colour: 0
-        buffs:
-        - modifier: 0
-          value: 10
-          min: 10
-          max: 20
-    - prismite:
-        name: 
-        id: 0
-        colour: 0
-        buffs:
-        - modifier: 0
-          value: 18
-          min: 10
-          max: 20
-    - prismite:
-        name: 
-        id: 0
-        colour: 0
-        buffs:
-        - modifier: 0
-          value: 14
-          min: 10
-          max: 20
-    - prismite:
-        name: 
-        id: 0
-        colour: 0
-        buffs:
-        - modifier: 0
-          value: 18
-          min: 10
-          max: 20
-    - prismite:
-        name: 
-        id: 4
+        id: -1
         colour: 0
         buffs: []
     - prismite:
         name: 
-        id: 4
+        id: -1
         colour: 0
         buffs: []
     - prismite:
         name: 
-        id: 3
-        colour: 0
-        buffs:
-        - modifier: 0
-          value: 25
-          min: 25
-          max: 50
-    - prismite:
-        name: 
-        id: 4
+        id: -1
         colour: 0
         buffs: []
