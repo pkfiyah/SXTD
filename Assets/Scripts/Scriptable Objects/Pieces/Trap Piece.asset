@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 697fad31807d7204a85642c9bdb3d09c, type: 3}
-  m_Name: Wall Piece
+  m_Name: Trap Piece
   m_EditorClassIdentifier: 
-  tile: {fileID: 11400000, guid: cf7b72ec7e9fab04a8c58693105834d4, type: 2}
+  tile: {fileID: 0}
   description: 
   data:
-    type: 3
+    type: 4
     damage:
-      baseValue: 0
+      baseValue: 10
       modifiedValue: 0
-    attackSpeed: 0
+    attackSpeed: 1

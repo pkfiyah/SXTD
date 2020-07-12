@@ -15,6 +15,7 @@ public enum State {
 public class RunStateObject : ScriptableObject {
 
   public State GetState { get { return data.state; } }
+  public int GetBots { get { return data.currentBots; } }
   public RunState data = new RunState();
 
   void OnEnable() {
@@ -51,6 +52,13 @@ public class RunStateObject : ScriptableObject {
         break;
     }
     TDEvents.AfterStateChange.Invoke(data.state);
+  }
+
+  public bool AssignBots(int botsAssigned) {
+    if (data.currentBots - botsAssigned < 0) return false;
+    data.currentBots -= botsAssigned;
+    TDEvents.CurrencyChange.Invoke(data.currentBots);
+    return true;
   }
 
   public void ResetBots() {

@@ -15,7 +15,7 @@ MonoBehaviour:
   tile: {fileID: 11400000, guid: b96af1a10fa1c76429594a3e38fbbe10, type: 2}
   description: 
   data:
-    type: 7
+    type: 4
     damage:
       baseValue: 0
       modifiedValue: 0

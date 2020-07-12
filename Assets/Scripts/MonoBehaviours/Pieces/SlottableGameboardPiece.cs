@@ -23,7 +23,7 @@ public class SlottableGameboardPiece : GameboardPiece {
       if(EventSystem.current.IsPointerOverGameObject()) return;
       if (MouseData.activeSelection == null  || (MouseData.activeSelection != null && MouseData.activeSelection != this)) {
         // Select this spot
-        MouseData.activeSelection = this;
+        MouseData.activeSelection = this.gameObject;
         ui.Reappear();
       } else {
         MouseData.activeSelection = null;

@@ -60,8 +60,8 @@ public class LevelGenerator {
       while (nodeCount < 3) {
         int randX = Random.Range(1, dimensions.x - 1);
         int randY = Random.Range(1, dimensions.y - 1);
-        if (ScanArea(randX, randY, PieceType.UnstableGround) && ScanArea(randX, randY, PieceType.Hearth) && ScanArea(randX, randY, PieceType.Ground)) {
-          level[randX, randY] = new Piece(PieceType.Ground);
+        if (ScanArea(randX, randY, PieceType.UnstableGround) && ScanArea(randX, randY, PieceType.Hearth) && ScanArea(randX, randY, PieceType.Prismite)) {
+          level[randX, randY] = new Piece(PieceType.Prismite);
           nodeCount++;
         }
       }

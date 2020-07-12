@@ -18,9 +18,14 @@ public class SelectionPanel : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate() {
       if (MouseData.activeSelection != null) {
-        damageText.text = "Dam: " + MouseData.activeSelection.piece.data.damage.BaseValue;
-        speedText.text = "Spe: " + MouseData.activeSelection.piece.data.attackSpeed;
-        displayImage.sprite = MouseData.activeSelection.piece.tile.sprite;
+        PieceObject po = MouseData.activeSelection.GetComponent<GameboardPiece>().piece;
+        damageText.text = "Dam: " + po.data.damage.BaseValue;
+        speedText.text = "Spe: " + po.data.attackSpeed;
+        if (po.tile != null) {
+          displayImage.sprite = po.tile.sprite;
+        } else  {
+          displayImage.sprite = MouseData.activeSelection.GetComponent<SpriteRenderer>().sprite;
+        }
       } else {
 
       }

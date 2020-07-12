@@ -6,21 +6,24 @@ public class PrismiteNode : GameboardPiece {
     // Start is called before the first frame update
     // private InventoryObject casinoInventory;
     private PrismiteObject currentPrismite;
+    private SpriteRenderer rendRef;
 
     public PrismiteDatabaseObject database;
 
     void Awake() {
+      rendRef = GetComponent<SpriteRenderer>();
       NextPrismite();
+
     }
 
     private void NextPrismite() {
-      currentPrismite = Instantiate(database.GetPrismite[Random.Range(0, database.GetPrismite.Count)]);
-      piece.tile.color = GetColourFromPrismite(currentPrismite.data);
+      currentPrismite = database.GetPrismite[Random.Range(0, database.GetPrismite.Count)];
+      rendRef.color = GetColourFromPrismite(currentPrismite.data);
     }
 
     private Color GetColourFromPrismite(Prismite p) {
       switch(p.colour) {
-        case PrismiteColour.Red:    return Color.red;
+        case PrismiteColour.Red:    return new Color(0.9f, 0.1f, 0.1f, 1.0f);
         case PrismiteColour.Blue:   return Color.blue;
         case PrismiteColour.Yellow: return Color.yellow;
         case PrismiteColour.Green:  return Color.green;

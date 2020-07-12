@@ -4,14 +4,13 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public enum PieceType {
+  Entity = -1,
   Empty = 0,
-  Entity = 1,
-  Hearth = 2,
-  Ground = 3,
-  Tower = 4,
-  Wall = 5,
-  UnstableGround = 6,
-  SpawnPoint = 7,
+  Hearth = 1,
+  Prismite = 2,
+  Construction = 3,
+  GroundConstruction = 4,
+  UnstableGround = 5,
 }
 
 [CreateAssetMenu(fileName = "New Piece Object", menuName = "Inventory System/Piece/New Piece")]
@@ -54,10 +53,10 @@ public class Piece : IPiece {
 
   public bool IsTraversable() {
     switch(type) {
-      case PieceType.Ground:
-      case PieceType.UnstableGround:
       case PieceType.Empty:
-      case PieceType.Entity:
+      case PieceType.Prismite:
+      case PieceType.UnstableGround:
+      case PieceType.GroundConstruction:
       case PieceType.Hearth:
         return true;
       default:
@@ -67,7 +66,6 @@ public class Piece : IPiece {
 
   public bool CanConstructOn() {
     switch(type) {
-      case PieceType.Ground:
       case PieceType.Empty:
         return true;
       default:

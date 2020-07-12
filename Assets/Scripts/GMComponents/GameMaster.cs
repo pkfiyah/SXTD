@@ -20,6 +20,7 @@ public class GameMaster : MonoBehaviour {
 
   void OnEnable() {
     TDEvents.PrismiteRolled.AddListener(ProgressTimeFromRoll);
+    //EnterPlanningPhase();
   }
 
   void OnDisable() {
@@ -31,6 +32,8 @@ public class GameMaster : MonoBehaviour {
     clock = new GameClock(runState.data.time);
     runState.ResetBots();
   }
+
+  //void EnterPlanningPhase()
 
   // Resets inventory scriptable object on close
   private void OnApplicationQuit() {
@@ -50,6 +53,21 @@ public class GameMaster : MonoBehaviour {
     clock.Tick(4);
     if (!clock.IsDaytime()) {
       runState.ProgressState();
+    }
+  }
+
+  public bool MakePurchase() {
+    return runState.AssignBots(1);
+  }
+
+  public void PlaceGameboardPiece(GameObject gameboardPiece, Vector3Int position) {
+    if (gameboardPiece.GetComponent<GameboardPiece>().piece.data.type == PieceType.Entity) {
+      gameboardPiece.transform.position = position;
+    } else {
+      if (gameboardPiece.GetComponent<SpriteRenderer>() != null) {
+        gameboardPiece.GetComponent<SpriteRenderer>().color = Color.white;
+      }
+      Gameboard.Instance.UpdateGameboard(position, Instantiate(gameboardPiece, position, Quaternion.identity));
     }
   }
 

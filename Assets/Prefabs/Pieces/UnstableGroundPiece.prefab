@@ -1,24 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &232178210742841493
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9040160641436043393}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbb6d75ac0a64724393ad42eccfbc66a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spawnList:
-  - {fileID: 1681031129313094952, guid: a35797ac5c7676c40990410dd06d5ddd, type: 3}
-  - {fileID: 1681031129313094952, guid: a35797ac5c7676c40990410dd06d5ddd, type: 3}
-  - {fileID: 1681031129313094952, guid: a35797ac5c7676c40990410dd06d5ddd, type: 3}
-  - {fileID: 1681031129313094952, guid: a35797ac5c7676c40990410dd06d5ddd, type: 3}
-  - {fileID: 1681031129313094952, guid: a35797ac5c7676c40990410dd06d5ddd, type: 3}
---- !u!1001 &4935016721257963878
+--- !u!1001 &1288969484980709441
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -29,22 +11,22 @@ PrefabInstance:
         type: 3}
       propertyPath: piece
       value: 
-      objectReference: {fileID: 11400000, guid: 13bf1455c4e6f424ab4db39f2866c6d8,
+      objectReference: {fileID: 11400000, guid: d0e32d360d770e54796b96a8c82aab83,
         type: 2}
     - target: {fileID: 4110002756758202855, guid: dae1f683c748df4488147958191d96d8,
         type: 3}
       propertyPath: m_Name
-      value: SpawnPointPiece
+      value: UnstableGroundPiece
       objectReference: {fileID: 0}
     - target: {fileID: 4304073837943791611, guid: dae1f683c748df4488147958191d96d8,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 4304073837943791611, guid: dae1f683c748df4488147958191d96d8,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.75
+      value: 4.25
       objectReference: {fileID: 0}
     - target: {fileID: 4304073837943791611, guid: dae1f683c748df4488147958191d96d8,
         type: 3}
@@ -93,9 +75,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dae1f683c748df4488147958191d96d8, type: 3}
---- !u!1 &9040160641436043393 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4110002756758202855, guid: dae1f683c748df4488147958191d96d8,
-    type: 3}
-  m_PrefabInstance: {fileID: 4935016721257963878}
-  m_PrefabAsset: {fileID: 0}

@@ -9,7 +9,8 @@ public class StaticInterface : UserInterface {
   public GameObject[] slots;
   private CanvasGroup _cGroup;
 
-  void Awake() {
+  public override void Awake() {
+    base.Awake();
     _cGroup = GetComponent<CanvasGroup>();
   }
 

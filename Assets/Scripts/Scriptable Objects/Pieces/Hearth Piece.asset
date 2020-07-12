@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 697fad31807d7204a85642c9bdb3d09c, type: 3}
   m_Name: Hearth Piece
   m_EditorClassIdentifier: 
-  tile: {fileID: 11400000, guid: 2c0bc288c44168b49a541c51a30dedf4, type: 2}
+  tile: {fileID: 0}
   description: 
   data:
-    type: 2
+    type: 1
     damage:
       baseValue: 0
       modifiedValue: 0

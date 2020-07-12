@@ -6,6 +6,12 @@ using TMPro;
 public class CurrencyInterface : MonoBehaviour {
     public TextMeshProUGUI timeValue;
     public TextMeshProUGUI botsValue;
+    public RunStateObject runState;
+
+    void Awake() {
+      OnCurrencyChange(runState.data.currentBots);
+      OnTimeChange(runState.data.time);
+    }
 
     void OnEnable() {
       TDEvents.CurrencyChange.AddListener(OnCurrencyChange);

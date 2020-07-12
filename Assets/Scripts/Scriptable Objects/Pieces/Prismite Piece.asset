@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 697fad31807d7204a85642c9bdb3d09c, type: 3}
   m_Name: Prismite Piece
   m_EditorClassIdentifier: 
-  tile: {fileID: 11400000, guid: 6a5237bf91a0f6543a1a676373fafd0a, type: 2}
+  tile: {fileID: 0}
   description: 
   data:
-    type: 3
+    type: 2
     damage:
       baseValue: 0
       modifiedValue: 0

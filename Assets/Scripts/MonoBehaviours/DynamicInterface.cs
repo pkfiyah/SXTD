@@ -5,20 +5,10 @@ using UnityEngine.EventSystems;
 
 public class DynamicInterface : UserInterface {
 
-  private int prismiteNodeCount;
-
   public GameObject inventoryPrefab;
   public int X_SPACE_BETWEEN;
   public int X_START;
   public int Y_START;
-  public bool isCasino = false;
-
-  void Awake() {
-    if (isCasino) {
-      prismiteNodeCount = Gameboard.Instance.prismiteNodes;
-      inventory.data = new Inventory(inventory, prismiteNodeCount);
-    }
-  }
 
   public override void createSlots() {
     slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
