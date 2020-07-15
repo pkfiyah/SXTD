@@ -5,11 +5,18 @@ using UnityEngine.EventSystems;
 
 public class GameboardPiece : MonoBehaviour {
     public PieceObject piece;
+    public delegate void PieceDestructionDelegate (GameObject piece);
+    public PieceDestructionDelegate pieceDestructionDelegate;
 
     private State currentState = State.Planning;
     private SpriteRenderer rend;
+    private float currentHealth;
 
-    void Awake() {
+    public virtual void Awake() {
+      if (piece.data.IsDamagable()){
+         currentHealth = piece.data.maxHealth;
+         Debug.Log("My health: " + piece.data.maxHealth);
+      }
       TDEvents.AfterStateChange.AddListener(OnAfterStateChange);
       if (GetComponent<SpriteRenderer>() != null) {
         rend = GetComponent<SpriteRenderer>();
@@ -34,5 +41,21 @@ public class GameboardPiece : MonoBehaviour {
 
     public void OnAfterStateChange(State state) {
       currentState = state;
+    }
+
+    void OnDestroy() {
+      if (pieceDestructionDelegate != null) pieceDestructionDelegate(gameObject);
+    }
+
+    public void TakeDamage(float damage) {
+      currentHealth -= damage;
+      Debug.Log("currentHealth: " + currentHealth);
+      if (currentHealth <= 0f) {
+        Destroy(this.gameObject);
+      }
+    }
+
+    public Vector3 GetPosition() {
+      return transform.position;
     }
 }

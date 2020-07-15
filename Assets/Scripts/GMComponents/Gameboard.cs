@@ -79,7 +79,6 @@ public class Gameboard : MonoBehaviour {
       piece.transform.parent = this.transform;
       gp.piece.parent = this;
       piece.transform.position = GetWorldPositionFromTilePosition(tilePosition);
-
       // Sets the tile portion of the graphic to the board
       if (piece.GetComponent<SpriteRenderer>() == null && gp.piece.tile != null) {
         if (gp.piece.data.type == PieceType.UnstableGround || gp.piece.data.type == PieceType.GroundConstruction || gp.piece.data.type == PieceType.Empty ) {
@@ -135,7 +134,6 @@ public class Gameboard : MonoBehaviour {
       }
 
       _pathfinder.parseGameBoard(boardRef);
-      Debug.Log("Start Tile: " + startTilePos );
       List<PathNode> path = _pathfinder.findPath(startTilePos.x, startTilePos.y, _hearthTileRef.x, _hearthTileRef.y);
       List<Vector3Int> convertedPath = new List<Vector3Int>();
       foreach (PathNode node in path) {

@@ -8,13 +8,13 @@ public class SlottableGameboardPiece : GameboardPiece {
     private StaticInterface ui;
     public InventoryObject inventory;
 
-    void Awake() {
-        ui = GetComponentInChildren<StaticInterface>();
-        // inventory = Instantiate(inventory); // Must make copy of initial inventory
+    public virtual void Awake() {
+      inventory = Instantiate(inventory); // Must make copy of initial inventory
+      ui = GetComponentInChildren<StaticInterface>();
     }
 
     void FixedUpdate() {
-      if (MouseData.activeSelection != this) {
+      if (MouseData.activeSelection != this.gameObject) {
         ui.Disappear();
       }
     }

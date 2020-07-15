@@ -23,7 +23,6 @@ public class Pathfinding {
         grid.setGridObject(x, y, new PathNode(grid, x, y, gb[x, y].IsTraversable()));
       }
     }
-    Debug.Log("Game Board Parsed");
   }
 
   public List<PathNode> findPath(int startX, int startY, int endX, int endY) {
@@ -54,7 +53,6 @@ public class Pathfinding {
       PathNode currNode = getLowestFCostNode(openList);
       if (currNode == endNode) {
         // Reached end
-        Debug.Log("Path Found");
         return calculatePath(endNode);
       }
 

@@ -15,6 +15,7 @@ MonoBehaviour:
   tile: {fileID: 0}
   description: 
   data:
+    maxHealth: 1000
     type: 1
     damage:
       baseValue: 0

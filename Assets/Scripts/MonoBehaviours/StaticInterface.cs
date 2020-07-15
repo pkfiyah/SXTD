@@ -10,6 +10,11 @@ public class StaticInterface : UserInterface {
   private CanvasGroup _cGroup;
 
   public override void Awake() {
+
+    var c = GetComponent<Canvas>();
+    if (c.worldCamera == null) {
+      c.worldCamera = Camera.main;
+    }
     base.Awake();
     _cGroup = GetComponent<CanvasGroup>();
   }

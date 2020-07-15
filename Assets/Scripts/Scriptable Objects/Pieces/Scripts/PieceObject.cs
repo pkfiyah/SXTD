@@ -29,17 +29,20 @@ public class PieceObject : ScriptableObject {
 
 [System.Serializable]
 public class Piece : IPiece {
+  public float maxHealth;
   public PieceType type;
   public ModifiableInt damage;
   public float attackSpeed;
 
   public Piece() {
+    maxHealth = 100f;
     type = PieceType.Empty;
     attackSpeed = 0f;
     damage = new ModifiableInt();
   }
 
   public Piece(PieceObject po) {
+    maxHealth = po.data.maxHealth;
     type = po.data.type;
     attackSpeed = po.data.attackSpeed;
     damage = po.data.damage;
@@ -67,6 +70,16 @@ public class Piece : IPiece {
   public bool CanConstructOn() {
     switch(type) {
       case PieceType.Empty:
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  public bool IsDamagable() {
+    switch(type) {
+      case PieceType.Entity:
+      case PieceType.Hearth:
         return true;
       default:
         return false;

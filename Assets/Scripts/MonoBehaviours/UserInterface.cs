@@ -13,6 +13,9 @@ public abstract class UserInterface : MonoBehaviour {
     public Dictionary<GameObject, InventorySlot> slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
 
     public virtual void Awake() {
+        if (inventory == null) {
+          inventory = GetComponent<SlottableGameboardPiece>().inventory;
+        }
         if (destructableInventory) {
           inventory = Instantiate(inventory);
         }
