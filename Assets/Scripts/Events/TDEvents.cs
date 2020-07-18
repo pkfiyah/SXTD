@@ -9,11 +9,8 @@ public static class TDEvents {
 
     public static CurrencyChangeEvent CurrencyChange = new CurrencyChangeEvent();
     public static TimeChangeEvent TimeChange = new TimeChangeEvent();
-
-    public static RollPrismiteEvent PrismiteRolled = new RollPrismiteEvent();
 }
 
 public class RunStateChangeEvent : UnityEvent<State> { }
 public class CurrencyChangeEvent : UnityEvent<int> { }
 public class TimeChangeEvent : UnityEvent<int> { }
-public class RollPrismiteEvent: UnityEvent { }

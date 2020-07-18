@@ -6,12 +6,22 @@ public class PrismiteCasino : MonoBehaviour {
 
     public InventoryObject inventory;
 
+    private int lastTime;
+
     void Awake() {
       GeneratePrismite();
     }
 
-    public void RollPrismite() {
-      TDEvents.PrismiteRolled.Invoke();
+    void OnEnable() {
+      TDEvents.TimeChange.AddListener(RollPrismite);
+    }
+
+    void OnDisable() {
+      TDEvents.TimeChange.RemoveListener(RollPrismite);
+    }
+
+    public void RollPrismite(int newTime) {
+      if (lastTime == newTime || GameClock.HasNightStarted) return;
       GeneratePrismite();
     }
 

@@ -19,12 +19,11 @@ public class GameMaster : MonoBehaviour {
   private float _timer = 0f;
 
   void OnEnable() {
-    TDEvents.PrismiteRolled.AddListener(ProgressTimeFromRoll);
-    //EnterPlanningPhase();
+    TDEvents.TimeChange.AddListener(OnTimeChange);
   }
 
   void OnDisable() {
-    TDEvents.PrismiteRolled.RemoveListener(ProgressTimeFromRoll);
+      TDEvents.TimeChange.RemoveListener(OnTimeChange);
   }
 
   void Awake() {
@@ -41,23 +40,43 @@ public class GameMaster : MonoBehaviour {
     inventory.Clean();
   }
 
-  public void ProgressTime() {
-    clock.Tick();
-    if (!clock.IsDaytime()) {
-      runState.ProgressState();
-    }
-  }
-
-  public void ProgressTimeFromRoll() {
+  public void ProgressTimeByButton() {
     runState.ResetBots();
-    clock.Tick(4);
-    if (!clock.IsDaytime()) {
-      runState.ProgressState();
+    if (!clock.Tick(4) && clock.IsDaytime) {
+      clock.StartNighttime();
+      StartCoroutine(Nighttime());
     }
   }
 
-  public bool MakePurchase() {
-    return runState.AssignBots(1);
+  public void OnTimeChange(int newTime) {
+    if (runState.GetState == State.Planning && newTime == GameClock.NIGHTTIME_STARTTIME) {
+      // switch button to go here, next click will be to start nighttime
+      Debug.Log("Nighttime lockdown");
+    }
+  }
+
+  // Handle nighttime waving
+  public IEnumerator Nighttime() {
+    InvokeRepeating("UpdateNighttime", GameClock.SECONDS_IN_HOUR + GameClock.ACTIVE_START_DELAY_TIME, GameClock.SECONDS_IN_HOUR);
+    yield return new WaitForSeconds(GameClock.ACTIVE_START_DELAY_TIME);
+    StateChangeRequest(State.Active);
+    Debug.Log("State Progressed to: " + State.Active);
+  }
+
+  void UpdateNighttime() {
+    clock.Tick();
+    if (clock.IsDaytime) {
+      StateChangeRequest(State.Planning);
+      CancelInvoke("UpdateNighttime");
+    }
+  }
+
+  public void StateChangeRequest(State newState) {
+    runState.ProgressState();
+  }
+
+  public bool MakePurchase(int i) {
+    return runState.AssignBots(i);
   }
 
   public void PlaceGameboardPiece(GameObject gameboardPiece, Vector3Int position) {
@@ -71,29 +90,8 @@ public class GameMaster : MonoBehaviour {
     }
   }
 
-  public void StateChange() {
-    runState.ProgressState();
-  }
-
   // Update is called once per frame
   void Update() {
-    // Planning phase
-    if(runState.GetState == State.Planning) {
-      if(MouseData.activeSelection != null) {
-
-      }
-    } else if (runState.GetState == State.Active) {
-      _timer += Time.deltaTime;
-      if (_timer >= _activeHourLength) {
-        _timer = 0f;
-        clock.Tick();
-      }
-      if (clock.IsDaytime()) {
-        // Need to clean up active phase here
-        runState.ProgressState();
-      }
-    }
-
     if (Input.GetKeyDown(KeyCode.Space)) {
       Debug.Log("Saving");
       inventory.Save();

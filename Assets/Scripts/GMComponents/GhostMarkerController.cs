@@ -26,13 +26,13 @@ public class GhostMarkerController : MonoBehaviour {
       else isBroke = false;
     }
 
-    public void cleanBoard() {
+    void CleanBoard() {
       ghostTileMap.ClearAllTiles();
       isClean = true;
     }
 
     void Update() {
-      if (!isClean) this.cleanBoard();
+      if (!isClean) this.CleanBoard();
       if(MouseData.tempPieceBeingDragged != null) {
         Tile tileRef = MouseData.tempPieceBeingDragged.GetComponent<GameboardPiece>().piece.tile;
         if (tileRef != null) {

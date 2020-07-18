@@ -86,7 +86,7 @@ public abstract class UserInterface : MonoBehaviour {
       return tempItem;
     }
 
-    public void OnDragEnd(GameObject obj) {
+    public virtual void OnDragEnd(GameObject obj) {
       Destroy(MouseData.tempItemBeingDragged);
       if (MouseData.interfaceMouseIsOver == null) {
         // slotsOnInterface[obj].RemoveItem();

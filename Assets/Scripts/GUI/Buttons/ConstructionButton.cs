@@ -18,7 +18,7 @@ public class ConstructionButton : MonoBehaviour, IBeginDragHandler, IDragHandler
     }
 
     public void OnEndDrag(PointerEventData eventData) {
-      if (GameMaster.Instance.MakePurchase()) {
+      if (GameMaster.Instance.MakePurchase(1)) {
         GameMaster.Instance.PlaceGameboardPiece(MouseData.tempPieceBeingDragged, Gameboard.Instance.GetTilePositionFromWorldPosition(Camera.main.ScreenToWorldPoint(eventData.position)));
       }
       Destroy(MouseData.tempPieceBeingDragged);
