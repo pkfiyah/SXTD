@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 697fad31807d7204a85642c9bdb3d09c, type: 3}
-  m_Name: Trap Piece
+  m_Name: Prismtoad
   m_EditorClassIdentifier: 
   tile: {fileID: 0}
   description: 
   data:
     maxHealth: 100
-    type: 4
+    type: -1
     damage:
-      baseValue: 10
+      baseValue: 50
       modifiedValue: 0
-    attackSpeed: 1
-    range: 0.25
+    attackSpeed: 0.5
+    range: 0.5

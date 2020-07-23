@@ -9,16 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 697fad31807d7204a85642c9bdb3d09c, type: 3}
-  m_Name: Trap Piece
+  m_Script: {fileID: 11500000, guid: a10a91a49a6122341bce00a8ee695a5e, type: 3}
+  m_Name: Stage_1_Wave_3
   m_EditorClassIdentifier: 
-  tile: {fileID: 0}
-  description: 
+  enemy: {fileID: 1681031129313094952, guid: a35797ac5c7676c40990410dd06d5ddd, type: 3}
   data:
-    maxHealth: 100
-    type: 4
-    damage:
-      baseValue: 10
-      modifiedValue: 0
-    attackSpeed: 1
-    range: 0.25
+    enemiesRemaining: 10
+    waveStagger: 4

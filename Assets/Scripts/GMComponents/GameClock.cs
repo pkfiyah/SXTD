@@ -19,7 +19,7 @@ public class GameClock {
 
     public static bool HasNightStarted = false;
     public static int ACTIVE_START_DELAY_TIME = 5;
-    public static int SECONDS_IN_HOUR = 20;
+    public static int SECONDS_IN_HOUR = 5;
     public static int NIGHTTIME_STARTTIME = 18;
     public static int DAYTIME_STARTTIME = 6;
     public static int HOURS_IN_DAY = 24;
@@ -39,13 +39,18 @@ public class GameClock {
       if (!HasNightStarted && time + numTicks > NIGHTTIME_STARTTIME) return false; // Do not tick past 6PM until flag is given
       TDEvents.TimeChange.Invoke(time += numTicks);
       if (time >= HOURS_IN_DAY) time = time % HOURS_IN_DAY;
-      if (time == DAYTIME_STARTTIME && HasNightStarted) HasNightStarted = false;
+      if (time == DAYTIME_STARTTIME && HasNightStarted) {
+        HasNightStarted = false;
+        Debug.Log("Firing Daytime Start");
+        TDEvents.IsNightChange.Invoke(false);
+      }
       return true;
     }
 
     public void StartNighttime() {
+      Debug.Log("Firing Nighttime Start");
       HasNightStarted = true;
-      TDEvents.TimeChange.Invoke(time); // Reinvoke with same time when night starts
+      TDEvents.IsNightChange.Invoke(true);
     }
 
     public int GetTime() {

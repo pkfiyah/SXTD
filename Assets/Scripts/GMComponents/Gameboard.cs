@@ -49,19 +49,15 @@ public class Gameboard : MonoBehaviour {
           } else {
             yikes = Instantiate(emptyPiece, GetWorldPositionFromTilePosition(new Vector3Int(i, j, 0)), Quaternion.identity);
           }
-          UpdateGameboard(new Vector3Int(i, j, 0), yikes); // Piece database is indexed by type / int type
+          UpdateGameboard(new Vector3Int(i, j, 0), yikes);
         }
       }
-      for (int i = 0; i < prismiteNodes; i++) {
+      for (int i = 0; i < 1; i++) {
         int randX = Random.Range((int)_levelGen.GetUnstableGround().x, (int)(_levelGen.GetUnstableGround().width + _levelGen.GetUnstableGround().x));
         int randY = Random.Range((int)_levelGen.GetUnstableGround().y, (int)(_levelGen.GetUnstableGround().height + _levelGen.GetUnstableGround().y));
-        UpdateGameboard(new Vector3Int(randX, randY, 0), Instantiate(spawnPoint, GetWorldPositionFromTilePosition(new Vector3Int(randX, randY, 0)), Quaternion.identity)); // Piece database is indexed by type / int type THIS NEEDS TO POINT TO SPAWN PIECE
+        UpdateGameboard(new Vector3Int(randX, randY, 0), Instantiate(spawnPoint, GetWorldPositionFromTilePosition(new Vector3Int(randX, randY, 0)), Quaternion.identity));
       }
     }
-
-    // private createGameboardPiece(PieceObject piece) {
-    //   GameObject go = Instantiate(piece, new Vector3(0f, 0f, 0f), Quaternion.identity);
-    // }
 
     private void GoGreen() {
       for (int i = 0; i < boardDimensions.x; i++) {

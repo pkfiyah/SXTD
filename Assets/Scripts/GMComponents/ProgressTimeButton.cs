@@ -16,24 +16,29 @@ public class ProgressTimeButton : MonoBehaviour {
       buttonAnimator = GetComponentInChildren<Animator>();
       rerollCount = GetComponentInChildren<TextMeshProUGUI>();
     }
-    
+
     void OnEnable() {
       TDEvents.TimeChange.AddListener(OnTimeChange);
+      TDEvents.IsNightChange.AddListener(OnNightChange);
     }
 
     void OnDisable() {
       TDEvents.TimeChange.RemoveListener(OnTimeChange);
+      TDEvents.IsNightChange.RemoveListener(OnNightChange);
     }
 
     private void OnTimeChange(int newTime) {
       rerollCount.text = string.Concat(DaytimeLeft(newTime) / 4);
-      if (newTime == lastTime && newTime == GameClock.NIGHTTIME_STARTTIME) {
-        buttonAnimator.Play(GetAnimationState(0));
-        return;
-      }
       if (Mathf.Abs(lastTime - newTime) >= 3 && (newTime >= GameClock.DAYTIME_STARTTIME && newTime <= GameClock.NIGHTTIME_STARTTIME)) {
         buttonAnimator.Play(GetAnimationState(newTime));
         lastTime = newTime;
+      }
+    }
+
+    private void OnNightChange(bool isNight) {
+      if (isNight) {
+        buttonAnimator.Play(GetAnimationState(0));
+        return;
       }
     }
 

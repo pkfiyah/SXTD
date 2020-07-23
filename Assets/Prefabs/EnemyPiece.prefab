@@ -117,7 +117,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   piece: {fileID: 11400000, guid: b6b22cc8c4a6af6429d419060986e06d, type: 2}
-  _health: 200
 --- !u!1001 &3340986325341193423
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -149,12 +148,12 @@ PrefabInstance:
     - target: {fileID: 4304073837943791611, guid: dae1f683c748df4488147958191d96d8,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4304073837943791611, guid: dae1f683c748df4488147958191d96d8,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4304073837943791611, guid: dae1f683c748df4488147958191d96d8,
         type: 3}

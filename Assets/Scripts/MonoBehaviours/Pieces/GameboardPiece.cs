@@ -8,16 +8,24 @@ public class GameboardPiece : MonoBehaviour {
     public delegate void PieceDestructionDelegate (GameObject piece);
     public PieceDestructionDelegate pieceDestructionDelegate;
 
-    private State currentState = State.Planning;
+    protected List<GameObject> entitiesInRange;
     private SpriteRenderer rend;
     private float currentHealth;
+    private CircleCollider2D rangeCollider;
 
     public virtual void Awake() {
+      // Any piece with a range needs a trigger collider for detecting things in range
+      if (piece.data.range > 0) {
+        entitiesInRange = new List<GameObject>();
+        rangeCollider = gameObject.AddComponent(typeof(CircleCollider2D)) as CircleCollider2D;
+        rangeCollider.isTrigger = true;
+        rangeCollider.radius = piece.data.range;
+      }
+
       if (piece.data.IsDamagable()){
          currentHealth = piece.data.maxHealth;
-         Debug.Log("My health: " + piece.data.maxHealth);
       }
-      TDEvents.AfterStateChange.AddListener(OnAfterStateChange);
+
       if (GetComponent<SpriteRenderer>() != null) {
         rend = GetComponent<SpriteRenderer>();
         if (piece.data.type == PieceType.GroundConstruction) {
@@ -35,21 +43,13 @@ public class GameboardPiece : MonoBehaviour {
       }
     }
 
-    public void OnBeforeStateChange() {
-      // Do this
-    }
-
-    public void OnAfterStateChange(State state) {
-      currentState = state;
-    }
-
     void OnDestroy() {
       if (pieceDestructionDelegate != null) pieceDestructionDelegate(gameObject);
     }
 
     public void TakeDamage(float damage) {
+      Debug.Log("Taking Damage");
       currentHealth -= damage;
-      Debug.Log("currentHealth: " + currentHealth);
       if (currentHealth <= 0f) {
         Destroy(this.gameObject);
       }
@@ -57,5 +57,27 @@ public class GameboardPiece : MonoBehaviour {
 
     public Vector3 GetPosition() {
       return transform.position;
+    }
+
+    public Vector3Int GetTilePosition() {
+      return Gameboard.Instance.GetTilePositionFromWorldPosition(transform.position);
+    }
+
+    void OnTriggerEnter2D(Collider2D otherCollider) {
+      if (piece.data.range == 0) return;
+      EntityEnteredRange(otherCollider);
+    }
+
+    void OnTriggerExit2D(Collider2D otherCollider) {
+      if (piece.data.range == 0) return;
+      EntityExitedRange(otherCollider);
+    }
+
+    public virtual void EntityEnteredRange(Collider2D otherCollider) {
+      entitiesInRange.Add(otherCollider.gameObject);
+    }
+
+    public virtual void EntityExitedRange(Collider2D otherCollider) {
+      entitiesInRange.Remove(otherCollider.gameObject);
     }
 }

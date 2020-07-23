@@ -4,29 +4,24 @@ using UnityEngine;
 
 public class IsoCharacterRenderer : MonoBehaviour
 {
-    public static readonly string[] staticDirections = { "Static N", "Static NW", "Static W", "Static SW", "Static S", "Static SE", "Static E", "Static NE" };
-    public static readonly string[] runDirections = { "Run N", "Run NW", "Run W", "Run SW", "Run S", "Run SE", "Run E", "Run NE" };
+    // public static readonly string[] staticDirections = { "Static N", "Static NW", "Static W", "Static SW", "Static S", "Static SE", "Static E", "Static NE" };
+    public static readonly string[] runDirections = { "Moving NE", "Moving NW", "Moving SW", "Moving SE" };
 
     Animator animator;
     int lastDirection;
     // Start is called before the first frame update
-    private void Awake()
-    {
+    private void Awake() {
         animator = GetComponent<Animator>();
+    }
+
+    void Update() {
+      // Debug.Log(animator.GetCurrentAnimatorStateInfo());
     }
 
     // Update is called once per frame
     public void SetDirection(Vector2 direction) {
-      string[] directionArray = null;
-
-      if (direction.magnitude < .01f) {
-        directionArray = staticDirections;
-      } else {
-        directionArray = staticDirections; // Should be Run directions
-        lastDirection = DirectionToIndex(direction, 8);
-      }
-
-      animator.Play(directionArray[lastDirection]);
+      lastDirection = DirectionToIndex(direction, 4);
+      animator.Play(runDirections[lastDirection]);
     }
 
     public static int DirectionToIndex(Vector2 dir, int sliceCount) {
@@ -40,5 +35,10 @@ public class IsoCharacterRenderer : MonoBehaviour
       }
       float stepCount = angle / step;
       return Mathf.FloorToInt(stepCount);
+    }
+
+    public void SetAttacking() {
+      Debug.Log("Attack Set");
+      animator.SetTrigger("IsAttacking");
     }
 }

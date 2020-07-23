@@ -33,6 +33,7 @@ public class Piece : IPiece {
   public PieceType type;
   public ModifiableInt damage;
   public float attackSpeed;
+  public float range;
 
   public Piece() {
     maxHealth = 100f;

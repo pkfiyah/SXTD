@@ -1,4 +1,4 @@
-﻿using System.Collections;
+ ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -15,16 +15,13 @@ public class GameMaster : MonoBehaviour {
   public RunStateObject runState;
 
   private GameClock clock;
-  private float _activeHourLength = 20f;
-  private float _timer = 0f;
-
-  void OnEnable() {
-    TDEvents.TimeChange.AddListener(OnTimeChange);
-  }
-
-  void OnDisable() {
-      TDEvents.TimeChange.RemoveListener(OnTimeChange);
-  }
+  // void OnEnable() {
+  //   TDEvents.TimeChange.AddListener(OnTimeChange);
+  // }
+  //
+  // void OnDisable() {
+  //     TDEvents.TimeChange.RemoveListener(OnTimeChange);
+  // }
 
   void Awake() {
     Instance = this;
@@ -41,17 +38,13 @@ public class GameMaster : MonoBehaviour {
   }
 
   public void ProgressTimeByButton() {
-    runState.ResetBots();
-    if (!clock.Tick(4) && clock.IsDaytime) {
-      clock.StartNighttime();
-      StartCoroutine(Nighttime());
-    }
-  }
-
-  public void OnTimeChange(int newTime) {
-    if (runState.GetState == State.Planning && newTime == GameClock.NIGHTTIME_STARTTIME) {
-      // switch button to go here, next click will be to start nighttime
-      Debug.Log("Nighttime lockdown");
+    if (clock.IsDaytime) {
+      if (clock.Tick(4)) {
+        runState.ResetBots();
+      } else {
+        clock.StartNighttime();
+        StartCoroutine(Nighttime());
+      }
     }
   }
 
@@ -59,20 +52,13 @@ public class GameMaster : MonoBehaviour {
   public IEnumerator Nighttime() {
     InvokeRepeating("UpdateNighttime", GameClock.SECONDS_IN_HOUR + GameClock.ACTIVE_START_DELAY_TIME, GameClock.SECONDS_IN_HOUR);
     yield return new WaitForSeconds(GameClock.ACTIVE_START_DELAY_TIME);
-    StateChangeRequest(State.Active);
-    Debug.Log("State Progressed to: " + State.Active);
   }
 
   void UpdateNighttime() {
     clock.Tick();
     if (clock.IsDaytime) {
-      StateChangeRequest(State.Planning);
       CancelInvoke("UpdateNighttime");
     }
-  }
-
-  public void StateChangeRequest(State newState) {
-    runState.ProgressState();
   }
 
   public bool MakePurchase(int i) {
