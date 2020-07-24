@@ -23,10 +23,13 @@ public class Gameboard : MonoBehaviour {
     private Pathfinding _pathfinder;
     private GameObject[,] _gameboard;
     private LevelGenerator _levelGen;
+    private List<Vector3Int> _spawnPoints;
+    private int activeEnemyCount = 0;
 
 
     void Awake() {
       Instance = this;
+      _spawnPoints = new List<Vector3Int>();
       _gameboard = new GameObject[boardDimensions.x, boardDimensions.y];
       _pathfinder = new Pathfinding(boardDimensions.x, boardDimensions.y);
       _levelGen = new LevelGenerator(boardDimensions.x, boardDimensions.y);
@@ -55,7 +58,7 @@ public class Gameboard : MonoBehaviour {
       for (int i = 0; i < 1; i++) {
         int randX = Random.Range((int)_levelGen.GetUnstableGround().x, (int)(_levelGen.GetUnstableGround().width + _levelGen.GetUnstableGround().x));
         int randY = Random.Range((int)_levelGen.GetUnstableGround().y, (int)(_levelGen.GetUnstableGround().height + _levelGen.GetUnstableGround().y));
-        UpdateGameboard(new Vector3Int(randX, randY, 0), Instantiate(spawnPoint, GetWorldPositionFromTilePosition(new Vector3Int(randX, randY, 0)), Quaternion.identity));
+        _spawnPoints.Add(UpdateGameboard(new Vector3Int(randX, randY, 0), Instantiate(spawnPoint, GetWorldPositionFromTilePosition(new Vector3Int(randX, randY, 0)), Quaternion.identity)));
       }
     }
 
@@ -68,9 +71,8 @@ public class Gameboard : MonoBehaviour {
     }
 
     // All modifications to the game board happen here
-    public void UpdateGameboard(Vector3Int tilePosition, GameObject piece) {
-      if(!IsOnGameboard(tilePosition)) return;
-
+    public Vector3Int UpdateGameboard(Vector3Int tilePosition, GameObject piece) {
+      if(!IsOnGameboard(tilePosition)) return tilePosition;
       GameboardPiece gp = piece.GetComponent<GameboardPiece>();
       piece.transform.parent = this.transform;
       gp.piece.parent = this;
@@ -89,7 +91,26 @@ public class Gameboard : MonoBehaviour {
       if (gp.piece.data.type != PieceType.Entity) {
         Destroy(_gameboard[tilePosition.x, tilePosition.y]);
         _gameboard[tilePosition.x, tilePosition.y] = piece;
+      } else {
+        activeEnemyCount++;
+        piece.GetComponent<EntityPiece>().SetPathToTargetPosition(aStar(tilePosition));
+        gp.pieceDestructionDelegate += OnEnemyDestroyed;
       }
+      return tilePosition;
+    }
+
+    private void OnEnemyDestroyed(GameObject enemyDestroyed) {
+      activeEnemyCount--;
+      if (!HasEnemiesRemaining()) GameMaster.Instance.EndNighttime();
+    }
+
+    private bool HasEnemiesRemaining() {
+      for (int i = 0; i < _spawnPoints.Count; i++) {
+        Vector3Int currTile = _spawnPoints[i];
+        if (_gameboard[currTile.x, currTile.y].GetComponent<WaveBehaviour>().HasWaves) return true;
+      }
+      if (activeEnemyCount > 0) return true;
+      return false;
     }
 
     private bool IsOnGameboard(Vector3Int tileCoords) {

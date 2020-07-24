@@ -22,7 +22,9 @@ public class TrapPiece : SlottableGameboardPiece {
     IEnumerator Attacking() {
       attacking = true;
       animator.SetTrigger("Attacking");
-      for (int i = enemiesInRange.Count - 1; i >= 0; i--) {
+      var loopCount = enemiesInRange.Count;
+      Debug.Log("LoopCount: " + loopCount);
+      for (int i = loopCount - 1; i >= 0; i--) {
         enemiesInRange[i].GetComponent<GameboardPiece>().TakeDamage(10f);
       }
       yield return new WaitForSeconds(1f);

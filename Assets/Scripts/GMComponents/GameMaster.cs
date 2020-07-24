@@ -22,6 +22,12 @@ public class GameMaster : MonoBehaviour {
   // void OnDisable() {
   //     TDEvents.TimeChange.RemoveListener(OnTimeChange);
   // }
+  //
+  // private void OnTimeChange(int newTime) {
+  //   if (newTime == GameClock.DAYTIME_STARTTIME) {
+  //     StartCoroutine(CheckStageCompletionParams());
+  //   }
+  // }
 
   void Awake() {
     Instance = this;
@@ -61,19 +67,19 @@ public class GameMaster : MonoBehaviour {
     }
   }
 
+  public void EndNighttime() {
+    Debug.Log("EndNight Here");
+  }
+
   public bool MakePurchase(int i) {
     return runState.AssignBots(i);
   }
 
-  public void PlaceGameboardPiece(GameObject gameboardPiece, Vector3Int position) {
-    if (gameboardPiece.GetComponent<GameboardPiece>().piece.data.type == PieceType.Entity) {
-      gameboardPiece.transform.position = position;
-    } else {
-      if (gameboardPiece.GetComponent<SpriteRenderer>() != null) {
-        gameboardPiece.GetComponent<SpriteRenderer>().color = Color.white;
-      }
-      Gameboard.Instance.UpdateGameboard(position, Instantiate(gameboardPiece, position, Quaternion.identity));
+  public void PlaceGameboardPiece(GameObject gameboardPiece, Vector3Int tilePosition) {
+    if (gameboardPiece.GetComponent<SpriteRenderer>() != null) {
+      gameboardPiece.GetComponent<SpriteRenderer>().color = Color.white;
     }
+    Gameboard.Instance.UpdateGameboard(tilePosition, Instantiate(gameboardPiece, tilePosition, Quaternion.identity));
   }
 
   // Update is called once per frame

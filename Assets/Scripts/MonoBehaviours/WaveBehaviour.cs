@@ -5,6 +5,7 @@ using UnityEngine;
 public class WaveBehaviour : MonoBehaviour {
 
     public WaveObject waves;
+    public bool HasWaves { get { return waves.HasWaves; } }
 
     private bool isNight = false;
 
@@ -33,9 +34,10 @@ public class WaveBehaviour : MonoBehaviour {
       yield return new WaitForSeconds(GameClock.ACTIVE_START_DELAY_TIME);
       while (isNight && waves.HasWaves) {
         for (int i = 0; i < waves.EnemyCount; i++) {
-          GameObject newEnemy = Instantiate(waves.GetEnemy, transform.position, Quaternion.identity);
-          List<Vector3Int> movementPath = Gameboard.Instance.aStar(GetComponent<GameboardPiece>().GetTilePosition());
-          newEnemy.GetComponent<EntityPiece>().SetPathToTargetPosition(movementPath);
+          GameMaster.Instance.PlaceGameboardPiece(waves.GetEnemy, GetComponent<GameboardPiece>().GetTilePosition());
+          // GameObject newEnemy = Instantiate(waves.GetEnemy, transform.position, Quaternion.identity);
+          // List<Vector3Int> movementPath = Gameboard.Instance.aStar(GetComponent<GameboardPiece>().GetTilePosition());
+          // newEnemy.GetComponent<EntityPiece>().SetPathToTargetPosition(movementPath);
           yield return new WaitForSeconds(waves.EnemyStaggerTime);
         }
         yield return new WaitForSeconds(waves.WaveStaggerTime);
