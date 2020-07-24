@@ -41,16 +41,14 @@ public class GameClock {
       if (time >= HOURS_IN_DAY) time = time % HOURS_IN_DAY;
       if (time == DAYTIME_STARTTIME && HasNightStarted) {
         HasNightStarted = false;
-        Debug.Log("Firing Daytime Start");
-        TDEvents.IsNightChange.Invoke(false);
+        TDEvents.IsNightChange.Invoke(HasNightStarted);
       }
       return true;
     }
 
     public void StartNighttime() {
-      Debug.Log("Firing Nighttime Start");
       HasNightStarted = true;
-      TDEvents.IsNightChange.Invoke(true);
+      TDEvents.IsNightChange.Invoke(HasNightStarted);
     }
 
     public int GetTime() {

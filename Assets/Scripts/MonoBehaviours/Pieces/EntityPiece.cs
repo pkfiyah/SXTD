@@ -5,7 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(PolygonCollider2D))]
 public class EntityPiece : GameboardPiece {
-    private List<GameObject> enemiesInRange;
     private GameboardPiece attackTarget;
     private Rigidbody2D rigidbody;
     private float movementSpeed = 0.4f;
@@ -30,12 +29,12 @@ public class EntityPiece : GameboardPiece {
     //   }
     // }
 
-    IEnumerator Attacking() {
-      attacking = true;
-      enemiesInRange[0].GetComponent<GameboardPiece>().TakeDamage(10f);
-      yield return new WaitForSeconds(1f);
-      attacking = false;
-    }
+    // IEnumerator Attacking() {
+    //   attacking = true;
+    //   enemiesInRange[0].GetComponent<GameboardPiece>().TakeDamage(10f);
+    //   yield return new WaitForSeconds(1f);
+    //   attacking = false;
+    // }
 
     void FixedUpdate() {
       if (movementPath == null) {
@@ -48,7 +47,7 @@ public class EntityPiece : GameboardPiece {
 
         // Find hearth and attack it
         Vector3 targetWorldPos = Gameboard.Instance.GetWorldPositionFromTilePosition(movementPath[0]);
-        if (movementPath[0] == GetTilePosition() && movementPath.Count > 0) {
+        if (movementPath[0] == GetTilePosition() && movementPath.Count > 1) {
             movementPath.RemoveAt(0);
         }
 
