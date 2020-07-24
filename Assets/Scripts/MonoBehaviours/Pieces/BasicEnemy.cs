@@ -12,12 +12,10 @@ public class BasicEnemy : EntityPiece {
 
   public override void EntityEnteredRange(Collider2D otherCollider) {
     if (otherCollider.gameObject.tag.Equals("PlayerPiece")) {
-      Debug.Log("Player found");
       entitiesInRange.Insert(entitiesInRange.Count == 0 ? 0 : entitiesInRange.Count - 1, otherCollider.gameObject); //ensures hearthtile is always attacked last for priority
       StartAttacking();
       otherCollider.gameObject.GetComponent<GameboardPiece>().pieceDestructionDelegate += OnPlayerPieceDestroy;
     } else if (otherCollider.gameObject.tag.Equals("HearthTile")) {
-      Debug.Log("Hearth found");
       entitiesInRange.Add(otherCollider.gameObject);
       StartAttacking();
       otherCollider.gameObject.GetComponent<GameboardPiece>().pieceDestructionDelegate += OnPlayerPieceDestroy;

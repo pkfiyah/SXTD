@@ -48,16 +48,15 @@ public class GameMaster : MonoBehaviour {
       if (clock.Tick(4)) {
         runState.ResetBots();
       } else {
-        clock.StartNighttime();
-        StartCoroutine(Nighttime());
+        StartNighttime();
       }
     }
   }
 
   // Handle nighttime waving
-  public IEnumerator Nighttime() {
+  public void StartNighttime() {
+    clock.StartNighttime();
     InvokeRepeating("UpdateNighttime", GameClock.SECONDS_IN_HOUR + GameClock.ACTIVE_START_DELAY_TIME, GameClock.SECONDS_IN_HOUR);
-    yield return new WaitForSeconds(GameClock.ACTIVE_START_DELAY_TIME);
   }
 
   void UpdateNighttime() {
@@ -69,6 +68,14 @@ public class GameMaster : MonoBehaviour {
 
   public void EndNighttime() {
     Debug.Log("EndNight Here");
+    CancelInvoke("UpdateNighttime");
+    int currTime = clock.GetTime();
+    int skipHours = 12;
+    if (currTime >= GameClock.NIGHTTIME_STARTTIME) skipHours = skipHours - (currTime - GameClock.NIGHTTIME_STARTTIME);
+    else skipHours = skipHours - 6 - currTime;
+    clock.Tick(skipHours);
+    clock.StartDaytime();
+    runState.ResetBots();
   }
 
   public bool MakePurchase(int i) {

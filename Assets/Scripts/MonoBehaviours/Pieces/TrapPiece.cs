@@ -24,8 +24,10 @@ public class TrapPiece : SlottableGameboardPiece {
       animator.SetTrigger("Attacking");
       var loopCount = enemiesInRange.Count;
       Debug.Log("LoopCount: " + loopCount);
+      if (loopCount < 1) yield return null;
       for (int i = loopCount - 1; i >= 0; i--) {
-        enemiesInRange[i].GetComponent<GameboardPiece>().TakeDamage(10f);
+        Debug.Log("Enemy: " + enemiesInRange[i]);
+        if (enemiesInRange[i] != null) enemiesInRange[i].GetComponent<GameboardPiece>().TakeDamage(10f);
       }
       yield return new WaitForSeconds(1f);
       attacking = false;
@@ -33,6 +35,7 @@ public class TrapPiece : SlottableGameboardPiece {
     }
 
     void OnEnemyDestroy(GameObject enemy) {
+      Debug.Log("Removing: Enemy");
       enemiesInRange.Remove(enemy);
     }
 

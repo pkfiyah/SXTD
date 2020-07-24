@@ -43,15 +43,12 @@ public class GameboardPiece : MonoBehaviour {
       }
     }
 
-    void OnDestroy() {
-      if (pieceDestructionDelegate != null) pieceDestructionDelegate(gameObject);
-    }
-
     public void TakeDamage(float damage) {
       Debug.Log("Taking Damage");
       currentHealth -= damage;
       if (currentHealth <= 0f) {
-        Destroy(this.gameObject);
+        if (pieceDestructionDelegate != null) pieceDestructionDelegate(gameObject);
+        Destroy(this.gameObject, 0.3f);
       }
     }
 
