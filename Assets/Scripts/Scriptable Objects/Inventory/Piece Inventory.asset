@@ -26,9 +26,17 @@ MonoBehaviour:
         name: 
         id: -1
         colour: 0
-        buffs: []
+        buffs:
+        - modifier: 0
+          value: 37
+          min: 25
+          max: 50
     - prismite:
         name: 
         id: -1
         colour: 0
-        buffs: []
+        buffs:
+        - modifier: 0
+          value: 33
+          min: 25
+          max: 50

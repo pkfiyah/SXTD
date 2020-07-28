@@ -30,10 +30,14 @@ public class ModifiableInt {
 
   public void UpdateModifiedValue() {
     var valueToAdd = 0;
+    Debug.Log("ValueToAddCheck: " + valueToAdd);
     for (int i = 0; i < modifiers.Count; i++) {
       modifiers[i].AddValue(ref valueToAdd);
     }
+    Debug.Log("Base Value:" + baseValue);
+    Debug.Log("Value to Add:" + valueToAdd);
     ModifiedValue = baseValue + valueToAdd;
+    Debug.Log("Modified Value:" + ModifiedValue);
     if (ValueModified != null) ValueModified.Invoke();
   }
 

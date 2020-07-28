@@ -82,4 +82,8 @@ public class PrismiteBuff : IModifiers {
   public void AddValue(ref int baseValue) {
     baseValue += value;
   }
+
+  public void RemoveValue(ref int baseValue) {
+    baseValue -= value;
+  }
 }

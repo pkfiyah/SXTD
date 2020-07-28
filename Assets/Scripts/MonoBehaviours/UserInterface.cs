@@ -9,26 +9,30 @@ public abstract class UserInterface : MonoBehaviour {
 
     public InventoryObject inventory;
     public bool canAcceptItems = true;
-    public bool destructableInventory = false;
     public Dictionary<GameObject, InventorySlot> slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
 
     public virtual void Awake() {
-        if (inventory == null) {
-          inventory = GetComponent<SlottableGameboardPiece>().inventory;
-        }
-        if (destructableInventory) {
-          inventory = Instantiate(inventory);
-        }
-
         for (int i = 0; i < inventory.GetSlots.Length; i++) {
           inventory.GetSlots[i].parent = this;
-          inventory.GetSlots[i].OnAfterUpdate += OnSlotUpdate;
         }
         createSlots();
         addEvent(gameObject, EventTriggerType.PointerEnter, delegate { OnEnterInterface(gameObject);});
         addEvent(gameObject, EventTriggerType.PointerExit, delegate { OnExitInterface(gameObject);});
     }
 
+    void OnEnable () {
+      for (int i = 0; i < inventory.GetSlots.Length; i++) {
+        inventory.GetSlots[i].OnAfterUpdate += OnSlotUpdate;
+      }
+    }
+
+    void OnDisable() {
+      for (int i = 0; i < inventory.GetSlots.Length; i++) {
+        inventory.GetSlots[i].OnAfterUpdate -= OnSlotUpdate;
+      }
+    }
+
+    // Fired whenever a slot on this UI is updated
     private void OnSlotUpdate(InventorySlot _slot) {
       if (_slot.prismite.id >= 0) {
         _slot.slotDisplay.transform.Find("Image").GetComponent<Image>().sprite = _slot.PrismiteObject.uiDisplay;
@@ -58,7 +62,6 @@ public abstract class UserInterface : MonoBehaviour {
     }
 
     public void OnEnterInterface(GameObject obj) {
-      Debug.Log("In Interface: " + obj);
       MouseData.interfaceMouseIsOver = obj.GetComponent<UserInterface>();
     }
 
@@ -69,6 +72,7 @@ public abstract class UserInterface : MonoBehaviour {
     public void OnDragStart(GameObject obj) {
       if (slotsOnInterface[obj].prismite.id <= -1) return;
       MouseData.tempItemBeingDragged = CreateTempItem(obj);
+      //MouseData.tempItemBeingDragged
     }
 
     public GameObject CreateTempItem(GameObject obj) {

@@ -4,4 +4,5 @@ using UnityEngine;
 
 public interface IModifiers {
   void AddValue(ref int baseValue);
+  void RemoveValue(ref int baseValue);
 }

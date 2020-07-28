@@ -17,8 +17,8 @@ MonoBehaviour:
   - {fileID: 2999100858413475658, guid: 479c5715a829b3444a55eeb61876318a, type: 3}
   data:
   - enemyCount: 1
-    waveStagger: 10
-    enemyStagger: 2
-  - enemyCount: 6
+    waveStagger: 4
+    enemyStagger: 1
+  - enemyCount: 1
     waveStagger: 4
     enemyStagger: 0.5

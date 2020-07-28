@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 557eca8a8e4eb76458fe95816ed4ca28, type: 3}
   m_Name: Blue Prismite
   m_EditorClassIdentifier: 
-  uiDisplay: {fileID: 21300000, guid: 7734eb1da5077cf4e8b02ae695d66ea6, type: 3}
+  uiDisplay: {fileID: 21300000, guid: 92c23a9a1431d074f817ef0a67734e31, type: 3}
   description: 
   data:
     name: 
