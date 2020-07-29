@@ -1,26 +1,26 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public delegate void ModifiedEvent();
 [System.Serializable]
-public class ModifiableInt {
+public class ModifiableFloat {
   [SerializeField]
-  private int baseValue;
-  public int BaseValue { get { return baseValue; } set { baseValue = value; } }
+  private float baseValue;
+  public float BaseValue { get { return baseValue; } set { baseValue = value; } }
 
   [SerializeField]
-  private int modifiedValue;
-  public int ModifiedValue { get { return modifiedValue; } private set { modifiedValue = value; } }
+  private float modifiedValue;
+  public float ModifiedValue { get { return modifiedValue; } private set { modifiedValue = value; } }
 
   public List<IModifiers> modifiers = new List<IModifiers>();
   public event ModifiedEvent ValueModified;
-  public ModifiableInt(ModifiedEvent method = null) {
+
+  public ModifiableFloat(ModifiedEvent method = null ) {
     modifiedValue = BaseValue;
     if (method != null) ValueModified += method;
   }
 
-  public ModifiableInt(int baseValue) {
+  public ModifiableFloat(float baseValue) {
     this.baseValue = baseValue;
     modifiedValue = BaseValue;
   }
@@ -34,15 +34,11 @@ public class ModifiableInt {
   }
 
   public void UpdateModifiedValue() {
-    var valueToAdd = 0;
-    Debug.Log("ValueToAddCheck: " + valueToAdd);
+    float valueToAdd = 0f;
     for (int i = 0; i < modifiers.Count; i++) {
       modifiers[i].AddValue(ref valueToAdd);
     }
-    Debug.Log("Base Value:" + baseValue);
-    Debug.Log("Value to Add:" + valueToAdd);
     ModifiedValue = baseValue + valueToAdd;
-    Debug.Log("Modified Value:" + ModifiedValue);
     if (ValueModified != null) ValueModified.Invoke();
   }
 

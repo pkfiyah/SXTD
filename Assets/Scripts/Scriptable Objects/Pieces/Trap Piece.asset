@@ -15,10 +15,8 @@ MonoBehaviour:
   tile: {fileID: 0}
   description: 
   data:
-    maxHealth: 100
     type: 4
-    damage:
-      baseValue: 10
-      modifiedValue: 0
-    attackSpeed: 1
-    range: 0.25
+    baseHealth: 100
+    baseDamage: 10
+    baseAttackSpeed: 1
+    baseRange: 0.5

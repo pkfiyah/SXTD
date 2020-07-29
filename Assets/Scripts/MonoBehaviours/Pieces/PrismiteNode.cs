@@ -10,10 +10,10 @@ public class PrismiteNode : GameboardPiece {
 
     public PrismiteDatabaseObject database;
 
-    void Awake() {
+    public override void Awake() {
+      base.Awake();
       rendRef = GetComponent<SpriteRenderer>();
       NextPrismite();
-
     }
 
     private void NextPrismite() {

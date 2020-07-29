@@ -5,22 +5,22 @@ using UnityEngine.EventSystems;
 
 public class SlottableGameboardPiece : GameboardPiece {
 
-    private StaticInterface ui;
+    protected StaticInterface ui;
     // public InventoryObject inventory;
     private Transform uiPositionHold;
     private Transform uiPosition;
 
-    public virtual void Awake() {
-      // inventory = Instantiate(inventory); // Must make copy of initial inventory
-      ui = GetComponentInChildren<StaticInterface>();
-      // ui.Disappear();
-    }
+    // public virtual void Awake() {
+    //   // inventory = Instantiate(inventory); // Must make copy of initial inventory
+    //   // base.Awake();
+    //   ui = GetComponentInChildren<StaticInterface>();
+    //   // ui.Disappear();
+    // }
 
     void FixedUpdate() {
       if (MouseData.activeSelection != this.gameObject) {
         ui.Disappear();
       }
-      Debug.Log("Piece Damage: " + piece.data.damage.ModifiedValue);
     }
 
     void OnMouseDown() {
@@ -39,7 +39,7 @@ public class SlottableGameboardPiece : GameboardPiece {
       if (slot.prismite != null && slot.prismite.id >= 0) {
         for (int i = 0; i < slot.prismite.buffs.Length; i++) {
           Debug.Log("Removing Modifier: " + slot.prismite.buffs[i].value);
-          piece.data.damage.RemoveModifier(slot.prismite.buffs[i]);
+          damage.RemoveModifier(slot.prismite.buffs[i]);
         }
       }
     }
@@ -47,7 +47,7 @@ public class SlottableGameboardPiece : GameboardPiece {
     private void OnAfterSlotUpdate(InventorySlot slot) {
       for (int i = 0; i < slot.prismite.buffs.Length; i++) {
         Debug.Log("Adding Modifier: " + slot.prismite.buffs[i].value);
-        piece.data.damage.AddModifier(slot.prismite.buffs[i]);
+        damage.AddModifier(slot.prismite.buffs[i]);
       }
     }
 

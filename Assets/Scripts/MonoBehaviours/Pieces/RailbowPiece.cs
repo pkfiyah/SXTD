@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RailbowPiece : SlottableGameboardPiece {
-  private List<GameObject> enemiesInRange;
   private bool attacking = false;
 
   public GameObject lineProjectile;
@@ -11,11 +10,12 @@ public class RailbowPiece : SlottableGameboardPiece {
 
   public override void Awake() {
     base.Awake();
-    enemiesInRange = new List<GameObject>();
+    ui = GetComponentInChildren<StaticInterface>();
+    // animator = GetComponent<Animator>();
   }
 
   void Update() {
-    if (enemiesInRange.Count > 0 && !attacking) {
+    if (entitiesInRange.Count > 0 && !attacking) {
       StartCoroutine(Attacking());
     }
   }
@@ -23,8 +23,8 @@ public class RailbowPiece : SlottableGameboardPiece {
   IEnumerator Attacking() {
     if (!attacking) {
       attacking = true;
-      GameboardPiece gp = enemiesInRange[0].GetComponent<GameboardPiece>();
-      Projectile.Create(transform.position, gp, piece.data.damage.BaseValue);
+      GameboardPiece gp = entitiesInRange[0].GetComponent<GameboardPiece>();
+      Projectile.Create(transform.position, gp, GetPieceDamage);
       yield return new WaitForSeconds(2f);
     }
     attacking = false;
@@ -42,20 +42,20 @@ public class RailbowPiece : SlottableGameboardPiece {
   }
 
   void OnEnemyDestroy(GameObject enemy) {
-    enemiesInRange.Remove(enemy);
+    entitiesInRange.Remove(enemy);
   }
 
-  void OnTriggerEnter2D(Collider2D otherCollider) {
-    if (otherCollider.gameObject.tag.Equals("EnemyPiece")) {
-      enemiesInRange.Add(otherCollider.gameObject);
-      otherCollider.gameObject.GetComponent<GameboardPiece>().pieceDestructionDelegate += OnEnemyDestroy;
+  public override void EntityEnteredRange(GameObject go) {
+    if (go.GetComponent<EntityPiece>().hitboxTrigger.tag.Equals("EnemyPiece")) {
+      entitiesInRange.Add(go);
+      go.GetComponent<EntityPiece>().pieceDestructionDelegate += OnEnemyDestroy;
     }
   }
 
-  void OnTriggerExit2D(Collider2D otherCollider) {
-    if (otherCollider.gameObject.tag.Equals("EnemyPiece")) {
-      enemiesInRange.Remove(otherCollider.gameObject);
-      otherCollider.gameObject.GetComponent<GameboardPiece>().pieceDestructionDelegate -= OnEnemyDestroy;
+  public override void EntityExitedRange(GameObject go) {
+    if (go.GetComponent<EntityPiece>().hitboxTrigger.tag.Equals("EnemyPiece")) {
+      entitiesInRange.Remove(go);
+      go.GetComponent<EntityPiece>().pieceDestructionDelegate -= OnEnemyDestroy;
     }
   }
 }

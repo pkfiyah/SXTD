@@ -4,26 +4,43 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class GameboardPiece : MonoBehaviour {
-    public PieceObject piece;
+    // Delegate used for notifying when a piece is destroyed
     public delegate void PieceDestructionDelegate (GameObject piece);
     public PieceDestructionDelegate pieceDestructionDelegate;
 
-    protected List<GameObject> entitiesInRange;
-    private SpriteRenderer rend;
-    private float currentHealth;
+    /** Piece Vars **/
+    public PieceObject piece;
+
+    protected ModifiableInt maxHealth;
+    private int currentHealth;
+    protected ModifiableInt damage;
+    public int GetPieceDamage { get { return damage.ModifiedValue; } }
+    protected ModifiableFloat attackSpeed;
+    public float GetPieceAttackSpeed { get { return attackSpeed.ModifiedValue; } }
+    protected ModifiableFloat range;
+    public float GetPieceRange { get { return range.ModifiedValue; } }
     private CircleCollider2D rangeCollider;
+    /** End Piece Vars **/
+
+    private SpriteRenderer rend;
+    protected List<GameObject> entitiesInRange = new List<GameObject>();
 
     public virtual void Awake() {
       // Any piece with a range needs a trigger collider for detecting things in range
-      if (piece.data.range > 0) {
-        entitiesInRange = new List<GameObject>();
+      damage = new ModifiableInt(piece.data.baseDamage);
+
+      attackSpeed = new ModifiableFloat(piece.data.baseAttackSpeed);
+      range = new ModifiableFloat(piece.data.baseRange);
+      if (rangeCollider == null && GetPieceRange > 0f) {
         rangeCollider = gameObject.AddComponent(typeof(CircleCollider2D)) as CircleCollider2D;
         rangeCollider.isTrigger = true;
-        rangeCollider.radius = piece.data.range;
+        rangeCollider.offset = new Vector2(0f, 0f);
+        rangeCollider.radius = GetPieceRange;
       }
 
-      if (piece.data.IsDamagable()){
-         currentHealth = piece.data.maxHealth;
+      if (piece.data.IsDamagable()) {
+         maxHealth = new ModifiableInt(piece.data.baseHealth);
+         currentHealth = maxHealth.ModifiedValue;
       }
 
       if (GetComponent<SpriteRenderer>() != null) {
@@ -43,10 +60,12 @@ public class GameboardPiece : MonoBehaviour {
       }
     }
 
-    public void TakeDamage(float damage) {
-      Debug.Log("Taking Damage");
+    public void TakeDamage(int damage) {
+      Debug.Log("Taking Damage" + damage);
+      Debug.Log("HealthPre" + currentHealth);
       currentHealth -= damage;
       if (currentHealth <= 0f) {
+        Debug.Log("Destroyed");
         if (pieceDestructionDelegate != null) pieceDestructionDelegate(gameObject);
         Destroy(this.gameObject, 0.3f);
       }
@@ -60,21 +79,25 @@ public class GameboardPiece : MonoBehaviour {
       return Gameboard.Instance.GetTilePositionFromWorldPosition(transform.position);
     }
 
+    // Tagged Triggers will exist on all pieces to represent hitboxes.
+    // They are always children of the parent gameboardPieces
     void OnTriggerEnter2D(Collider2D otherCollider) {
-      if (piece.data.range == 0) return;
-      EntityEnteredRange(otherCollider);
+      if (GetPieceRange <= 0f) return;
+      if (otherCollider.gameObject.tag == "Untagged") return;
+      EntityEnteredRange(otherCollider.gameObject.transform.parent.gameObject);
     }
 
     void OnTriggerExit2D(Collider2D otherCollider) {
-      if (piece.data.range == 0) return;
-      EntityExitedRange(otherCollider);
+      if (GetPieceRange <= 0f) return;
+      if (otherCollider.gameObject.tag == "Untagged") return;
+      EntityExitedRange(otherCollider.gameObject.transform.parent.gameObject);
     }
 
-    public virtual void EntityEnteredRange(Collider2D otherCollider) {
-      entitiesInRange.Add(otherCollider.gameObject);
+    public virtual void EntityEnteredRange(GameObject go) {
+      entitiesInRange.Add(go);
     }
 
-    public virtual void EntityExitedRange(Collider2D otherCollider) {
-      entitiesInRange.Remove(otherCollider.gameObject);
+    public virtual void EntityExitedRange(GameObject go) {
+      entitiesInRange.Remove(go);
     }
 }

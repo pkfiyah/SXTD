@@ -66,10 +66,10 @@ public class Prismite {
 [System.Serializable]
 public class PrismiteBuff : IModifiers {
   public PrismiteModifier modifier;
-  public int value;
-  public int min;
-  public int max;
-  public PrismiteBuff(int _min, int _max) {
+  public float value;
+  public float min;
+  public float max;
+  public PrismiteBuff(float _min, float _max) {
     min = _min;
     max = _max;
     GenerateValue();
@@ -80,10 +80,18 @@ public class PrismiteBuff : IModifiers {
   }
 
   public void AddValue(ref int baseValue) {
-    baseValue += value;
+    baseValue += (int)Mathf.Floor(value);
   }
 
   public void RemoveValue(ref int baseValue) {
+    baseValue -= (int)Mathf.Floor(value);
+  }
+
+  public void AddValue(ref float baseValue) {
+    baseValue += value;
+  }
+
+  public void RemoveValue(ref float baseValue) {
     baseValue -= value;
   }
 }

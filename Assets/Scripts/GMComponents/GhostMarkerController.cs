@@ -9,9 +9,11 @@ public class GhostMarkerController : MonoBehaviour {
     public static Color GHOST_RED = new Color(1.0f, 0f, 0f, 0.5f);
 
     public Tilemap ghostTileMap;
+    public SpriteRenderer ghostSprite;
 
     private bool isClean = true;
     private bool isBroke = false;
+
 
     void OnEnable() {
         TDEvents.CurrencyChange.AddListener(IsBroke);
@@ -40,9 +42,10 @@ public class GhostMarkerController : MonoBehaviour {
           else tileRef.color = GhostMarkerController.GHOST_RED;
           ghostTileMap.SetTile(ghostTileMap.WorldToCell(MouseData.GetWorldPosition), tileRef);
         } else {
-          SpriteRenderer rend = MouseData.tempPieceBeingDragged.GetComponent<SpriteRenderer>();
-          if (!isBroke) rend.color = GhostMarkerController.GHOST_WHITE;
-          else rend.color = GhostMarkerController.GHOST_RED;
+          ghostSprite.sprite = MouseData.tempPieceBeingDragged.GetComponent<SpriteRenderer>().sprite;
+          ghostSprite.transform.position = MouseData.tempPieceBeingDragged.transform.position;
+          if (!isBroke) ghostSprite.color = GhostMarkerController.GHOST_WHITE;
+          else ghostSprite.color = GhostMarkerController.GHOST_RED;
         }
 
         isClean = false;

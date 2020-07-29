@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(PolygonCollider2D))]
 public class EntityPiece : GameboardPiece {
+    public GameObject hitboxTrigger;
+
     private GameboardPiece attackTarget;
     private Rigidbody2D rigidbody;
     private float movementSpeed = 0.4f;
@@ -50,5 +52,21 @@ public class EntityPiece : GameboardPiece {
         Vector2 newPos = currWorldPos + movement * Time.fixedDeltaTime;
         rigidbody.MovePosition(newPos);
       }
+    }
+
+    public override void EntityEnteredRange(GameObject go) {
+      if (go.tag == hitboxTrigger.tag) return;
+      // if (go.tag.Equals("EnemyPiece")) {
+      //   entitiesInRange.Add(go.transform.parent.gameObject);
+      //   go.transform.parent.gameObject.GetComponent<GameboardPiece>().pieceDestructionDelegate += OnEnemyDestroy;
+      // }
+    }
+
+    public override void EntityExitedRange(GameObject go) {
+      if (go.tag == hitboxTrigger.tag) return;
+      // if (go.tag.Equals("EnemyPiece")) {
+      //   entitiesInRange.Remove(go.transform.parent.gameObject);
+      //   go.transform.parent.gameObject.GetComponent<GameboardPiece>().pieceDestructionDelegate -= OnEnemyDestroy;
+      // }
     }
 }

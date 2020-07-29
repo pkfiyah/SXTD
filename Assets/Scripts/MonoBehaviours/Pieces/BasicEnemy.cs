@@ -10,24 +10,24 @@ public class BasicEnemy : EntityPiece {
 
   private bool isAttacking = false;
 
-  public override void EntityEnteredRange(Collider2D otherCollider) {
-    if (otherCollider.gameObject.tag.Equals("PlayerPiece")) {
-      entitiesInRange.Insert(entitiesInRange.Count == 0 ? 0 : entitiesInRange.Count - 1, otherCollider.gameObject); //ensures hearthtile is always attacked last for priority
-      StartAttacking();
-      otherCollider.gameObject.GetComponent<GameboardPiece>().pieceDestructionDelegate += OnPlayerPieceDestroy;
-    } else if (otherCollider.gameObject.tag.Equals("HearthTile")) {
-      entitiesInRange.Add(otherCollider.gameObject);
-      StartAttacking();
-      otherCollider.gameObject.GetComponent<GameboardPiece>().pieceDestructionDelegate += OnPlayerPieceDestroy;
-    }
-  }
-
-  public override void EntityExitedRange(Collider2D otherCollider) {
-    if (otherCollider.gameObject.tag.Equals("PlayerPiece") || otherCollider.gameObject.tag.Equals("HearthTile")) {
-      entitiesInRange.Remove(otherCollider.gameObject);
-      otherCollider.gameObject.GetComponent<GameboardPiece>().pieceDestructionDelegate -= OnPlayerPieceDestroy;
-    }
-  }
+  // public override void EntityEnteredRange(GameObject go) {
+  //   if (go.tag.Equals("PlayerPiece")) {
+  //     entitiesInRange.Insert(entitiesInRange.Count == 0 ? 0 : entitiesInRange.Count - 1, go); //ensures hearthtile is always attacked last for priority
+  //     StartAttacking();
+  //     go.GetComponent<GameboardPiece>().pieceDestructionDelegate += OnPlayerPieceDestroy;
+  //   } else if (go.tag.Equals("HearthTile")) {
+  //     entitiesInRange.Add(go);
+  //     StartAttacking();
+  //     go.GetComponent<GameboardPiece>().pieceDestructionDelegate += OnPlayerPieceDestroy;
+  //   }
+  // }
+  //
+  // public override void EntityExitedRange(GameObject go) {
+  //   if (go.tag.Equals("PlayerPiece") || go.tag.Equals("HearthTile")) {
+  //     entitiesInRange.Remove(go);
+  //     go.GetComponent<GameboardPiece>().pieceDestructionDelegate -= OnPlayerPieceDestroy;
+  //   }
+  // }
 
   private void StartAttacking() {
     if (!isAttacking) {
@@ -40,7 +40,7 @@ public class BasicEnemy : EntityPiece {
     isAttacking = true;
     Debug.Log("InRange: " + entitiesInRange.Count);
     while (entitiesInRange.Count > 0) {
-      entitiesInRange[0].GetComponent<GameboardPiece>().TakeDamage(10f);
+      entitiesInRange[0].GetComponent<GameboardPiece>().TakeDamage(10);
       Debug.Log("Boom");
       if (isoRend != null) isoRend.SetAttacking();
       yield return new WaitForSeconds(1f);

@@ -29,30 +29,30 @@ public class PieceObject : ScriptableObject {
 
 [System.Serializable]
 public class Piece : IPiece {
-  public float maxHealth;
   public PieceType type;
-  public ModifiableInt damage;
-  public float attackSpeed;
-  public float range;
+  public int baseHealth;
+  public int baseDamage;
+  public float baseAttackSpeed;
+  public float baseRange;
 
   public Piece() {
-    maxHealth = 100f;
     type = PieceType.Empty;
-    attackSpeed = 0f;
-    damage = new ModifiableInt();
+    baseHealth = 100;
+    baseDamage = 0;
+    baseAttackSpeed = 0f;
+    baseRange = 0f;
   }
 
   public Piece(PieceObject po) {
-    maxHealth = po.data.maxHealth;
     type = po.data.type;
-    attackSpeed = po.data.attackSpeed;
-    damage = po.data.damage;
+    baseHealth = po.data.baseHealth;
+    baseDamage = po.data.baseDamage;
+    baseAttackSpeed = po.data.baseAttackSpeed;
+    baseRange = po.data.baseRange;
   }
 
   public Piece(PieceType pt) {
     type = pt;
-    attackSpeed = 0f;
-    damage = new ModifiableInt();
   }
 
   public bool IsTraversable() {

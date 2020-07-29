@@ -8,7 +8,7 @@ public class ConstructionButton : MonoBehaviour, IBeginDragHandler, IDragHandler
     public GameObject constructablePrefab;
 
     public void OnBeginDrag(PointerEventData eventData) {
-      MouseData.tempPieceBeingDragged = Instantiate(constructablePrefab, MouseData.GetWorldPosition, Quaternion.identity);
+      MouseData.tempPieceBeingDragged = constructablePrefab;
     }
 
     public void OnDrag(PointerEventData eventData) {
@@ -21,6 +21,6 @@ public class ConstructionButton : MonoBehaviour, IBeginDragHandler, IDragHandler
       if (GameMaster.Instance.MakePurchase(1)) {
         GameMaster.Instance.PlaceGameboardPiece(MouseData.tempPieceBeingDragged, Gameboard.Instance.GetTilePositionFromWorldPosition(Camera.main.ScreenToWorldPoint(eventData.position)));
       }
-      Destroy(MouseData.tempPieceBeingDragged);
+      MouseData.tempPieceBeingDragged = null;
     }
 }
