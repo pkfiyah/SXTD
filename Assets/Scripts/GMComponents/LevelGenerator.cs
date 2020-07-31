@@ -5,29 +5,25 @@ using UnityEngine;
 public class LevelGenerator {
     // Whats a level Have?
     private const int LEFT_UNSTABLE_GROUND_MARGIN = 2;
+    private List<Vector2Int> spawnPointAreaNodes;
     private Vector2Int dimensions;
-    private Rect unstableGroundArea;
     private Piece[,] level;
 
-    public LevelGenerator() {
-      dimensions = new Vector2Int(12, 12);
-      InitializeBoard();
-    }
-
-    public LevelGenerator(int x, int y) {
-      dimensions = new Vector2Int(x, y);
-      InitializeBoard();
+    public LevelGenerator(StageObject stageParams) {
+      dimensions = new Vector2Int(stageParams.StageWidth, stageParams.StageLength);
+      spawnPointAreaNodes = new List<Vector2Int>();
+      InitializeBoard(stageParams);
     }
 
     public Piece[,] GetLevel() {
       return level;
     }
 
-    public Rect GetUnstableGround() {
-      return unstableGroundArea;
+    public Vector3Int GetValidSpawnPointPosition() {
+      return new Vector3Int(spawnPointAreaNodes[Random.Range(0, spawnPointAreaNodes.Count - 1)].x, spawnPointAreaNodes[Random.Range(0, spawnPointAreaNodes.Count - 1)].y, 0);
     }
 
-    private void InitializeBoard() {
+    private void InitializeBoard(StageObject stageParams) {
       level = new Piece[dimensions.x, dimensions.y];
       // Empty area to start
       for(int i = 0; i < dimensions.x; i++) {
@@ -37,18 +33,19 @@ public class LevelGenerator {
       }
 
       // Add features in all levels here
-      DefineEnemySpawnArea();
+      foreach (Rect unstableGroundArea in stageParams.UnstableGroundAreas) {
+          DefineEnemySpawnArea(unstableGroundArea);
+      }
       DefineHearth();
       DefinePrismiteNodes();
     }
 
     // Not along sides, just under half of stage
-    private void DefineEnemySpawnArea() {
-      int yStart = (int)(dimensions.y / 2) + 1;
-      unstableGroundArea = new Rect(LEFT_UNSTABLE_GROUND_MARGIN, yStart, dimensions.x - LEFT_UNSTABLE_GROUND_MARGIN * 2, dimensions.y - yStart);
+    private void DefineEnemySpawnArea(Rect unstableGroundArea) {
       for (int i = (int)unstableGroundArea.x; i < (int)(unstableGroundArea.x + unstableGroundArea.width); i++) {
         for (int j = (int)unstableGroundArea.y; j < (int)(unstableGroundArea.y + unstableGroundArea.height); j++) {
           level[i, j] = new Piece(PieceType.UnstableGround);
+          spawnPointAreaNodes.Add(new Vector2Int(i, j));
         }
       }
     }

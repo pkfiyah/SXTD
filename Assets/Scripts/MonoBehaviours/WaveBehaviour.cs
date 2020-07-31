@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class WaveBehaviour : MonoBehaviour {
 
-    public WaveObject waves;
-    public bool HasWaves { get { return waves.HasWaves; } }
+    public WaveObject wave;
 
+    private int currentWave = 0;
     private bool isNight = false;
 
     void OnEnable() {
       TDEvents.IsNightChange.AddListener(BeginWave);
-      waves.Refresh();
+      currentWave = 0;
     }
 
     void OnDisable() {
@@ -20,10 +20,24 @@ public class WaveBehaviour : MonoBehaviour {
 
     // Wave happens over the entire night
     void BeginWave(bool isNight) {
+      if (wave == null) {
+        Debug.LogError("Wave has not been set in WaveBehaviour but is trying to spawn.", wave);
+        return;
+      }
       this.isNight = isNight;
-      if (isNight) {
+      if (isNight && currentWave < wave.NumberOfWaves) {
         StartCoroutine(SpawnWaves());
       }
+    }
+
+    public bool HasWaves() {
+      if (currentWave >= wave.NumberOfWaves) return false;
+      return true;
+    }
+
+    public void PrepNextNight(WaveObject nextNight) {
+      wave = nextNight;
+      currentWave = 0;
     }
 
     /* Spawn wave initiates the spawning of a nighttime worth of enemies
@@ -32,16 +46,13 @@ public class WaveBehaviour : MonoBehaviour {
      */
     IEnumerator SpawnWaves() {
       yield return new WaitForSeconds(GameClock.ACTIVE_START_DELAY_TIME);
-      while (isNight && waves.HasWaves) {
-        for (int i = 0; i < waves.EnemyCount; i++) {
-          GameMaster.Instance.PlaceGameboardPiece(waves.GetEnemy, GetComponent<GameboardPiece>().GetTilePosition());
-          // GameObject newEnemy = Instantiate(waves.GetEnemy, transform.position, Quaternion.identity);
-          // List<Vector3Int> movementPath = Gameboard.Instance.aStar(GetComponent<GameboardPiece>().GetTilePosition());
-          // newEnemy.GetComponent<EntityPiece>().SetPathToTargetPosition(movementPath);
-          yield return new WaitForSeconds(waves.EnemyStaggerTime);
+      while (isNight && currentWave < wave.NumberOfWaves) {
+        for (int i = 0; i < wave.EnemyCount(currentWave); i++) {
+          GameMaster.Instance.PlaceGameboardPiece(wave.GetEnemy(currentWave), GetComponent<GameboardPiece>().GetTilePosition());
+          yield return new WaitForSeconds(wave.EnemyStaggerTime(currentWave));
         }
-        yield return new WaitForSeconds(waves.WaveStaggerTime);
-        waves.NextWave();
+        yield return new WaitForSeconds(wave.WaveStaggerTime(currentWave));
+        currentWave++;
       }
     }
 }

@@ -10,15 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a10a91a49a6122341bce00a8ee695a5e, type: 3}
-  m_Name: Stage_1_Wave_1
+  m_Name: Stage_1_Night_1
   m_EditorClassIdentifier: 
   enemies:
   - {fileID: 1681031129313094952, guid: a35797ac5c7676c40990410dd06d5ddd, type: 3}
-  - {fileID: 2999100858413475658, guid: 479c5715a829b3444a55eeb61876318a, type: 3}
+  - {fileID: 1681031129313094952, guid: a35797ac5c7676c40990410dd06d5ddd, type: 3}
+  - {fileID: 1681031129313094952, guid: a35797ac5c7676c40990410dd06d5ddd, type: 3}
   data:
-  - enemyCount: 1
+  - enemyCount: 15
     waveStagger: 4
-    enemyStagger: 1
-  - enemyCount: 1
+    enemyStagger: 0.5
+  - enemyCount: 15
+    waveStagger: 4
+    enemyStagger: 0.5
+  - enemyCount: 15
     waveStagger: 4
     enemyStagger: 0.5

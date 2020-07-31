@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class Gameboard : MonoBehaviour {
 
-    public Vector2Int boardDimensions;
+    public StageObject stageParams;
     public Tilemap groundTilemap;
     public Tile emptyTile;
     public GameObject gamepieceTemplate;
@@ -25,23 +25,36 @@ public class Gameboard : MonoBehaviour {
     private LevelGenerator _levelGen;
     private List<Vector3Int> _spawnPoints;
     private int activeEnemyCount = 0;
+    private int currentNight = 0;
 
 
     void Awake() {
       Instance = this;
+      if (stageParams == null) {
+        Debug.LogError("StageObject required by Gameboard to generate stage", stageParams);
+      }
       _spawnPoints = new List<Vector3Int>();
-      _gameboard = new GameObject[boardDimensions.x, boardDimensions.y];
-      _pathfinder = new Pathfinding(boardDimensions.x, boardDimensions.y);
-      _levelGen = new LevelGenerator(boardDimensions.x, boardDimensions.y);
+      _gameboard = new GameObject[stageParams.StageWidth, stageParams.StageLength];
+      _pathfinder = new Pathfinding(stageParams.StageWidth, stageParams.StageLength);
+      _levelGen = new LevelGenerator(stageParams);
       RealizeGameBoard();
+    }
+
+    private void OnNightEnd() {
+      if (currentNight >= stageParams.data.nightsInStage) return;
+      for (int i = 0; i < _spawnPoints.Count; i++) {
+        Vector3Int currTile = _spawnPoints[i];
+        _gameboard[currTile.x, currTile.y].GetComponent<WaveBehaviour>().PrepNextNight(stageParams.SpawnPointWaves[currentNight]);
+      }
+      currentNight++;
     }
 
     // Instantiate all GameboardPieces from Pieces
     private void RealizeGameBoard() {
       Piece[,] generatedLevel = _levelGen.GetLevel();
       GoGreen();
-      for (int i = 0; i < boardDimensions.x; i++) {
-        for (int j = 0; j < boardDimensions.y; j++) {
+      for (int i = 0; i < stageParams.StageWidth; i++) {
+        for (int j = 0; j < stageParams.StageLength; j++) {
           GameObject yikes;
           if (generatedLevel[i, j].type == PieceType.Prismite) {
             yikes = Instantiate(prismitePiece, GetWorldPositionFromTilePosition(new Vector3Int(i, j, 0)), Quaternion.identity);
@@ -56,21 +69,26 @@ public class Gameboard : MonoBehaviour {
         }
       }
       for (int i = 0; i < 1; i++) {
-        int randX = Random.Range((int)_levelGen.GetUnstableGround().x, (int)(_levelGen.GetUnstableGround().width + _levelGen.GetUnstableGround().x));
-        int randY = Random.Range((int)_levelGen.GetUnstableGround().y, (int)(_levelGen.GetUnstableGround().height + _levelGen.GetUnstableGround().y));
-        _spawnPoints.Add(UpdateGameboard(new Vector3Int(randX, randY, 0), Instantiate(spawnPoint, GetWorldPositionFromTilePosition(new Vector3Int(randX, randY, 0)), Quaternion.identity)));
+        Vector3Int spawnPointPosition = _levelGen.GetValidSpawnPointPosition();
+        Debug.Log("spawnPos: " + spawnPointPosition);
+        _spawnPoints.Add(UpdateGameboard(spawnPointPosition, Instantiate(spawnPoint, GetWorldPositionFromTilePosition(spawnPointPosition), Quaternion.identity)));
+        OnNightEnd();
       }
     }
 
     private void GoGreen() {
-      for (int i = 0; i < boardDimensions.x; i++) {
-        for (int j = 0; j < boardDimensions.y; j++) {
+      for (int i = 0; i < stageParams.StageWidth; i++) {
+        for (int j = 0; j < stageParams.StageLength; j++) {
           SetTileGraphic(groundTilemap, new Vector3Int(i, j, 0), emptyTile);
         }
       }
     }
 
-    // All modifications to the game board happen here
+    /**
+    * All modifications to the game board happen here
+    * Input is a position and an already instantiated GameObject
+    * This ensures pieces are displayed and placed in a consistant way
+    **/
     public Vector3Int UpdateGameboard(Vector3Int tilePosition, GameObject piece) {
       if(!IsOnGameboard(tilePosition)) return tilePosition;
       GameboardPiece gp = piece.GetComponent<GameboardPiece>();
@@ -107,14 +125,14 @@ public class Gameboard : MonoBehaviour {
     private bool HasEnemiesRemaining() {
       for (int i = 0; i < _spawnPoints.Count; i++) {
         Vector3Int currTile = _spawnPoints[i];
-        if (_gameboard[currTile.x, currTile.y].GetComponent<WaveBehaviour>().HasWaves) return true;
+        if (_gameboard[currTile.x, currTile.y].GetComponent<WaveBehaviour>().HasWaves()) return true;
       }
       if (activeEnemyCount > 0) return true;
       return false;
     }
 
     private bool IsOnGameboard(Vector3Int tileCoords) {
-      if (tileCoords.x < boardDimensions.x && tileCoords.x >= 0 && tileCoords.y < boardDimensions.y && tileCoords.y >= 0) {
+      if (tileCoords.x < stageParams.StageWidth && tileCoords.x >= 0 && tileCoords.y < stageParams.StageLength && tileCoords.y >= 0) {
         return true;
       } else {
         return false;
@@ -143,9 +161,9 @@ public class Gameboard : MonoBehaviour {
     }
 
     public List<Vector3Int> aStar(Vector3Int startTilePos) {
-      Piece[,] boardRef = new Piece[boardDimensions.x, boardDimensions.y];
-      for (int i = 0; i < boardDimensions.x; i++) {
-        for (int j = 0; j < boardDimensions.y; j++) {
+      Piece[,] boardRef = new Piece[stageParams.StageWidth, stageParams.StageLength];
+      for (int i = 0; i < stageParams.StageWidth; i++) {
+        for (int j = 0; j < stageParams.StageLength; j++) {
           boardRef[i, j] = _gameboard[i, j].GetComponent<GameboardPiece>().piece.CreatePiece();
         }
       }

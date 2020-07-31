@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbab7d54ffabd5a408fc57a41990ae19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waves: {fileID: 11400000, guid: 49c5f68e734c3844894efd4cb8a6c8ce, type: 2}
+  wave: {fileID: 11400000, guid: 49c5f68e734c3844894efd4cb8a6c8ce, type: 2}
 --- !u!1001 &4935016721257963878
 PrefabInstance:
   m_ObjectHideFlags: 0

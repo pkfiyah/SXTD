@@ -1207,7 +1207,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 346626973}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: -1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 917435949}
@@ -1254,6 +1254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3772639da10ba8541b3476e2960fa696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stageParams: {fileID: 11400000, guid: c45ff6979e606c641909eb79d86be640, type: 2}
   boardDimensions: {x: 8, y: 12}
   groundTilemap: {fileID: 1523882886}
   emptyTile: {fileID: 11400000, guid: b5a2482989a4f874d8be122ba4658868, type: 2}
@@ -2639,7 +2640,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1903417bd9578f64fbd4d46e50ea45c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  constructablePrefab: {fileID: 2600490870953743073, guid: 6c389a6e3ff7fdf4ab246331cff293df,
+  constructablePrefab: {fileID: 3772997044463849686, guid: 2a353f2a866e4b2428b54790978367f4,
     type: 3}
 --- !u!114 &928070219
 MonoBehaviour:
