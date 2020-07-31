@@ -23,7 +23,7 @@ public class GameboardPiece : MonoBehaviour {
     /** End Piece Vars **/
 
     private SpriteRenderer rend;
-    protected List<GameObject> entitiesInRange = new List<GameObject>();
+    public List<GameObject> entitiesInRange = new List<GameObject>();
 
     public virtual void Awake() {
       // Any piece with a range needs a trigger collider for detecting things in range
@@ -61,13 +61,10 @@ public class GameboardPiece : MonoBehaviour {
     }
 
     public void TakeDamage(int damage) {
-      Debug.Log("Taking Damage" + damage);
-      Debug.Log("HealthPre" + currentHealth);
       currentHealth -= damage;
       if (currentHealth <= 0f) {
-        Debug.Log("Destroyed");
         if (pieceDestructionDelegate != null) pieceDestructionDelegate(gameObject);
-        Destroy(this.gameObject, 0.3f);
+        Destroy(gameObject);
       }
     }
 
@@ -84,12 +81,14 @@ public class GameboardPiece : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D otherCollider) {
       if (GetPieceRange <= 0f) return;
       if (otherCollider.gameObject.tag == "Untagged") return;
+      if (otherCollider.gameObject.transform.parent.gameObject == null) return;
       EntityEnteredRange(otherCollider.gameObject.transform.parent.gameObject);
     }
 
     void OnTriggerExit2D(Collider2D otherCollider) {
       if (GetPieceRange <= 0f) return;
       if (otherCollider.gameObject.tag == "Untagged") return;
+      if (otherCollider.gameObject.transform.parent.gameObject == null) return;
       EntityExitedRange(otherCollider.gameObject.transform.parent.gameObject);
     }
 

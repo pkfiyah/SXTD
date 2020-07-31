@@ -40,7 +40,7 @@ public class EntityPiece : GameboardPiece {
 
         if (movementPath[0] == GetTilePosition() && movementPath.Count > 1) {
             movementPath.RemoveAt(0);
-            tilePositionVariance = new Vector3(Random.Range(-0.3f, 0.3f), Random.Range(-0.12f, 0.12f), 0f);
+            tilePositionVariance = new Vector3(Random.Range(-0.12f, 0.12f), Random.Range(-0.12f, 0.12f), 0f);
         }
 
         Vector2 inputVector = new Vector2(targetWorldPos.x - currWorldPos.x, targetWorldPos.y - currWorldPos.y);
@@ -56,17 +56,9 @@ public class EntityPiece : GameboardPiece {
 
     public override void EntityEnteredRange(GameObject go) {
       if (go.tag == hitboxTrigger.tag) return;
-      // if (go.tag.Equals("EnemyPiece")) {
-      //   entitiesInRange.Add(go.transform.parent.gameObject);
-      //   go.transform.parent.gameObject.GetComponent<GameboardPiece>().pieceDestructionDelegate += OnEnemyDestroy;
-      // }
     }
 
     public override void EntityExitedRange(GameObject go) {
       if (go.tag == hitboxTrigger.tag) return;
-      // if (go.tag.Equals("EnemyPiece")) {
-      //   entitiesInRange.Remove(go.transform.parent.gameObject);
-      //   go.transform.parent.gameObject.GetComponent<GameboardPiece>().pieceDestructionDelegate -= OnEnemyDestroy;
-      // }
     }
 }

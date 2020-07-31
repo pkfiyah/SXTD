@@ -70,7 +70,6 @@ public class Gameboard : MonoBehaviour {
       }
       for (int i = 0; i < 1; i++) {
         Vector3Int spawnPointPosition = _levelGen.GetValidSpawnPointPosition();
-        Debug.Log("spawnPos: " + spawnPointPosition);
         _spawnPoints.Add(UpdateGameboard(spawnPointPosition, Instantiate(spawnPoint, GetWorldPositionFromTilePosition(spawnPointPosition), Quaternion.identity)));
         OnNightEnd();
       }
@@ -115,6 +114,10 @@ public class Gameboard : MonoBehaviour {
         gp.pieceDestructionDelegate += OnEnemyDestroyed;
       }
       return tilePosition;
+    }
+
+    void FixedUpdate() {
+      Debug.Log("Active Enemy Count: " + activeEnemyCount);
     }
 
     private void OnEnemyDestroyed(GameObject enemyDestroyed) {

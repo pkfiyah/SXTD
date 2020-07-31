@@ -17,12 +17,12 @@ MonoBehaviour:
   - {fileID: 1681031129313094952, guid: a35797ac5c7676c40990410dd06d5ddd, type: 3}
   - {fileID: 1681031129313094952, guid: a35797ac5c7676c40990410dd06d5ddd, type: 3}
   data:
-  - enemyCount: 15
+  - enemyCount: 10
     waveStagger: 4
     enemyStagger: 0.5
-  - enemyCount: 15
+  - enemyCount: 0
     waveStagger: 4
     enemyStagger: 0.5
-  - enemyCount: 15
+  - enemyCount: 0
     waveStagger: 4
     enemyStagger: 0.5

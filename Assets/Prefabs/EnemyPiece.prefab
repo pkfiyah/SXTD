@@ -113,6 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   piece: {fileID: 11400000, guid: b6b22cc8c4a6af6429d419060986e06d, type: 2}
+  entitiesInRange: []
   hitboxTrigger: {fileID: 3482450532643181818}
 --- !u!1001 &3340986325341193423
 PrefabInstance:

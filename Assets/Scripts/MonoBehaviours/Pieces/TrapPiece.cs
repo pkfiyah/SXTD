@@ -1,13 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class TrapPiece : SlottableGameboardPiece {
     private Animator animator;
     private bool attacking = false;
+    public HazardDamage DoHazardDamage;
 
     public override void Awake() {
       base.Awake();
+      DoHazardDamage = new HazardDamage();
       ui = GetComponentInChildren<StaticInterface>();
       animator = GetComponent<Animator>();
     }
@@ -21,33 +24,31 @@ public class TrapPiece : SlottableGameboardPiece {
     IEnumerator Attacking() {
       attacking = true;
       animator.SetTrigger("Attacking");
-      var loopCount = entitiesInRange.Count;
-      if (loopCount < 1) yield return null;
-      for (int i = loopCount - 1; i >= 0; i--) {
-        if (entitiesInRange[i] != null) entitiesInRange[i].GetComponent<GameboardPiece>().TakeDamage(GetPieceDamage);
-      }
+      DoHazardDamage.Invoke(GetPieceDamage);
       yield return new WaitForSeconds(1f);
       attacking = false;
     }
 
     void OnEnemyDestroy(GameObject enemy) {
+      DoHazardDamage.RemoveListener(enemy.GetComponent<GameboardPiece>().TakeDamage);
       entitiesInRange.Remove(enemy);
     }
 
     public override void EntityEnteredRange(GameObject go) {
-      Debug.Log("Entered Trap Range");
-      Debug.Log("Entitty Tag: " + go.GetComponent<EntityPiece>().hitboxTrigger.tag);
       if (go.GetComponent<EntityPiece>().hitboxTrigger.tag.Equals("EnemyPiece")) {
-        entitiesInRange.Add(go);
         go.GetComponent<EntityPiece>().pieceDestructionDelegate += OnEnemyDestroy;
+        DoHazardDamage.AddListener(go.GetComponent<GameboardPiece>().TakeDamage);
+        entitiesInRange.Add(go);
       }
     }
 
     public override void EntityExitedRange(GameObject go) {
-      Debug.Log("Exited Trap Range");
       if (go.GetComponent<EntityPiece>().hitboxTrigger.tag.Equals("EnemyPiece")) {
-        entitiesInRange.Remove(go);
         go.GetComponent<EntityPiece>().pieceDestructionDelegate -= OnEnemyDestroy;
+        DoHazardDamage.RemoveListener(go.GetComponent<GameboardPiece>().TakeDamage);
+        entitiesInRange.Remove(go);
       }
     }
 }
+
+public class HazardDamage : UnityEvent<int> { }
