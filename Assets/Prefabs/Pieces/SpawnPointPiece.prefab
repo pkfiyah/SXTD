@@ -34,12 +34,12 @@ PrefabInstance:
     - target: {fileID: 4304073837943791611, guid: dae1f683c748df4488147958191d96d8,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4304073837943791611, guid: dae1f683c748df4488147958191d96d8,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.75
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4304073837943791611, guid: dae1f683c748df4488147958191d96d8,
         type: 3}
@@ -91,6 +91,12 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6814843536461035107, guid: dae1f683c748df4488147958191d96d8,
+        type: 3}
+      propertyPath: piece
+      value: 
+      objectReference: {fileID: 11400000, guid: 13bf1455c4e6f424ab4db39f2866c6d8,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dae1f683c748df4488147958191d96d8, type: 3}
 --- !u!1 &9040160641436043393 stripped

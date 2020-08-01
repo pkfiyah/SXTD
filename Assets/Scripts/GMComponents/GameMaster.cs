@@ -89,6 +89,10 @@ public class GameMaster : MonoBehaviour {
     Gameboard.Instance.UpdateGameboard(tilePosition, Instantiate(gameboardPiece, tilePosition, Quaternion.identity));
   }
 
+  public void PlaceEntity(GameObject gameboardEntity, Vector3Int tilePosition) {
+    Gameboard.Instance.AddEntity(tilePosition, Instantiate(gameboardEntity, tilePosition, Quaternion.identity));
+  }
+
   // Update is called once per frame
   void Update() {
     if (Input.GetKeyDown(KeyCode.Space)) {

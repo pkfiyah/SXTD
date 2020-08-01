@@ -6,17 +6,16 @@ using UnityEngine.Events;
 public class TrapPiece : SlottableGameboardPiece {
     private Animator animator;
     private bool attacking = false;
-    public HazardDamage DoHazardDamage;
 
     public override void Awake() {
       base.Awake();
-      DoHazardDamage = new HazardDamage();
       ui = GetComponentInChildren<StaticInterface>();
       animator = GetComponent<Animator>();
     }
 
     void Update() {
-      if (entitiesInRange.Count > 0 && !attacking) {
+      Debug.Log("entitiesInTile: " + entitiesInTile);
+      if (entitiesInTile > 0 && !attacking) {
         StartCoroutine(Attacking());
       }
     }
@@ -24,31 +23,29 @@ public class TrapPiece : SlottableGameboardPiece {
     IEnumerator Attacking() {
       attacking = true;
       animator.SetTrigger("Attacking");
-      DoHazardDamage.Invoke(GetPieceDamage);
+      TileDamageEvent.Invoke(GetPieceDamage);
       yield return new WaitForSeconds(1f);
       attacking = false;
     }
 
-    void OnEnemyDestroy(GameObject enemy) {
-      DoHazardDamage.RemoveListener(enemy.GetComponent<GameboardPiece>().TakeDamage);
-      entitiesInRange.Remove(enemy);
-    }
+    // void OnEnemyDestroy(GameObject enemy) {
+    //   TileDamageEvent.RemoveListener(enemy.GetComponent<GameboardPiece>().TakeDamage);
+    //   // entitiesInRange.Remove(enemy);
+    // }
 
-    public override void EntityEnteredRange(GameObject go) {
-      if (go.GetComponent<EntityPiece>().hitboxTrigger.tag.Equals("EnemyPiece")) {
-        go.GetComponent<EntityPiece>().pieceDestructionDelegate += OnEnemyDestroy;
-        DoHazardDamage.AddListener(go.GetComponent<GameboardPiece>().TakeDamage);
-        entitiesInRange.Add(go);
-      }
-    }
-
-    public override void EntityExitedRange(GameObject go) {
-      if (go.GetComponent<EntityPiece>().hitboxTrigger.tag.Equals("EnemyPiece")) {
-        go.GetComponent<EntityPiece>().pieceDestructionDelegate -= OnEnemyDestroy;
-        DoHazardDamage.RemoveListener(go.GetComponent<GameboardPiece>().TakeDamage);
-        entitiesInRange.Remove(go);
-      }
-    }
+    // public override void EntityEnteredRange(GameObject go) {
+    //   if (go.GetComponent<EntityPiece>().hitboxTrigger.tag.Equals("EnemyPiece")) {
+    //     go.GetComponent<EntityPiece>().pieceDestructionDelegate += OnEnemyDestroy;
+    //     TileDamageEvent.AddListener(go.GetComponent<GameboardPiece>().TakeDamage);
+    //     // entitiesInRange.Add(go);
+    //   }
+    // }
+    //
+    // public override void EntityExitedRange(GameObject go) {
+    //   if (go.GetComponent<EntityPiece>().hitboxTrigger.tag.Equals("EnemyPiece")) {
+    //     go.GetComponent<EntityPiece>().pieceDestructionDelegate -= OnEnemyDestroy;
+    //     TileDamageEvent.RemoveListener(go.GetComponent<GameboardPiece>().TakeDamage);
+    //     // entitiesInRange.Remove(go);
+    //   }
+    // }
 }
-
-public class HazardDamage : UnityEvent<int> { }

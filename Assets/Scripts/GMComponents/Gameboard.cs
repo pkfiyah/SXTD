@@ -109,19 +109,24 @@ public class Gameboard : MonoBehaviour {
         Destroy(_gameboard[tilePosition.x, tilePosition.y]);
         _gameboard[tilePosition.x, tilePosition.y] = piece;
       } else {
-        activeEnemyCount++;
-        piece.GetComponent<EntityPiece>().SetPathToTargetPosition(aStar(tilePosition));
-        gp.pieceDestructionDelegate += OnEnemyDestroyed;
+        // activeEnemyCount++;
+        // piece.GetComponent<EntityPiece>().SetPathToTargetPosition(aStar(tilePosition));
+        // gp.EntityDestructionEvent += OnEnemyDestroyed;
       }
       return tilePosition;
     }
 
-    void FixedUpdate() {
-      Debug.Log("Active Enemy Count: " + activeEnemyCount);
+    public void AddEntity(Vector3Int tilePosition, GameObject entity) {
+      entity.transform.position = GetWorldPositionFromTilePosition(tilePosition);
+      entity.GetComponent<GameboardEntity>().SetPathToTargetPosition(aStar(tilePosition));
     }
 
-    private void OnEnemyDestroyed(GameObject enemyDestroyed) {
-      activeEnemyCount--;
+    void FixedUpdate() {
+
+    }
+
+    private void OnEnemyDestroyed(GameObject goDestroyed) {
+      // if (goDestroyed.tag == "EnemyPiece") activeEnemyCount--;
       if (!HasEnemiesRemaining()) GameMaster.Instance.EndNighttime();
     }
 

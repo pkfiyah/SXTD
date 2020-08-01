@@ -33,14 +33,14 @@ public class Piece : IPiece {
   public int baseHealth;
   public int baseDamage;
   public float baseAttackSpeed;
-  public float baseRange;
+  public int baseRange;
 
   public Piece() {
     type = PieceType.Empty;
     baseHealth = 100;
     baseDamage = 0;
     baseAttackSpeed = 0f;
-    baseRange = 0f;
+    baseRange = 0;
   }
 
   public Piece(PieceObject po) {

@@ -37,7 +37,7 @@ public class Projectile : MonoBehaviour {
       transform.eulerAngles = new Vector3(0, 0, angle);
 
       if (Vector3.Distance(transform.position, targetPos) < 0.05f) {
-        if (piece != null) piece.TakeDamage(damageAmount);
+        //if (piece != null) piece.TakeDamage(damageAmount);
         Destroy(gameObject);
       }
     }

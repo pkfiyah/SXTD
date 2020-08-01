@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: Stage_1_Night_1
   m_EditorClassIdentifier: 
   enemies:
-  - {fileID: 1681031129313094952, guid: a35797ac5c7676c40990410dd06d5ddd, type: 3}
-  - {fileID: 1681031129313094952, guid: a35797ac5c7676c40990410dd06d5ddd, type: 3}
-  - {fileID: 1681031129313094952, guid: a35797ac5c7676c40990410dd06d5ddd, type: 3}
+  - {fileID: 2999100858413475658, guid: 479c5715a829b3444a55eeb61876318a, type: 3}
+  - {fileID: 2999100858413475658, guid: 479c5715a829b3444a55eeb61876318a, type: 3}
+  - {fileID: 2999100858413475658, guid: 479c5715a829b3444a55eeb61876318a, type: 3}
   data:
+  - enemyCount: 15
+    waveStagger: 6
+    enemyStagger: 0.5
   - enemyCount: 10
     waveStagger: 4
     enemyStagger: 0.5
   - enemyCount: 0
-    waveStagger: 4
-    enemyStagger: 0.5
-  - enemyCount: 0
-    waveStagger: 4
+    waveStagger: 0
     enemyStagger: 0.5

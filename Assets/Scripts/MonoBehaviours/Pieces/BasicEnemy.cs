@@ -4,9 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEditor;
 
-[RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(PolygonCollider2D))]
-public class BasicEnemy : EntityPiece {
+public class BasicEnemy : GameboardEntity {
 
   private bool isAttacking = false;
 
@@ -29,26 +27,26 @@ public class BasicEnemy : EntityPiece {
   //   }
   // }
 
-  private void StartAttacking() {
-    if (!isAttacking) {
-      Debug.Log("Start Attacking");
-      StartCoroutine(Attacking());
-    }
-  }
-
-  IEnumerator Attacking() {
-    isAttacking = true;
-    Debug.Log("InRange: " + entitiesInRange.Count);
-    while (entitiesInRange.Count > 0) {
-      entitiesInRange[0].GetComponent<GameboardPiece>().TakeDamage(10);
-      Debug.Log("Boom");
-      if (isoRend != null) isoRend.SetAttacking();
-      yield return new WaitForSeconds(1f);
-    }
-    isAttacking = false;
-  }
-
-  private void OnPlayerPieceDestroy(GameObject playerPiece) {
-    entitiesInRange.Remove(playerPiece);
-  }
+  // private void StartAttacking() {
+  //   if (!isAttacking) {
+  //     Debug.Log("Start Attacking");
+  //     StartCoroutine(Attacking());
+  //   }
+  // }
+  //
+  // IEnumerator Attacking() {
+  //   isAttacking = true;
+  //   Debug.Log("InRange: " + entitiesInRange.Count);
+  //   while (entitiesInRange.Count > 0) {
+  //     entitiesInRange[0].GetComponent<GameboardPiece>().TakeDamage(10);
+  //     Debug.Log("Boom");
+  //     if (isoRend != null) isoRend.SetAttacking();
+  //     yield return new WaitForSeconds(1f);
+  //   }
+  //   isAttacking = false;
+  // }
+  //
+  // private void OnPlayerPieceDestroy(GameObject playerPiece) {
+  //   entitiesInRange.Remove(playerPiece);
+  // }
 }
