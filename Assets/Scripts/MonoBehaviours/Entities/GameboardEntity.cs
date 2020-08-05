@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(CircleCollider2D))]
 public abstract class GameboardEntity : MonoBehaviour {
 
   public EntityObject entity;
@@ -12,18 +11,21 @@ public abstract class GameboardEntity : MonoBehaviour {
   private GameboardPiece attackTarget;
   private Rigidbody2D rigidbody;
   private float movementSpeed = 0.4f;
-  private List<Vector3Int> movementPath;
+  protected List<Vector3Int> movementPath;
   protected IsoCharacterRenderer isoRend;
   private bool attacking = false;
   private int currentHealth;
   private Vector3 tilePositionVariance;
+
   public int maxHealth;
   public EntityDestruction EntityDestructionEvent = new EntityDestruction();
+  public bool IsDamagable;
 
   public void Awake() {
+    IsDamagable = false;
     isoRend = GetComponent<IsoCharacterRenderer>();
     rigidbody = GetComponent<Rigidbody2D>();
-    tilePositionVariance = new Vector3(Random.Range(-0.4f, 0.4f), Random.Range(-0.2f, 0.2f), 0f);
+    tilePositionVariance = new Vector3(Random.Range(-0.12f, 0.12f), Random.Range(-0.12f, 0.12f), 0f);
   }
 
   public void TakeDamage(int damage) {
@@ -33,6 +35,12 @@ public abstract class GameboardEntity : MonoBehaviour {
       EntityDestructionEvent.Invoke(this.gameObject);
       Destroy(gameObject);
     }
+  }
+
+  public void SetPathToTargetPosition(Vector3Int path) {
+    List<Vector3Int> newPath = new List<Vector3Int>();
+    newPath.Add(path);
+    SetPathToTargetPosition(newPath);
   }
 
   public void SetPathToTargetPosition(List<Vector3Int> newPath) {

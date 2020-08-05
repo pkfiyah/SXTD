@@ -112,6 +112,9 @@ public abstract class GameboardPiece : MonoBehaviour {
     //   //entitiesInTile--;
     //   TileDamageEvent.RemoveListener(go.GetComponent<GameboardEntity>().TakeDamage);
     // }
+    void OnMouseOver() {
+      MouseData.hoverTarget = this.gameObject;
+    }
 }
 
 public class TileDamage : UnityEvent<int> { }

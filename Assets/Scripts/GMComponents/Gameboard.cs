@@ -19,7 +19,7 @@ public class Gameboard : MonoBehaviour {
 
     public static Gameboard Instance { get; private set; }
 
-    private Vector2Int _hearthTileRef;
+    private Vector3Int _hearthTileRef;
     private Pathfinding _pathfinder;
     private GameObject[,] _gameboard;
     private LevelGenerator _levelGen;
@@ -102,7 +102,7 @@ public class Gameboard : MonoBehaviour {
       }
 
       if (gp.piece.data.type == PieceType.Hearth) {
-        _hearthTileRef = new Vector2Int(tilePosition.x, tilePosition.y);
+        _hearthTileRef = new Vector3Int(tilePosition.x, tilePosition.y, 0);
       }
 
       if (gp.piece.data.type != PieceType.Entity) {
@@ -184,6 +184,10 @@ public class Gameboard : MonoBehaviour {
       }
       return convertedPath;
     }
+
+    public Vector3Int GetHearthTile() {
+      return _hearthTileRef;
+    }
 }
 
 public static class MouseData {
@@ -193,5 +197,6 @@ public static class MouseData {
   public static Piece tileHoveredOver;
   public static UserInterface interfaceMouseIsOver;
   public static GameObject activeSelection;
+  public static GameObject hoverTarget;
   public static Vector3 GetWorldPosition { get { Vector3 normalZmousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition); normalZmousePos.z = 0; return normalZmousePos; }}
 }

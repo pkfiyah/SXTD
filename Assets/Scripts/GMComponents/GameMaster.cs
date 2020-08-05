@@ -86,6 +86,7 @@ public class GameMaster : MonoBehaviour {
     if (gameboardPiece.GetComponent<SpriteRenderer>() != null) {
       gameboardPiece.GetComponent<SpriteRenderer>().color = Color.white;
     }
+    TDEvents.RequestDrone.Invoke(tilePosition);
     Gameboard.Instance.UpdateGameboard(tilePosition, Instantiate(gameboardPiece, tilePosition, Quaternion.identity));
   }
 
