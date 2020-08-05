@@ -168,7 +168,7 @@ public class Gameboard : MonoBehaviour {
       _tilemap.SetTile(tilePosition, tile);
     }
 
-    public List<Vector3Int> aStar(Vector3Int startTilePos) {
+    public List<Vector3> aStar(Vector3Int startTilePos) {
       Piece[,] boardRef = new Piece[stageParams.StageWidth, stageParams.StageLength];
       for (int i = 0; i < stageParams.StageWidth; i++) {
         for (int j = 0; j < stageParams.StageLength; j++) {
@@ -178,15 +178,16 @@ public class Gameboard : MonoBehaviour {
 
       _pathfinder.parseGameBoard(boardRef);
       List<PathNode> path = _pathfinder.findPath(startTilePos.x, startTilePos.y, _hearthTileRef.x, _hearthTileRef.y);
-      List<Vector3Int> convertedPath = new List<Vector3Int>();
+      List<Vector3> convertedPath = new List<Vector3>();
       foreach (PathNode node in path) {
-        convertedPath.Add(new Vector3Int(node.getX(), node.getY(), 0));
+        Vector3Int tilePos = new Vector3Int(node.getX(), node.getY(), 0);
+        convertedPath.Add(GetWorldPositionFromTilePosition(tilePos));
       }
       return convertedPath;
     }
 
-    public Vector3Int GetHearthTile() {
-      return _hearthTileRef;
+    public Vector3 GetHearthTile() {
+      return GetWorldPositionFromTilePosition(_hearthTileRef);
     }
 }
 

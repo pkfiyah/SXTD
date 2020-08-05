@@ -138,7 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d81897bf9dd9f540b7cde92223ceba6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entity: {fileID: 0}
+  entity: {fileID: 11400000, guid: 0a45fdddf44e68e48a89b0e8214e4bc5, type: 2}
   maxHealth: 0
   IsDamagable: 0
 --- !u!114 &6153451008366141112

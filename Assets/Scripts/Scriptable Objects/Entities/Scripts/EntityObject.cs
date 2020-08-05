@@ -15,12 +15,14 @@ public class Entity {
   public int baseDamage;
   public float baseAttackSpeed;
   public int baseRange;
+  public float baseSpeed;
 
   public Entity() {
     baseHealth = 100;
     baseDamage = 0;
     baseAttackSpeed = 0f;
     baseRange = 0;
+    baseSpeed = 0.4f;
   }
 
   public Entity(EntityObject po) {
@@ -28,5 +30,6 @@ public class Entity {
     baseDamage = po.data.baseDamage;
     baseAttackSpeed = po.data.baseAttackSpeed;
     baseRange = po.data.baseRange;
+    baseSpeed = po.data.baseSpeed; 
   }
 }
