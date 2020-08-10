@@ -83,6 +83,21 @@ public class Gameboard : MonoBehaviour {
       }
     }
 
+    public GameObject GetTileReference(int x, int y) {
+      return _gameboard[x, y];
+    }
+
+    public GameObject[] GetTileReferences(int xStart, int xRange, int yStart, int yRange) {
+      GameObject[] reference = new GameObject[xRange * yRange];
+      int index = 0;
+      for (int i = 0; i < xRange; i++) {
+        for(int j = 0; j < yRange; j++){
+          reference[index] = _gameboard[xStart + i, yStart + j];
+        }
+      }
+      return reference;
+    }
+
     /**
     * All modifications to the game board happen here
     * Input is a position and an already instantiated GameObject
@@ -108,6 +123,7 @@ public class Gameboard : MonoBehaviour {
       if (gp.piece.data.type != PieceType.Entity) {
         Destroy(_gameboard[tilePosition.x, tilePosition.y]);
         _gameboard[tilePosition.x, tilePosition.y] = piece;
+        gp.OnAfterPlaced();
       } else {
         // activeEnemyCount++;
         // piece.GetComponent<EntityPiece>().SetPathToTargetPosition(aStar(tilePosition));

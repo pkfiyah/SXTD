@@ -3,22 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PrismiteNode : GameboardPiece {
-    // Start is called before the first frame update
-    // private InventoryObject casinoInventory;
     private PrismiteObject currentPrismite;
-    private SpriteRenderer rendRef;
-
     public PrismiteDatabaseObject database;
-
+    private GameObject temp;
     public override void Awake() {
       base.Awake();
-      rendRef = GetComponent<SpriteRenderer>();
       NextPrismite();
+      temp = GameObject.Find("PrismiteSelectionPanel");
+
     }
 
     private void NextPrismite() {
       currentPrismite = database.GetPrismite[Random.Range(0, database.GetPrismite.Count)];
-      rendRef.color = GetColourFromPrismite(currentPrismite.data);
+      pieceRenderer.color = GetColourFromPrismite(currentPrismite.data);
     }
 
     private Color GetColourFromPrismite(Prismite p) {
@@ -35,4 +32,16 @@ public class PrismiteNode : GameboardPiece {
           return Color.white;
       }
     }
+
+    public PrismiteObject GetPrismite() {
+      return currentPrismite;
+    }
+
+    void Update() {
+      if (DebugMode) {
+          Debug.Log("Panel: " + temp);
+      }
+    }
+
+    public override void OnAfterPlaced() {}
 }

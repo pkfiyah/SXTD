@@ -16,7 +16,7 @@ public abstract class GameboardEntity : MonoBehaviour {
   private bool attacking = false;
   private int currentHealth;
   private Vector3 tilePositionVariance;
-
+  public bool variantPos = false;
   public int maxHealth;
   public EntityDestruction EntityDestructionEvent = new EntityDestruction();
   public bool IsDamagable;
@@ -26,13 +26,12 @@ public abstract class GameboardEntity : MonoBehaviour {
     IsDamagable = false;
     isoRend = GetComponent<IsoCharacterRenderer>();
     rigidbody = GetComponent<Rigidbody2D>();
-    tilePositionVariance = new Vector3(Random.Range(-0.12f, 0.12f), Random.Range(-0.12f, 0.12f), 0f);
+    if (variantPos) tilePositionVariance = new Vector3(Random.Range(-0.12f, 0.12f), Random.Range(-0.12f, 0.12f), 0f);
   }
 
   public void TakeDamage(int damage) {
     currentHealth -= damage;
     if (currentHealth <= 0) {
-      Debug.Log("INVOKING DEATH");
       EntityDestructionEvent.Invoke(this.gameObject);
       Destroy(gameObject);
     }
@@ -58,18 +57,17 @@ public abstract class GameboardEntity : MonoBehaviour {
 
   void FixedUpdate() {
     if (movementPath == null) {
-      Debug.Log("No Path Found");
       return;
     }
 
     if (movementPath.Count > 0) {
       Vector2 currWorldPos = rigidbody.position;
-
       // Find hearth and attack it
-      Vector3 targetWorldPos = movementPath[0] + tilePositionVariance;
+      Vector3 targetWorldPos = movementPath[0];
+      if (variantPos) targetWorldPos += tilePositionVariance;
       if (Vector3.Distance(movementPath[0], transform.position) < 0.1f && movementPath.Count > 1) {
           movementPath.RemoveAt(0);
-          tilePositionVariance = new Vector3(Random.Range(-0.12f, 0.12f), Random.Range(-0.12f, 0.12f), 0f);
+          if (variantPos) tilePositionVariance = new Vector3(Random.Range(-0.12f, 0.12f), Random.Range(-0.12f, 0.12f), 0f);
       }
 
       Vector2 inputVector = new Vector2(targetWorldPos.x - currWorldPos.x, targetWorldPos.y - currWorldPos.y);

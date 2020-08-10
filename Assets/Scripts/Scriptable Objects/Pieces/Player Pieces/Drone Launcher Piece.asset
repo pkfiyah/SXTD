@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 697fad31807d7204a85642c9bdb3d09c, type: 3}
-  m_Name: Prismite Piece
+  m_Name: Drone Launcher Piece
   m_EditorClassIdentifier: 
   tile: {fileID: 0}
   description: 
   data:
-    type: 2
-    damage:
-      baseValue: 0
-      modifiedValue: 0
-    attackSpeed: 0
+    type: 3
+    baseHealth: 100
+    baseDamage: 3
+    baseAttackSpeed: 1.5
+    baseRange: 1

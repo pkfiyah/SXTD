@@ -9,6 +9,7 @@ public static class TDEvents {
     public static DayNightChangeEvent IsNightChange = new DayNightChangeEvent();
     public static GameOverEvent GameOver = new GameOverEvent();
     public static RequestDroneEvent RequestDrone = new RequestDroneEvent();
+    public static SelectionChangedEvent SelectionChanged = new SelectionChangedEvent();
 }
 
 public class CurrencyChangeEvent : UnityEvent<int> { }
@@ -16,3 +17,4 @@ public class TimeChangeEvent : UnityEvent<int> { }
 public class DayNightChangeEvent: UnityEvent<bool> { }
 public class GameOverEvent: UnityEvent { }
 public class RequestDroneEvent: UnityEvent<Vector3Int> { }
+public class SelectionChangedEvent: UnityEvent<GameObject> { }

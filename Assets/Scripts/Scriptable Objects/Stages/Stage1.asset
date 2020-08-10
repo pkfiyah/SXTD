@@ -29,6 +29,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4da208efc8026a94b8e58f07f854e08a, type: 2}
   PrismitePool: {fileID: 0}
   data:
-    stageWidth: 12
-    stageLength: 16
+    stageWidth: 10
+    stageLength: 14
     nightsInStage: 3

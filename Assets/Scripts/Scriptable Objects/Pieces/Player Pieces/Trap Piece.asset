@@ -10,18 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 697fad31807d7204a85642c9bdb3d09c, type: 3}
-  m_Name: Empty Piece
+  m_Name: Trap Piece
   m_EditorClassIdentifier: 
-  tile: {fileID: 11400000, guid: b5a2482989a4f874d8be122ba4658868, type: 2}
-  description: 'Default Piece, Used for all spaces that aren''t another type
-
-    -
-    IsTraversable: true
-
-    - CanConstructOn: true'
+  tile: {fileID: 0}
+  description: 
   data:
-    type: 0
-    damage:
-      baseValue: 0
-      modifiedValue: 0
-    attackSpeed: 0
+    type: 4
+    baseHealth: 100
+    baseDamage: 10
+    baseAttackSpeed: 1
+    baseRange: 0

@@ -6,4 +6,8 @@ public class HearthPiece : GameboardPiece {
     void OnDestroy() {
       TDEvents.GameOver.Invoke();
     }
+
+    public override void OnAfterPlaced() {
+
+    }
 }

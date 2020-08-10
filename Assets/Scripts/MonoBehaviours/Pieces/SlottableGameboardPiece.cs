@@ -65,4 +65,8 @@ public class SlottableGameboardPiece : GameboardPiece {
         ui.inventory.GetSlots[i].OnAfterUpdate += OnAfterSlotUpdate;
       }
     }
+
+    public override void OnAfterPlaced() {
+      TilePosition = Gameboard.Instance.GetTilePositionFromWorldPosition(transform.position);
+    }
 }

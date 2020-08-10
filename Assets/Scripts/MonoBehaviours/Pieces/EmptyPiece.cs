@@ -2,4 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EmptyPiece : GameboardPiece {}
+public class EmptyPiece : GameboardPiece {
+  public override void OnAfterPlaced() {
+    return;
+  }
+}
