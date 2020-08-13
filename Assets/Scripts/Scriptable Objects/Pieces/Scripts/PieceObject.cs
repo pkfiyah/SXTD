@@ -15,6 +15,7 @@ public enum PieceType {
 
 [CreateAssetMenu(fileName = "New Piece Object", menuName = "Inventory System/Piece/New Piece")]
 public class PieceObject : ScriptableObject {
+  public Sprite staticSprite;
   public Tile tile; // Sprite shown on grid
   [TextArea(15,20)]
   public string description;

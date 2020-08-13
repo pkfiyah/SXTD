@@ -10,16 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 557eca8a8e4eb76458fe95816ed4ca28, type: 3}
-  m_Name: Green Prismite
+  m_Name: Dull Blue Prismite
   m_EditorClassIdentifier: 
-  uiDisplay: {fileID: 21300000, guid: ceeedd9aa06b15a439a6698002fabad1, type: 3}
+  uiDisplay: {fileID: 21300000, guid: 7734eb1da5077cf4e8b02ae695d66ea6, type: 3}
   description: 
   data:
-    name: 
-    id: 1
-    colour: 0
+    name: Dull Blue Prismite
+    id: 0
+    redColour: 0
+    blueColour: 1
+    yellowColour: 0
+    quality: 1
     buffs:
-    - modifier: 2
+    - modifier: 0
       value: 0
       min: 10
-      max: 30
+      max: 20

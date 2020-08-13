@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 697fad31807d7204a85642c9bdb3d09c, type: 3}
   m_Name: Trap Piece
   m_EditorClassIdentifier: 
+  staticSprite: {fileID: 1601861561609165259, guid: 6298ecaa114287047805821ec2b175b6,
+    type: 3}
   tile: {fileID: 0}
   description: 
   data:

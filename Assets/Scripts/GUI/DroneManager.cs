@@ -12,7 +12,6 @@ public class DroneManager : MonoBehaviour {
     private int droneIndex = 0;
 
     void InitDrones() {
-      Debug.Log("INHere");
       UnusedDrones = new GameObject[4];
       for (int i = 0; i < 4; i++) {
         Vector3 LaunchPosition = Gameboard.Instance.GetHearthTile();

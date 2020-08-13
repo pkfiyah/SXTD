@@ -10,12 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 557eca8a8e4eb76458fe95816ed4ca28, type: 3}
-  m_Name: Yellow Prismite
+  m_Name: Forest Green Prismite
   m_EditorClassIdentifier: 
-  uiDisplay: {fileID: 21300000, guid: fc9dabc5171ab5a4d98c75f07e31c209, type: 3}
-  description: A Yellow Crystal.
+  uiDisplay: {fileID: 21300000, guid: ceeedd9aa06b15a439a6698002fabad1, type: 3}
+  description: 
   data:
-    name: 
-    id: 4
-    colour: 0
-    buffs: []
+    name: Forest Green Prismite
+    id: 1
+    redColour: 0
+    blueColour: 2
+    yellowColour: 1
+    quality: 2
+    buffs:
+    - modifier: 2
+      value: 0
+      min: 10
+      max: 30

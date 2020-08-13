@@ -14,7 +14,6 @@ public class TrapPiece : SlottableGameboardPiece {
     }
 
     void Update() {
-      Debug.Log("entitiesInTile: " + entitiesInTile);
       if (entitiesInTile > 0 && !attacking) {
         StartCoroutine(Attacking());
       }

@@ -10,16 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 557eca8a8e4eb76458fe95816ed4ca28, type: 3}
-  m_Name: Blue Prismite
+  m_Name: Dull Yellow Prismite
   m_EditorClassIdentifier: 
-  uiDisplay: {fileID: 21300000, guid: 92c23a9a1431d074f817ef0a67734e31, type: 3}
-  description: 
+  uiDisplay: {fileID: 21300000, guid: d1c89f20b3c67914d9fa7862847ef1fd, type: 3}
+  description: A Yellow Crystal.
   data:
-    name: 
-    id: 0
-    colour: 0
-    buffs:
-    - modifier: 0
-      value: 0
-      min: 10
-      max: 20
+    name: Dull Yellow Prismite
+    id: 2
+    redColour: 0
+    blueColour: 0
+    yellowColour: 1
+    quality: 1
+    buffs: []

@@ -49,22 +49,9 @@ public class StaticInterface : UserInterface {
   }
 
   public void Reappear(Vector3 newPosition) {
-    // Debug.Log("WhatL " + uiPosition.localScale);
-    // Debug.Log("PAretn: " + uiPosition.parent.localScale.x);
-    // newPosition.z = 0f;
     _cGroup.alpha = 1f;
     _cGroup.blocksRaycasts = true;
-    // Debug.Log("Screen Pos: " + Camera.main.WorldToScreenPoint(newPosition));
-    // Vector3 updatedPos = Camera.main.WorldToScreenPoint(newPosition);
-    // updatedPos.z = 0f;
-    // Debug.Log("Updated Pos: " + updatedPos);
-    // Vector2 gimme;
-    // RectTransformUtility.ScreenPointToLocalPointInRectangle(uiPosition, updatedPos, Camera.main, out gimme);
-    // Debug.Log("Screen Point in Local Point: " + gimme);
-    //uiPosition.localPosition = gimme;
-    // uiPosition.localPosition = Vector3.zero;
-    uiPosition.localPosition = new Vector3(0, 0, 0);// GetOffset(newPosition);
-    Debug.Log("Local Pos: " + uiPosition.localPosition);
+    uiPosition.position = transform.parent.position + new Vector3(2.75f, 0f, 0f);
   }
 
   private Vector3 GetOffset(Vector3 newPosition) {

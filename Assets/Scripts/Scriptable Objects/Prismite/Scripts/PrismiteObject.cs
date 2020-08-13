@@ -2,18 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//All Prismite Colours
-public enum PrismiteColour {
-  Red,
-  Blue,
-  Yellow,
-  Green,
-  Orange,
-  Purple,
-  White,
-  Black
-}
-
 // All Prismite Modifiers
 public enum PrismiteModifier {
   Damage,
@@ -41,13 +29,19 @@ public class Prismite {
 
   public string name;
   public int id = -1;
-  public PrismiteColour colour;
+  public int redColour;
+  public int blueColour;
+  public int yellowColour;
+  public int quality;
   public PrismiteBuff[] buffs;
 
   // Clones an existing PrismiteObject
   public Prismite(PrismiteObject item) {
     id = item.data.id;
-    colour = item.data.colour;
+    redColour = item.data.redColour;
+    blueColour = item.data.blueColour;
+    yellowColour = item.data.yellowColour;
+    quality = item.data.quality;
     buffs = new PrismiteBuff[item.data.buffs.Length];
     for (int i = 0; i < buffs.Length; i++) {
       buffs[i] = new PrismiteBuff(item.data.buffs[i].min, item.data.buffs[i].max);
