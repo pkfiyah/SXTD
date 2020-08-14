@@ -16,9 +16,10 @@ MonoBehaviour:
   description: 
   data:
     name: Dull Red Prismite
-    id: 0
+    id: 1
     redColour: 1
     blueColour: 0
     yellowColour: 0
     quality: 1
+    cost: 1
     buffs: []

@@ -20,40 +20,72 @@ MonoBehaviour:
     - prismite:
         name: 
         id: -1
-        colour: 0
+        redColour: 0
+        blueColour: 0
+        yellowColour: 0
+        quality: 0
+        cost: 0
         buffs: []
     - prismite:
         name: 
         id: -1
-        colour: 0
+        redColour: 0
+        blueColour: 0
+        yellowColour: 0
+        quality: 0
+        cost: 0
         buffs: []
     - prismite:
         name: 
         id: -1
-        colour: 0
+        redColour: 0
+        blueColour: 0
+        yellowColour: 0
+        quality: 0
+        cost: 0
         buffs: []
     - prismite:
         name: 
         id: -1
-        colour: 0
+        redColour: 0
+        blueColour: 0
+        yellowColour: 0
+        quality: 0
+        cost: 0
         buffs: []
     - prismite:
         name: 
         id: -1
-        colour: 0
+        redColour: 0
+        blueColour: 0
+        yellowColour: 0
+        quality: 0
+        cost: 0
         buffs: []
     - prismite:
         name: 
         id: -1
-        colour: 0
+        redColour: 0
+        blueColour: 0
+        yellowColour: 0
+        quality: 0
+        cost: 0
         buffs: []
     - prismite:
         name: 
         id: -1
-        colour: 0
+        redColour: 0
+        blueColour: 0
+        yellowColour: 0
+        quality: 0
+        cost: 0
         buffs: []
     - prismite:
         name: 
         id: -1
-        colour: 0
+        redColour: 0
+        blueColour: 0
+        yellowColour: 0
+        quality: 0
+        cost: 0
         buffs: []

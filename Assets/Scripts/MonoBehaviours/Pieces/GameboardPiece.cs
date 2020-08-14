@@ -47,11 +47,16 @@ public abstract class GameboardPiece : MonoBehaviour {
 
     void OnMouseDown() {
       if(EventSystem.current.IsPointerOverGameObject()) return;
+
       if (MouseData.activeSelection == null  || (MouseData.activeSelection != null && MouseData.activeSelection != this)) {
         MouseData.activeSelection = this.gameObject;
         TDEvents.SelectionChanged.Invoke(this.gameObject);
       } else {
         MouseData.activeSelection = null;
+      }
+
+      if (piece.data.CanConstructOn() && EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.GetComponent<HeroConstructionCard>() != null) {
+        GameMaster.Instance.PlaceGameboardPiece(EventSystem.current.currentSelectedGameObject.GetComponent<HeroConstructionCard>().constructablePiece, GetTilePosition());
       }
     }
 
@@ -70,7 +75,7 @@ public abstract class GameboardPiece : MonoBehaviour {
     }
 
     public Vector3Int GetTilePosition() {
-      return TilePosition;
+      return Gameboard.Instance.GetTilePositionFromWorldPosition(transform.position);
     }
 
     // Tagged Triggers will exist on all pieces to represent hitboxes.
@@ -105,6 +110,13 @@ public abstract class GameboardPiece : MonoBehaviour {
 
     // Things that Need to happen after initialization and gameboard placement happen here
     public abstract void OnAfterPlaced();
+
+    void OnDrawGizmos() {
+
+      // Gizmos.color = Color.yellow;
+      // Gizmos.DrawWireSphere(transform.position, 0.25f);
+
+    }
 }
 
 public class TileDamage : UnityEvent<int> { }

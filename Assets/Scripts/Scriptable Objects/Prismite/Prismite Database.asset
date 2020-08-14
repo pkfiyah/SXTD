@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prismiteObjects:
   - {fileID: 11400000, guid: 76d33b0203f2e6c4ab8ccb427ae092e2, type: 2}
-  - {fileID: 11400000, guid: cd8db125e53c4634f994e36623446948, type: 2}
   - {fileID: 11400000, guid: 75873c388cbd45942bb9e3506e0aeb96, type: 2}
-  - {fileID: 11400000, guid: bb9dc1b99751db045829771c707cb9b0, type: 2}
   - {fileID: 11400000, guid: 102a6bb9ed77abb4c8b22813c1c7744d, type: 2}
+  - {fileID: 11400000, guid: cd8db125e53c4634f994e36623446948, type: 2}
+  - {fileID: 11400000, guid: bb9dc1b99751db045829771c707cb9b0, type: 2}

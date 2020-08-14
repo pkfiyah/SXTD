@@ -73,6 +73,8 @@ public class Gameboard : MonoBehaviour {
         _spawnPoints.Add(UpdateGameboard(spawnPointPosition, Instantiate(spawnPoint, GetWorldPositionFromTilePosition(spawnPointPosition), Quaternion.identity)));
         OnNightEnd();
       }
+      Debug.Log("INVOKING");
+      TDEvents.StageInitiated.Invoke();
     }
 
     private void GoGreen() {
@@ -120,15 +122,11 @@ public class Gameboard : MonoBehaviour {
         _hearthTileRef = new Vector3Int(tilePosition.x, tilePosition.y, 0);
       }
 
-      if (gp.piece.data.type != PieceType.Entity) {
-        Destroy(_gameboard[tilePosition.x, tilePosition.y]);
-        _gameboard[tilePosition.x, tilePosition.y] = piece;
-        gp.OnAfterPlaced();
-      } else {
-        // activeEnemyCount++;
-        // piece.GetComponent<EntityPiece>().SetPathToTargetPosition(aStar(tilePosition));
-        // gp.EntityDestructionEvent += OnEnemyDestroyed;
-      }
+
+      Destroy(_gameboard[tilePosition.x, tilePosition.y]);
+      _gameboard[tilePosition.x, tilePosition.y] = piece;
+      gp.OnAfterPlaced();
+
       return tilePosition;
     }
 
@@ -177,6 +175,10 @@ public class Gameboard : MonoBehaviour {
       Vector3 ret = groundTilemap.GetCellCenterWorld(tilePosition);
       ret.z = 0f;
       return ret;
+    }
+
+    public Vector3 GetTileCenterWorldPosition(Vector3 worldPosition) {
+      return GetWorldPositionFromTilePosition(GetTilePositionFromWorldPosition(worldPosition));
     }
 
     public void SetTileGraphic(Tilemap _tilemap, Vector3Int tilePosition, Tile tile) {

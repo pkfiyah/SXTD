@@ -15,12 +15,17 @@ public class GhostMarkerController : MonoBehaviour {
     private bool isBroke = false;
 
 
+
+
     void OnEnable() {
         TDEvents.CurrencyChange.AddListener(IsBroke);
+        TDEvents.RequestConstruction.AddListener(SetGhostPiece);
+        ghostSprite.enabled = false;
     }
 
     void OnDisable() {
         TDEvents.CurrencyChange.RemoveListener(IsBroke);
+        TDEvents.RequestConstruction.RemoveListener(SetGhostPiece);
     }
 
     private void IsBroke(int currentBots) {
@@ -33,21 +38,24 @@ public class GhostMarkerController : MonoBehaviour {
       isClean = true;
     }
 
+    void SetGhostPiece(GameObject constructablePiece) {
+      if (constructablePiece != null) {
+        ghostSprite.sprite = constructablePiece.GetComponent<SpriteRenderer>().sprite;
+        ghostSprite.enabled = true;
+      } else {
+        ghostSprite.enabled = false;
+      }
+    }
+
     void Update() {
       if (!isClean) this.CleanBoard();
-      if(MouseData.tempPieceBeingDragged != null) {
-        Tile tileRef = MouseData.tempPieceBeingDragged.GetComponent<GameboardPiece>().piece.tile;
-        if (tileRef != null) {
-          if (!isBroke) tileRef.color = GhostMarkerController.GHOST_WHITE;
-          else tileRef.color = GhostMarkerController.GHOST_RED;
-          ghostTileMap.SetTile(ghostTileMap.WorldToCell(MouseData.GetWorldPosition), tileRef);
-        } else {
-          ghostSprite.sprite = MouseData.tempPieceBeingDragged.GetComponent<SpriteRenderer>().sprite;
-          ghostSprite.transform.position = MouseData.tempPieceBeingDragged.transform.position;
+      if(ghostSprite.enabled) {
+        if (ghostSprite != null) {
+          ghostSprite.sprite = ghostSprite.sprite;
+          ghostSprite.transform.position = ghostTileMap.GetCellCenterWorld(ghostTileMap.WorldToCell(MouseData.GetWorldPosition));
           if (!isBroke) ghostSprite.color = GhostMarkerController.GHOST_WHITE;
           else ghostSprite.color = GhostMarkerController.GHOST_RED;
         }
-
         isClean = false;
       }
     }

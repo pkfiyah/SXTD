@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using UnityEngine.UIElements;
+using UnityEngine.EventSystems;
 using UnityEditor;
 using System.Collections.Generic;
 using DataStructures.PriorityQueue;
@@ -86,12 +86,26 @@ public class GameMaster : MonoBehaviour {
     if (gameboardPiece.GetComponent<SpriteRenderer>() != null) {
       gameboardPiece.GetComponent<SpriteRenderer>().color = Color.white;
     }
-    TDEvents.RequestDrone.Invoke(tilePosition);
-    Gameboard.Instance.UpdateGameboard(tilePosition, Instantiate(gameboardPiece, tilePosition, Quaternion.identity));
+    if (MakePurchase(gameboardPiece.GetComponent<GameboardPiece>().piece.data.cost)) {
+      for (int i = 0; i < gameboardPiece.GetComponent<GameboardPiece>().piece.data.cost; i++) {
+        TDEvents.RequestDrone.Invoke(tilePosition);
+      }
+      Gameboard.Instance.UpdateGameboard(tilePosition, Instantiate(gameboardPiece, tilePosition, Quaternion.identity));
+    }
   }
 
   public void PlaceEntity(GameObject gameboardEntity, Vector3Int tilePosition) {
     Gameboard.Instance.AddEntity(tilePosition, Instantiate(gameboardEntity, tilePosition, Quaternion.identity));
+  }
+
+  public bool HarvestPrismite(Vector3Int tilePosition, int cost) {
+    if (MakePurchase(cost)) {
+      for (int i = 0; i < cost; i++) {
+        TDEvents.RequestDrone.Invoke(tilePosition);
+      }
+      return true;
+    }
+    return false;
   }
 
   // Update is called once per frame

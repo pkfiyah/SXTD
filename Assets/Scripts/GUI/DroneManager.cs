@@ -21,12 +21,15 @@ public class DroneManager : MonoBehaviour {
       }
     }
 
+    void OnStageInit() {
+      Debug.Log("HERHEHREH");
+      InitDrones();
+    }
+
     void OnEnable() {
       TDEvents.RequestDrone.AddListener(LaunchDrone);
       TDEvents.TimeChange.AddListener(OnTimeChange);
-      // for (int i = 0; i < 4; i++) {
-      //   RecallDrones.AddListener(UnusedDrones[i].GetComponent<DroneBehaviour>().ListenToRecall);
-      // }
+      TDEvents.StageInitiated.AddListener(OnStageInit);
     }
 
     private void OnTimeChange(int meh) {
@@ -37,6 +40,7 @@ public class DroneManager : MonoBehaviour {
     void OnDisable() {
       TDEvents.RequestDrone.RemoveListener(LaunchDrone);
       TDEvents.TimeChange.RemoveListener(OnTimeChange);
+      TDEvents.StageInitiated.RemoveListener(OnStageInit);
       for (int i = 0; i < 4; i++) {
         RecallDrones.RemoveListener(UnusedDrones[i].GetComponent<DroneBehaviour>().ListenToRecall);
       }

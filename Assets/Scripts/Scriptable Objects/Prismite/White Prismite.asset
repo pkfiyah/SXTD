@@ -16,8 +16,12 @@ MonoBehaviour:
   description: A White Crystal.
   data:
     name: 
-    id: 3
-    colour: 0
+    id: 4
+    redColour: 0
+    blueColour: 0
+    yellowColour: 0
+    quality: 0
+    cost: 4
     buffs:
     - modifier: 1
       value: 0

@@ -18,6 +18,13 @@ public class PrismiteDatabaseObject : ScriptableObject, ISerializationCallbackRe
     public void OnBeforeSerialize() {
       GetPrismite = new Dictionary<int, PrismiteObject>();
     }
+
+    public string CheckDb() {
+      Debug.Log("Database Size: " + prismiteObjects.Length);
+      Debug.Log("Keys:" + GetPrismite.Keys);
+      Debug.Log("Values:" + GetPrismite.Values);
+      return "";
+    }
 }
 
 // Reference to all Scriptable Prismite Objects that exist. Can get a reference to an PrismiteObject in the database via it's ID

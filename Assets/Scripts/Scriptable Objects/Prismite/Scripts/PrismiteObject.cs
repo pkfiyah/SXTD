@@ -33,6 +33,7 @@ public class Prismite {
   public int blueColour;
   public int yellowColour;
   public int quality;
+  public int cost;
   public PrismiteBuff[] buffs;
 
   // Clones an existing PrismiteObject

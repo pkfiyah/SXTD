@@ -21,6 +21,7 @@ MonoBehaviour:
     blueColour: 1
     yellowColour: 0
     quality: 1
+    cost: 1
     buffs:
     - modifier: 0
       value: 0

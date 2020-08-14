@@ -5,10 +5,22 @@ using UnityEngine;
 public class DroneBehaviour : GameboardEntity {
 
   GameObject[] AttackableTiles;
-  public void SetDronePosition(Vector3 newPos) {
-    Vector3Int tilePos = Gameboard.Instance.GetTilePositionFromWorldPosition(newPos);
-    // Need Range Check here, 2 for now
-    AttackableTiles = Gameboard.Instance.GetTileReferences(tilePos.x, 1, tilePos.y, 1);
+  Vector3 wanderPosition;
+  bool wanderUpdate = true;
+
+  void Update() {
+    if (wanderUpdate) {
+      Debug.Log("MovePAth: " + movementPath);
+      wanderUpdate = false;
+      StartCoroutine(SelectWanderPoint());
+    }
+  }
+
+  IEnumerator SelectWanderPoint() {
+    yield return new WaitForSeconds(4);
+    if (movementPath == null) movementPath = new List<Vector3>();
+    movementPath.Add(Gameboard.Instance.GetTileCenterWorldPosition(transform.position) + new Vector3(Random.Range(-0.20f, 0.20f), Random.Range(-0.15f, 0.15f), 0f));
+    wanderUpdate = true;
   }
 
   void ScanTilesForEnemies() {

@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public enum PieceType {
-  Entity = -1,
   Empty = 0,
   Hearth = 1,
   Prismite = 2,
@@ -35,6 +34,7 @@ public class Piece : IPiece {
   public int baseDamage;
   public float baseAttackSpeed;
   public int baseRange;
+  public int cost;
 
   public Piece() {
     type = PieceType.Empty;
@@ -42,6 +42,7 @@ public class Piece : IPiece {
     baseDamage = 0;
     baseAttackSpeed = 0f;
     baseRange = 0;
+    cost = 0;
   }
 
   public Piece(PieceObject po) {
@@ -50,6 +51,7 @@ public class Piece : IPiece {
     baseDamage = po.data.baseDamage;
     baseAttackSpeed = po.data.baseAttackSpeed;
     baseRange = po.data.baseRange;
+    cost = po.data.cost;
   }
 
   public Piece(PieceType pt) {
@@ -80,7 +82,6 @@ public class Piece : IPiece {
 
   public bool IsDamagable() {
     switch(type) {
-      case PieceType.Entity:
       case PieceType.Hearth:
         return true;
       default:

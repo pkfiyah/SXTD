@@ -9,8 +9,8 @@ public abstract class GameboardEntity : MonoBehaviour {
   public EntityObject entity;
 
   private GameboardPiece attackTarget;
-  private Rigidbody2D rigidbody;
-  private float movementSpeed = 0.4f;
+  protected Rigidbody2D rigidbody;
+  protected float movementSpeed = 0.4f;
   protected List<Vector3> movementPath;
   protected IsoCharacterRenderer isoRend;
   private bool attacking = false;
