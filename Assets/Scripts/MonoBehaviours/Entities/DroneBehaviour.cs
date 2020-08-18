@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class DroneBehaviour : GameboardEntity {
 
-  GameObject[] AttackableTiles;
   Vector3 wanderPosition;
   bool wanderUpdate = true;
 
@@ -19,16 +18,8 @@ public class DroneBehaviour : GameboardEntity {
   IEnumerator SelectWanderPoint() {
     yield return new WaitForSeconds(4);
     if (movementPath == null) movementPath = new List<Vector3>();
-    movementPath.Add(Gameboard.Instance.GetTileCenterWorldPosition(transform.position) + new Vector3(Random.Range(-0.20f, 0.20f), Random.Range(-0.15f, 0.15f), 0f));
+    movementPath.Add(Gameboard.Instance.GetTileCenterWorldPosition(transform.position) + new Vector3(Random.Range(-0.15f, 0.15f), Random.Range(-0.15f, 0.15f), 0f));
     wanderUpdate = true;
-  }
-
-  void ScanTilesForEnemies() {
-    if (AttackableTiles != null) {
-      for(int i = 0; i < AttackableTiles.Length; i++) {
-        // AttackableTiles.GetComponent<GameboardPiece>();
-      }
-    }
   }
 
   public void ListenToRecall() {

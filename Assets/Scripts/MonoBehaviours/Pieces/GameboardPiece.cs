@@ -13,10 +13,10 @@ public abstract class GameboardPiece : MonoBehaviour {
     /** Piece Vars **/
     public PieceObject piece;
     protected ModifiableInt damage;
-    public int GetPieceDamage { get { return damage.ModifiedValue; } }
+    public ModifiableInt GetPieceDamage { get { return damage; } }
 
     protected ModifiableFloat attackSpeed;
-    public float GetPieceAttackSpeed { get { return attackSpeed.ModifiedValue; } }
+    public ModifiableFloat GetPieceAttackSpeed { get { return attackSpeed; } }
 
     protected ModifiableInt range;
     public float GetPieceRange { get { return range.ModifiedValue; } }

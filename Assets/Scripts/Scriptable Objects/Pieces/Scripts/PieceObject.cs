@@ -29,6 +29,7 @@ public class PieceObject : ScriptableObject {
 
 [System.Serializable]
 public class Piece : IPiece {
+  public string name;
   public PieceType type;
   public int baseHealth;
   public int baseDamage;

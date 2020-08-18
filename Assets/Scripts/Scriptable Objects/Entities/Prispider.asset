@@ -9,18 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 697fad31807d7204a85642c9bdb3d09c, type: 3}
-  m_Name: Trap Piece
+  m_Script: {fileID: 11500000, guid: 294ef5c13b3bc80438618e9401a38178, type: 3}
+  m_Name: Prispider
   m_EditorClassIdentifier: 
-  staticSprite: {fileID: 1601861561609165259, guid: 6298ecaa114287047805821ec2b175b6,
-    type: 3}
-  tile: {fileID: 0}
-  description: 
   data:
-    name: Trap Tower
-    type: 4
-    baseHealth: 100
+    baseHealth: 50
     baseDamage: 10
     baseAttackSpeed: 1
-    baseRange: 0
-    cost: 2
+    baseRange: 1
+    baseSpeed: 0.4

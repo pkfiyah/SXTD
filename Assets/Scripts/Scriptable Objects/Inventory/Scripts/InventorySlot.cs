@@ -20,8 +20,7 @@ public class InventorySlot {
   public PrismiteObject PrismiteObject {
     get {
       if (prismite.id >= 0) { // This is the getter for the item the inventory slot is holding [Ensures it's a valid item in the database]
-         Debug.Log("prismiteId: " + prismite.id);
-         Debug.Log("parent.inventory.database.GetPrismite[" + parent.inventory.database.CheckDb());
+        // Debug.Log("parent.inventory.database.GetPrismite[" + parent.inventory.database.CheckDb());
          return parent.inventory.database.GetPrismite[prismite.id];
       }
       return null;

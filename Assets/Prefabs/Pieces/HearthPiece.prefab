@@ -62,7 +62,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ad281da3aced814e867b09c4d945dd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DebugMode: 0
   piece: {fileID: 11400000, guid: 008ce5234ab28094882e3f2b5fea4c0d, type: 2}
+  DronePrefab: {fileID: 3005186834990036999, guid: bfec3261cbc9eb54786c18569d117905,
+    type: 3}
 --- !u!1001 &6704561374153314425
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -154,6 +157,7 @@ PrefabInstance:
         type: 2}
     m_RemovedComponents:
     - {fileID: 201022857602847062, guid: dae1f683c748df4488147958191d96d8, type: 3}
+    - {fileID: 6814843536461035107, guid: dae1f683c748df4488147958191d96d8, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: dae1f683c748df4488147958191d96d8, type: 3}
 --- !u!1 &7206545242940799390 stripped
 GameObject:

@@ -73,8 +73,6 @@ public class Gameboard : MonoBehaviour {
         _spawnPoints.Add(UpdateGameboard(spawnPointPosition, Instantiate(spawnPoint, GetWorldPositionFromTilePosition(spawnPointPosition), Quaternion.identity)));
         OnNightEnd();
       }
-      Debug.Log("INVOKING");
-      TDEvents.StageInitiated.Invoke();
     }
 
     private void GoGreen() {

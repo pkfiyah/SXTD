@@ -16,6 +16,7 @@ MonoBehaviour:
   tile: {fileID: 0}
   description: 
   data:
+    name: Wall
     type: 3
     baseHealth: 100
     baseDamage: 0

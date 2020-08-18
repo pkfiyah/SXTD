@@ -22,7 +22,7 @@ public class TrapPiece : SlottableGameboardPiece {
     IEnumerator Attacking() {
       attacking = true;
       animator.SetTrigger("Attacking");
-      TileDamageEvent.Invoke(GetPieceDamage);
+      TileDamageEvent.Invoke(GetPieceDamage.ModifiedValue);
       yield return new WaitForSeconds(1f);
       attacking = false;
     }
