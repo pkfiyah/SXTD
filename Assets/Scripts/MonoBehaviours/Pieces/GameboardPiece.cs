@@ -113,8 +113,8 @@ public abstract class GameboardPiece : MonoBehaviour {
 
     void OnDrawGizmos() {
 
-      // Gizmos.color = Color.yellow;
-      // Gizmos.DrawWireSphere(transform.position, 0.25f);
+      Gizmos.color = Color.yellow;
+      Gizmos.DrawWireSphere(transform.position, 0.15f);
 
     }
 }

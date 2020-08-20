@@ -8,7 +8,8 @@ public class DroneBehaviour : GameboardEntity {
   bool wanderUpdate = true;
 
   void Update() {
-    if (wanderUpdate) {
+    Debug.Log("movementPath.Count" + movementPath.Count);
+    if (wanderUpdate && movementPath.Count == 0) {
       Debug.Log("MovePAth: " + movementPath);
       wanderUpdate = false;
       StartCoroutine(SelectWanderPoint());
@@ -16,9 +17,8 @@ public class DroneBehaviour : GameboardEntity {
   }
 
   IEnumerator SelectWanderPoint() {
-    yield return new WaitForSeconds(4);
-    if (movementPath == null) movementPath = new List<Vector3>();
     movementPath.Add(Gameboard.Instance.GetTileCenterWorldPosition(transform.position) + new Vector3(Random.Range(-0.15f, 0.15f), Random.Range(-0.15f, 0.15f), 0f));
+    yield return new WaitForSeconds(4);
     wanderUpdate = true;
   }
 

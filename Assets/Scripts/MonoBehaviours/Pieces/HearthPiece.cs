@@ -14,6 +14,9 @@ public class HearthPiece : GameboardPiece {
 
     void OnDestroy() {
       TDEvents.GameOver.Invoke();
+      for (int i = 0; i < 4; i++) {
+        Destroy(UnusedDrones[i]);
+      }
     }
 
     public override void OnAfterPlaced() {

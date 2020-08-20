@@ -20,12 +20,14 @@ public abstract class GameboardEntity : MonoBehaviour {
   public int maxHealth;
   public EntityDestruction EntityDestructionEvent = new EntityDestruction();
   public bool IsDamagable;
+  public bool DebugMode = false;
 
   public void Awake() {
     movementSpeed = entity.data.baseSpeed;
     IsDamagable = false;
     isoRend = GetComponent<IsoCharacterRenderer>();
     rigidbody = GetComponent<Rigidbody2D>();
+    movementPath = new List<Vector3>();
     if (variantPos) tilePositionVariance = new Vector3(Random.Range(-0.12f, 0.12f), Random.Range(-0.12f, 0.12f), 0f);
   }
 
@@ -56,16 +58,12 @@ public abstract class GameboardEntity : MonoBehaviour {
   // }
 
   void FixedUpdate() {
-    if (movementPath == null) {
-      return;
-    }
-
     if (movementPath.Count > 0) {
       Vector2 currWorldPos = rigidbody.position;
       // Find hearth and attack it
       Vector3 targetWorldPos = movementPath[0];
       if (variantPos) targetWorldPos += tilePositionVariance;
-      if (Vector3.Distance(movementPath[0], transform.position) < 0.1f && movementPath.Count > 1) {
+      if (Vector3.Distance(movementPath[0], transform.position) < 0.02f && movementPath.Count >= 1) {
           movementPath.RemoveAt(0);
           if (variantPos) tilePositionVariance = new Vector3(Random.Range(-0.12f, 0.12f), Random.Range(-0.12f, 0.12f), 0f);
       }
@@ -78,6 +76,13 @@ public abstract class GameboardEntity : MonoBehaviour {
       Vector2 movement = inputVector * movementSpeed;
       Vector2 newPos = currWorldPos + movement * Time.fixedDeltaTime;
       rigidbody.MovePosition(newPos);
+    }
+  }
+
+  void OnDrawGizmos() {
+    if (DebugMode) {
+      Gizmos.color = Color.white;
+      Gizmos.DrawWireSphere(transform.position, 0.15f);
     }
   }
 }
