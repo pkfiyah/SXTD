@@ -205,6 +205,18 @@ public class Gameboard : MonoBehaviour {
     public Vector3 GetHearthTile() {
       return GetWorldPositionFromTilePosition(_hearthTileRef);
     }
+
+    public List<Vector3Int> GetBlockedArea() {
+      List<Vector3Int> blockedTilePositions = new List<Vector3Int>();
+      for (int i = 0; i < _gameboard.GetLength(0); i++) {
+        for (int j = 0; j < _gameboard.GetLength(1); j++) {
+          if (!_gameboard[i,j].GetComponent<GameboardPiece>().piece.data.CanConstructOn()) {
+            blockedTilePositions.Add(new Vector3Int(i, j, 0));
+          }
+        }
+      }
+      return blockedTilePositions;
+    }
 }
 
 public static class MouseData {

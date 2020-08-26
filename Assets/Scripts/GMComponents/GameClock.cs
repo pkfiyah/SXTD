@@ -39,10 +39,6 @@ public class GameClock {
       if (!HasNightStarted && time + numTicks > NIGHTTIME_STARTTIME) return false; // Do not tick past 6PM until flag is given
       TDEvents.TimeChange.Invoke(time += numTicks);
       if (time >= HOURS_IN_DAY) time = time % HOURS_IN_DAY;
-      // if (time == DAYTIME_STARTTIME && HasNightStarted) {
-      //   HasNightStarted = false;
-      //   TDEvents.IsNightChange.Invoke(HasNightStarted);
-      // }
       return true;
     }
 

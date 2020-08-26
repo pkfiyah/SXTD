@@ -12,6 +12,7 @@ public static class TDEvents {
 
     public static RequestDroneEvent RequestDrone = new RequestDroneEvent();
     public static RequestConstructionEvent RequestConstruction = new RequestConstructionEvent();
+    public static RequestRepositionEvent RequestReposition = new RequestRepositionEvent();
 }
 
 public class CurrencyChangeEvent : UnityEvent<int> { }
@@ -22,3 +23,4 @@ public class SelectionChangedEvent: UnityEvent<GameObject> { }
 
 public class RequestDroneEvent: UnityEvent<Vector3Int> { }
 public class RequestConstructionEvent: UnityEvent<GameObject> { }
+public class RequestRepositionEvent: UnityEvent<GameObject> { }

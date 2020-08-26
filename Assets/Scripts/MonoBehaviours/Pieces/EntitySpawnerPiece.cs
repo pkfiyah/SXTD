@@ -6,11 +6,27 @@ public class EntitySpawnerPiece : SlottableGameboardPiece {
 
   public GameObject minionObject;
   private GameObject[] minions;
+  private bool repositioning = false;
 
   public override void Awake() {
     // animator = GetComponent<Animator>();
     ui = GetComponentInChildren<StaticInterface>();
     base.Awake();
+  }
+
+  void Update() {
+    if (repositioning) {
+      if (Input.GetMouseButtonDown(0)) {
+        Vector3Int newTilePosition = Gameboard.Instance.GetTilePositionFromWorldPosition(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        repositioning = false;
+        TDEvents.RequestReposition.Invoke(null);
+        if (IsRepositionInRange(newTilePosition)) {
+          for(int i = 0; i < minions.Length; i++) {
+            minions[i].GetComponent<GameboardEntity>().SetPathToTargetPosition(Gameboard.Instance.GetWorldPositionFromTilePosition(newTilePosition));
+          }
+        }
+      }
+    }
   }
 
   private List<Vector3> GetTriangularPositions(Vector3Int tilePosition) {
@@ -32,5 +48,18 @@ public class EntitySpawnerPiece : SlottableGameboardPiece {
       minions[i].transform.parent = this.transform.parent;
       minions[i].GetComponent<DroneBehaviour>().SetPathToTargetPosition(Gameboard.Instance.GetWorldPositionFromTilePosition(minPos) + triPos[i]);
     }
+  }
+
+  public void RepositionMinionRequest() {
+    ui.Disappear();
+    TDEvents.RequestReposition.Invoke(this.gameObject);
+    repositioning = true;
+  }
+
+  private bool IsRepositionInRange(Vector3Int newPosition) {
+    int range = piece.data.baseRange;
+    Vector3Int tilePosition = GetTilePosition();
+    Bounds b = new Bounds(tilePosition, new Vector3(1 + (range * 2), 1 + (range * 2) , 0));
+    return b.Contains(newPosition);
   }
 }

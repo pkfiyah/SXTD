@@ -8,9 +8,7 @@ public class DroneBehaviour : GameboardEntity {
   bool wanderUpdate = true;
 
   void Update() {
-    Debug.Log("movementPath.Count" + movementPath.Count);
     if (wanderUpdate && movementPath.Count == 0) {
-      Debug.Log("MovePAth: " + movementPath);
       wanderUpdate = false;
       StartCoroutine(SelectWanderPoint());
     }

@@ -49,6 +49,10 @@ public abstract class GameboardEntity : MonoBehaviour {
     movementPath = newPath;
   }
 
+  public void AddToPath(Vector3 newPosition) {
+    movementPath.Add(newPosition);
+  }
+
   // public void EntityEnteredRange(GameObject go) {
   //   if (go.tag == hitboxTrigger.tag) return;
   // }
